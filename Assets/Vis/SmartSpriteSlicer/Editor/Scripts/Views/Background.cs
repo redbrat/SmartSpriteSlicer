@@ -19,7 +19,7 @@ namespace Vis.SmartSpriteSlicer
 
             var x0 = position.x;
             var y0 = position.y;
-            var size = _model.BackgroundCellSize;
+            var size = _model.BackgroundTileSize;
             var xCount = Mathf.CeilToInt(position.width / size);
             var yCount = Mathf.CeilToInt(position.height / size);
 

@@ -6,9 +6,18 @@ namespace Vis.SmartSpriteSlicer
 {
     public class SmartSpriteSlicer : EditorWindow
     {
-        [NonSerialized]
-        public int BackgroundCellSize = 40;
+        /// <summary>
+        /// Background tile size
+        /// </summary>
+        public int BackgroundTileSize = 40;
 
+        /// <summary>
+        /// Local rect of control panel window
+        /// </summary>
+        public Rect ControlPanelRect = new Rect(100, 100, 240, 360);
+
+        [NonSerialized]
+        public GUISkin Skin;
         [NonSerialized]
         public Texture2D Texture;
         [NonSerialized]
@@ -20,6 +29,7 @@ namespace Vis.SmartSpriteSlicer
         {
             Texture = sprite;
             Importer = importer;
+            Skin = Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
 
             _view = new MainView(this);
         }

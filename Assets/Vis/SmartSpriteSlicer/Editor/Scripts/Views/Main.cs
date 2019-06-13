@@ -21,6 +21,7 @@ namespace Vis.SmartSpriteSlicer
         {
             _background.OnGUI(position);
             _image.OnGUI(position);
+            _controlPanel.OnGUI(position);
         }
     }
 }
