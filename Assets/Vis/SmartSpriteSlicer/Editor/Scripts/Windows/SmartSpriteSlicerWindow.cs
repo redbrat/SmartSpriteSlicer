@@ -1,11 +1,16 @@
 ﻿using System;
+using System.IO;
 using UnityEditor;
+using UnityEditor.Presets;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
-    public class SmartSpriteSlicer : EditorWindow
+    public class SmartSpriteSlicerWindow : EditorWindow
     {
+        private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
+        private const string _slicingSettingsName = "SlicingSettings.asset";
+
         /// <summary>
         /// Background tile size
         /// </summary>
@@ -15,6 +20,16 @@ namespace Vis.SmartSpriteSlicer
         /// Local rect of control panel window
         /// </summary>
         public Rect ControlPanelRect = new Rect(100, 100, 240, 360);
+
+        /// <summary>
+        /// Current slicing settings
+        /// </summary>
+        public SlicingSettings SlicingSettings;
+
+        /// <summary>
+        /// Currently selected slicing settings preset
+        /// </summary>
+        public Preset SlicingSettingsPreset;
 
         [NonSerialized]
         public GUISkin Skin;
@@ -31,7 +46,14 @@ namespace Vis.SmartSpriteSlicer
             Importer = importer;
             Skin = Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
 
+            SlicingSettings = getSlicingSettings();
+
             _view = new MainView(this);
+        }
+
+        private void OnDestroy()
+        {
+            DestroyImmediate(SlicingSettings);
         }
 
         private void OnGUI()
@@ -54,6 +76,24 @@ namespace Vis.SmartSpriteSlicer
                 else if (Event.current.type == EventType.DragExited)
                     Initialize(DragAndDrop.objectReferences[0] as Texture2D, EntryPoints.GetTextureImporter(DragAndDrop.objectReferences[0]));
             }
+        }
+
+        private SlicingSettings getSlicingSettings()
+        {
+            var dbPointerGuids = AssetDatabase.FindAssets(_dbPointerName);
+            if (dbPointerGuids.Length == 0)
+                throw new ApplicationException($"[{nameof(SmartSpriteSlicerWindow)}] Asset installation corrupted. Try reimport asset from AssetStore!");
+            var dbPointerPath = AssetDatabase.GUIDToAssetPath(dbPointerGuids[0]);
+            var slicingSettingsPath = Path.Combine(dbPointerPath.Substring(0, dbPointerPath.Length - Path.GetFileName(dbPointerPath).Length), _slicingSettingsName);
+            var instance = AssetDatabase.LoadAssetAtPath<SlicingSettings>(slicingSettingsPath);
+            if (instance == null)
+            {
+                instance = CreateInstance<SlicingSettings>();
+                AssetDatabase.CreateAsset(instance, slicingSettingsPath);
+                AssetDatabase.SaveAssets();
+                instance = AssetDatabase.LoadAssetAtPath<SlicingSettings>(slicingSettingsPath);
+            }
+            return instance;
         }
     }
 }

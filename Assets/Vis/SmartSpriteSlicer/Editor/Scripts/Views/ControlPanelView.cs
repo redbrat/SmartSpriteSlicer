@@ -10,7 +10,7 @@ namespace Vis.SmartSpriteSlicer
 
         private ControlPanelWindow _subWindow;
 
-        public ControlPanelView(SmartSpriteSlicer model) : base(model)
+        public ControlPanelView(SmartSpriteSlicerWindow model) : base(model)
         {
             _backgroundStyle = model.Skin.GetStyle("ControlPanel");
             _subWindow = new ControlPanelWindow(model);

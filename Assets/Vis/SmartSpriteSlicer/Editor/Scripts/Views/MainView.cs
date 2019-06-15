@@ -9,7 +9,7 @@ namespace Vis.SmartSpriteSlicer
         private ControlPanelView _controlPanel;
         private PreviewSpriteView _previewSpriteView;
 
-        public MainView(SmartSpriteSlicer model) : base(model)
+        public MainView(SmartSpriteSlicerWindow model) : base(model)
         {
             _background = new BackgroundView(model);
             _image = new TextureView(model);

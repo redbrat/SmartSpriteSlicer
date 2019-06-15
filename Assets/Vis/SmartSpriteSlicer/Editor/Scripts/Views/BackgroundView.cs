@@ -6,7 +6,7 @@ namespace Vis.SmartSpriteSlicer
     {
         private Texture2D _tile;
 
-        public BackgroundView(SmartSpriteSlicer model) : base(model)
+        public BackgroundView(SmartSpriteSlicerWindow model) : base(model)
         {
             _tile = new Texture2D(1, 1);
             _tile.SetPixel(0, 0, Color.white);

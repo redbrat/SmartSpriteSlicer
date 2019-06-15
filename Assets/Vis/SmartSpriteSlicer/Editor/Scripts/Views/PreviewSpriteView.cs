@@ -2,7 +2,7 @@
 {
     internal class PreviewSpriteView : ViewBase
     {
-        public PreviewSpriteView(SmartSpriteSlicer model) : base(model)
+        public PreviewSpriteView(SmartSpriteSlicerWindow model) : base(model)
         {
         }
     }

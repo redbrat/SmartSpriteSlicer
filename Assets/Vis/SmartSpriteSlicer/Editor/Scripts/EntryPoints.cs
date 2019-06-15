@@ -10,7 +10,7 @@ namespace Vis.SmartSpriteSlicer
         [MenuItem(_editMenuPath, false)]
         public static void CreateNew()
         {
-            var window = EditorWindow.GetWindow<SmartSpriteSlicer>("Smart Sprite Slicer", true, typeof(SceneView));
+            var window = EditorWindow.GetWindow<SmartSpriteSlicerWindow>("Smart Sprite Slicer", true, typeof(SceneView));
             window.Initialize(Selection.activeObject as Texture2D, GetTextureImporter(Selection.activeObject));
         }
 

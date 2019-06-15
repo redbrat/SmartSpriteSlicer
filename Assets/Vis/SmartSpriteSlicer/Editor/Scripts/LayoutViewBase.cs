@@ -4,7 +4,7 @@ namespace Vis.SmartSpriteSlicer
 {
     public class LayoutViewBase : ViewBase
     {
-        public LayoutViewBase(SmartSpriteSlicer model) : base(model) { }
+        public LayoutViewBase(SmartSpriteSlicerWindow model) : base(model) { }
 
         public override sealed void OnGUI(Rect position) {}
 

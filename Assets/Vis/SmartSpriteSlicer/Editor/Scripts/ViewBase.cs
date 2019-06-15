@@ -4,9 +4,9 @@ namespace Vis.SmartSpriteSlicer
 {
     public abstract class ViewBase
     {
-        protected readonly SmartSpriteSlicer _model;
+        protected readonly SmartSpriteSlicerWindow _model;
 
-        public ViewBase(SmartSpriteSlicer model)
+        public ViewBase(SmartSpriteSlicerWindow model)
         {
             _model = model;
         }
