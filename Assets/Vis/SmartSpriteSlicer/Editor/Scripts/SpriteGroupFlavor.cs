@@ -6,7 +6,7 @@ namespace Vis.SmartSpriteSlicer
     public enum SpriteGroupFlavor
     {
         Group = 0,
-        Eof,
-        Space
+        EndOfLine,
+        EmptySpace
     }
 }

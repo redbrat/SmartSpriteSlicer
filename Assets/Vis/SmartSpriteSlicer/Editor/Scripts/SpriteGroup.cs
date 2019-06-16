@@ -28,48 +28,63 @@ namespace Vis.SmartSpriteSlicer
         [SerializeField]
         private int _times;
 
+        public Vector2Int Offset => _offset;
+        [SerializeField]
+        private Vector2Int _offset;
+        public LayoutDirection Direction => _direction;
+        [SerializeField]
+        private LayoutDirection _direction;
+        public RectOffset IndividualMargin => _individualMargin;
+        [SerializeField]
+        private RectOffset _individualMargin;
+
         /// <summary>
         /// Ctor with only nessessary properties
         /// </summary>
-        /// <param name="id"></param>
         public SpriteGroup(int id)
         {
             _id = id;
             _flavor = default;
             _chunkId = default;
             _times = default;
+            _offset = default;
+            _direction = default;
+            _individualMargin = default;
         }
 
         /// <summary>
         /// Default ctor fot chunk groups
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="chunkId"></param>
         public SpriteGroup(int id, int chunkId)
         {
             _id = id;
             _chunkId = chunkId;
             _flavor = SpriteGroupFlavor.Group;
             _times = 1;
+            _offset = default;
+            _direction = default;
+            _individualMargin = default;
         }
 
         /// <summary>
         /// Ctor with full set of features
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="chunkId"></param>
-        /// <param name="flavor"></param>
-        /// <param name="times"></param>
-        public SpriteGroup(int id, int chunkId, SpriteGroupFlavor flavor, int times)
+        public SpriteGroup(int id, int chunkId, SpriteGroupFlavor flavor, int times, Vector2Int offset, LayoutDirection direction, RectOffset individualMargin)
         {
             _id = id;
             _chunkId = chunkId;
             _flavor = flavor;
             _times = times;
+            _offset = offset;
+            _direction = direction;
+            _individualMargin = individualMargin;
         }
 
-        internal SpriteGroup SetChunk(int chunkId) => new SpriteGroup(_id, chunkId, _flavor, _times);
-        internal SpriteGroup SetTimes(int times) => new SpriteGroup(_id, _chunkId, _flavor, times);
-        internal SpriteGroup SetFlavor(SpriteGroupFlavor flavor) => new SpriteGroup(_id, _chunkId, flavor, _times);
+        internal SpriteGroup SetChunk(int chunkId) => new SpriteGroup(_id, chunkId, _flavor, _times, _offset, _direction, _individualMargin);
+        internal SpriteGroup SetTimes(int times) => new SpriteGroup(_id, _chunkId, _flavor, times, _offset, _direction, _individualMargin);
+        internal SpriteGroup SetFlavor(SpriteGroupFlavor flavor) => new SpriteGroup(_id, _chunkId, flavor, _times, _offset, _direction, _individualMargin);
+        internal SpriteGroup SetOffset(Vector2Int offset) => new SpriteGroup(_id, _chunkId, _flavor, _times, offset, _direction, _individualMargin);
+        internal SpriteGroup SetDirection(LayoutDirection direction) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, direction, _individualMargin);
+        internal SpriteGroup SetIndividualMargin(RectOffset individualMargin) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, individualMargin);
     }
 }

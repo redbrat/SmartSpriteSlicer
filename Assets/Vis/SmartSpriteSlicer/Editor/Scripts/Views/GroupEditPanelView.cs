@@ -36,18 +36,24 @@ namespace Vis.SmartSpriteSlicer
                 Undo.RecordObject(_model.SlicingSettings, "Group type changed");
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetFlavor(newFlavor);
             }
-            switch (newFlavor)
+            var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Direction:"), group.Direction);
+            if (newDirection != group.Direction)
             {
-                case SpriteGroupFlavor.Group:
-
-                    break;
-                case SpriteGroupFlavor.Eof:
-                    break;
-                case SpriteGroupFlavor.Space:
-                    break;
-                default:
-                    break;
+                Undo.RecordObject(_model.SlicingSettings, "Group direction changed");
+                _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetDirection(newDirection);
             }
+            var newOffset = EditorGUILayout.Vector2IntField(new GUIContent($"Offset:"), group.Offset);
+            if (newOffset != group.Offset)
+            {
+                Undo.RecordObject(_model.SlicingSettings, "Group offset changed");
+                _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetOffset(newOffset);
+            }
+            //var newIndividualMargin = (new GUIContent($"Individual Margin:"), group.IndividualMargin);
+            //if (newIndividualMargin != group.IndividualMargin)
+            //{
+            //    Undo.RecordObject(_model.SlicingSettings, "Group individual margin changed");
+            //    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetIndividualMargin(newIndividualMargin);
+            //}
             EditorGUILayout.EndVertical();
         }
     }
