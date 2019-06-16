@@ -7,12 +7,10 @@ namespace Vis.SmartSpriteSlicer
     internal class TopPanelView : LayoutViewBase
     {
         private readonly GUIStyle _panelStyle;
-        private readonly GUIStyle _textStyle;
 
         public TopPanelView(SmartSpriteSlicerWindow model) : base(model)
         {
             _panelStyle = _model.Skin.GetStyle("ControlTopPanel");
-            _textStyle = _model.Skin.GetStyle("ControlTopText");
         }
 
         public override void OnGUILayout()
@@ -20,8 +18,8 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUILayout();
 
             EditorGUILayout.BeginHorizontal(_panelStyle);
-            EditorGUILayout.LabelField(new GUIContent($"Preset:"), _textStyle, GUILayout.Width(46f));
-            var newPreset = (Preset)EditorGUILayout.ObjectField(_model.SlicingSettingsPreset, typeof(Preset), false, GUILayout.Width(140f));
+            EditorGUILayout.LabelField(new GUIContent($"<i><size=14>Preset:</size></i>", "Saved layout info"), _model.RichTextStyle, GUILayout.Width(58f));
+            var newPreset = (Preset)EditorGUILayout.ObjectField(_model.SlicingSettingsPreset, typeof(Preset), false, GUILayout.Width(128f));
             if (newPreset != _model.SlicingSettingsPreset)
             {
                 _model.SlicingSettingsPreset = newPreset;
@@ -30,7 +28,7 @@ namespace Vis.SmartSpriteSlicer
             {
                 if (!_model.SlicingSettingsPreset.DataEquals(_model.SlicingSettings))
                 {
-                    EditorGUILayout.LabelField(new GUIContent($"*modified"), _textStyle, GUILayout.Width(68f));
+                    EditorGUILayout.LabelField(new GUIContent($"*modified"), _model.RichTextStyle, GUILayout.Width(68f));
                     if (GUILayout.Button(new GUIContent($"Save", "Save values to preset")))
                     {
                         if (Selection.activeObject == _model.SlicingSettingsPreset)

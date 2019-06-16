@@ -33,6 +33,7 @@ namespace Vis.SmartSpriteSlicer
 
         [NonSerialized]
         public GUISkin Skin;
+        public GUIStyle RichTextStyle => Skin.GetStyle($"RichText");
         [NonSerialized]
         public Texture2D Texture;
         [NonSerialized]

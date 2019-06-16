@@ -13,8 +13,6 @@ namespace Vis.SmartSpriteSlicer
 
         internal static int EditorChunkId;
 
-        private readonly GUIStyle _richTextStyle;
-
         private readonly GUIStyle _chunksPanelStyle;
         private readonly GUIStyle _chunkEditPanelStyle;
         private readonly GUIStyle _chunkButtonStyle;
@@ -24,8 +22,6 @@ namespace Vis.SmartSpriteSlicer
             _chunksPanelStyle = _model.Skin.GetStyle(ChunksPanelStyleName);
             _chunkEditPanelStyle = _model.Skin.GetStyle(ChunkEditPanelStyleName);
             _chunkButtonStyle = _model.Skin.GetStyle(ChunkButtonStyleName);
-
-            _richTextStyle = model.Skin.GetStyle("RichText");
         }
 
         public override void OnGUILayout()
@@ -37,7 +33,7 @@ namespace Vis.SmartSpriteSlicer
 
             var chunks = _model.SlicingSettings.Chunks;
 
-            EditorGUILayout.LabelField(new GUIContent($"<b>Chunks</b>", "Here you can edit chunks"), _richTextStyle);
+            EditorGUILayout.LabelField(new GUIContent($"<b>Chunks</b>", "Here you can edit chunks"), _model.RichTextStyle);
             EditorGUILayout.BeginVertical(_chunksPanelStyle);
             var buttonsCount = chunks.Count + 1;
             var currentButtonIndex = 0;
