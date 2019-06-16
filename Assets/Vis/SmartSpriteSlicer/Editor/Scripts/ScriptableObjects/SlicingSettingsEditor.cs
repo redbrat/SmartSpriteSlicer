@@ -10,8 +10,6 @@ namespace Vis.SmartSpriteSlicer
     public class SlicingSettingsEditor : Editor
     {
         private static Dictionary<object, int> _currentEditedChunks = new Dictionary<object, int>();
-        private static Dictionary<object, int> _currentFocusedControl = new Dictionary<object, int>();
-        private static int _controlPtr;
 
         private GUISkin _skin;
         private GUIStyle _chunksPanelStyle;
@@ -67,25 +65,9 @@ namespace Vis.SmartSpriteSlicer
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(new GUIContent("Width:"));
-                GUI.SetNextControlName("Width");
                 var newWidth = EditorGUILayout.IntField(chunk.Size.x);
-                var id = GUIUtility.GetControlID(FocusType.Keyboard);
-                var te = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), id - 1);
-                if (te != null)
-                {
-                    Debug.Log($"te.selectIndex = {te.text}");
-                }
-                if (!_currentFocusedControl.ContainsKey(sender))
-                    _currentFocusedControl.Add(sender, id);
-                else
-                {
-                    if (_currentFocusedControl[sender] != id && _controlPtr == _currentFocusedControl[sender])//Layout changed
-                        GUI.FocusControl("Width");
-                    _currentFocusedControl[sender] = id;
-                }
                 if (newWidth != chunk.Size.x)
                 {
-                    _controlPtr = id;
                     Undo.RecordObject(target, "Chunk width changed");
                     chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(newWidth, chunk.Size.y));
                 }
@@ -101,19 +83,6 @@ namespace Vis.SmartSpriteSlicer
                 }
                 EditorGUILayout.EndHorizontal();
 
-                //var newSize = EditorGUILayout.Vector2IntField(new GUIContent("Size:"), chunk._size);
-                ////var control = GetLastControlId();
-                ////GUIUtility.hotControl = control;
-                //if (!_currentFocusedControl.ContainsKey(sender))
-                //    _currentFocusedControl[sender] = GetLastControlId();
-
-
-                //if (newSize != chunk._size)
-                //{
-                //    Debug.Log("Focused: " + GUI.Control());
-                //    Undo.RecordObject(target, "Chunk size changed");
-                //    chunks[targetChunkIndex] = chunk.SetSize(newSize);
-                //}
                 var newColor = EditorGUILayout.ColorField(new GUIContent("Color:"), chunk._color);
                 if (newColor != chunk._color)
                 {
@@ -127,15 +96,6 @@ namespace Vis.SmartSpriteSlicer
                 }
                 EditorGUILayout.EndVertical();
             }
-
-            if (GUILayout.Button("Set Focus"))
-                GUI.FocusControl("Size");
-            //var isPossibleFocusChange = Event.current.type == EventType.MouseDown || Event.current.type == EventType.MouseUp;
-            //if (!isPossibleFocusChange && GUIUtility.hotControl != _currentFocusedControl[sender])
-            //{
-            //    GUIUtility.hotControl = _currentFocusedControl[sender];
-            //    Event.current.Use();
-            //}
         }
 
         public static int GetLastControlId()
