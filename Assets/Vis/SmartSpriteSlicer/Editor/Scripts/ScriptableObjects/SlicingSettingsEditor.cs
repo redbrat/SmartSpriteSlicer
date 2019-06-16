@@ -15,6 +15,7 @@ namespace Vis.SmartSpriteSlicer
         private GUISkin _skin;
         private GUIStyle _chunksPanelStyle;
         private GUIStyle _chunkEditPanelStyle;
+        private GUIStyle _chunkButtonStyle;
 
         public override void OnInspectorGUI()
         {
@@ -24,11 +25,13 @@ namespace Vis.SmartSpriteSlicer
                 _chunksPanelStyle = _skin.GetStyle(ChunksView.ChunksPanelStyleName);
             if (_chunkEditPanelStyle == null)
                 _chunkEditPanelStyle = _skin.GetStyle(ChunksView.ChunkEditPanelStyleName);
+            if (_chunkButtonStyle == null)
+                _chunkButtonStyle = _skin.GetStyle(ChunksView.ChunkButtonStyleName);
 
-            RenderSlicingSettingsGUI(this, target as SlicingSettings, _chunksPanelStyle, _chunkEditPanelStyle);
+            RenderSlicingSettingsGUI(this, target as SlicingSettings, _chunksPanelStyle, _chunkEditPanelStyle, _chunkButtonStyle);
         }
 
-        public static void RenderSlicingSettingsGUI(object sender, SlicingSettings target, GUIStyle chunksPanelStyle, GUIStyle chunkEditPanelStyle)
+        public static void RenderSlicingSettingsGUI(object sender, SlicingSettings target, GUIStyle chunksPanelStyle, GUIStyle chunkEditPanelStyle, GUIStyle chunkButtonStyle)
         {
             if (!_currentEditedChunks.ContainsKey(sender))
                 _currentEditedChunks.Add(sender, default);
@@ -46,7 +49,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     if (currentButtonIndex == buttonsCount - 1)
                     {
-                        if (GUILayout.Button(new GUIContent("+", "Create new chunk"), GUILayout.Width(34f)))
+                        if (DragableButton.Draw(new GUIContent("+", "Create new chunk"), chunkButtonStyle, GUILayout.Width(34f)))
                         {
                             var defaultSize = Vector2Int.one * 64;
                             if (chunks.Count > 0)
@@ -61,7 +64,8 @@ namespace Vis.SmartSpriteSlicer
                         var chunk = chunks[currentButtonIndex++];
                         var originalColor = GUI.backgroundColor;
                         GUI.backgroundColor = chunk._color;
-                        if (GUILayout.Button($"{chunk._size.x}x{chunk._size.y}", GUILayout.MinWidth(80f)))
+                        GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
+                        if (DragableButton.Draw(new GUIContent($"{chunk._size.x}x{chunk._size.y}"), chunkButtonStyle, GUILayout.MinWidth(80f)))
                             _currentEditedChunks[sender] = chunk.Id;
                         GUI.backgroundColor = originalColor;
                     }
@@ -69,24 +73,6 @@ namespace Vis.SmartSpriteSlicer
                 EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.EndVertical();
-            //EditorGUILayout.BeginHorizontal();
-            //for (int i = 0; i < chunks.Count; i++)
-            //{
-            //    var chunk = chunks[i];
-            //    var originalColor = GUI.backgroundColor;
-            //    GUI.backgroundColor = chunk._color;
-            //    if (GUILayout.Button($"{chunk._size.x}x{chunk._size.y}", GUILayout.MinWidth(80f)))
-            //        _currentEditedChunks[sender] = chunk.Id;
-            //    GUI.backgroundColor = originalColor;
-            //}
-            //if (GUILayout.Button(new GUIContent("+", "Create new chunk"), GUILayout.Width(34f)))
-            //{
-            //    var defaultSize = Vector2Int.one * 64;
-            //    if (chunks.Count > 0)
-            //        defaultSize = chunks[chunks.Count - 1]._size;
-            //    chunks.Add(new SpriteChunk(chunks.Count, defaultSize));
-            //}
-            //EditorGUILayout.EndHorizontal();
 
             var targetChunkIndex = chunks.FindIndex(c => c.Id == _currentEditedChunks[sender]);
             if (targetChunkIndex >= 0)

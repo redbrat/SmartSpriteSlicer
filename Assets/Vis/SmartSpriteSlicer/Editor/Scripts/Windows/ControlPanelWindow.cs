@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
@@ -23,6 +25,19 @@ namespace Vis.SmartSpriteSlicer
             _groupsView.OnGUILayout();
             EditorGUILayout.Space();
             _topPanelView.OnGUILayout();
+
+            manageDrag();
+        }
+
+        private void manageDrag()
+        {
+            switch(Event.current.type)
+            {
+                case EventType.DragUpdated:
+                    var focusedControl = GUI.GetNameOfFocusedControl();
+                    Debug.Log($"focusedControl = {focusedControl}");
+                    break;
+            }
         }
     }
 }
