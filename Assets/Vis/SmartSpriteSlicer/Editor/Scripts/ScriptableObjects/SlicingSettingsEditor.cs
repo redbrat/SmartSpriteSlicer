@@ -54,7 +54,7 @@ namespace Vis.SmartSpriteSlicer
                             var defaultSize = Vector2Int.one * 64;
                             if (chunks.Count > 0)
                                 defaultSize = chunks[chunks.Count - 1]._size;
-                            chunks.Add(new SpriteChunk(chunks.Count, defaultSize));
+                            chunks.Add(new SpriteChunk(chunks.Count + 1, defaultSize));
                         }
                         currentButtonIndex++;
                         i = _maxButtonsPerRow;
@@ -68,7 +68,10 @@ namespace Vis.SmartSpriteSlicer
                         if (DragableButton.Draw(new GUIContent($"{chunk._size.x}x{chunk._size.y}"), chunkButtonStyle, true, GUILayout.MinWidth(80f)))
                         {
                             Debug.Log($"Chunk Clicked!");
-                            _currentEditedChunks[sender] = chunk.Id;
+                            if (_currentEditedChunks[sender] == chunk.Id)
+                                _currentEditedChunks[sender] = default;
+                            else
+                                _currentEditedChunks[sender] = chunk.Id;
                         }
                         GUI.backgroundColor = originalColor;
                     }
