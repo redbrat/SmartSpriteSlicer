@@ -67,5 +67,9 @@ namespace Vis.SmartSpriteSlicer
             _flavor = flavor;
             _times = times;
         }
+
+        internal SpriteGroup SetChunk(int chunkId) => new SpriteGroup(_id, chunkId, _flavor, _times);
+        internal SpriteGroup SetTimes(int times) => new SpriteGroup(_id, _chunkId, _flavor, times);
+        internal SpriteGroup SetFlavor(SpriteGroupFlavor flavor) => new SpriteGroup(_id, _chunkId, flavor, _times);
     }
 }

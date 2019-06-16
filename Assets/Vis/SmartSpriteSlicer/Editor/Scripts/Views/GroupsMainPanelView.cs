@@ -26,9 +26,7 @@ namespace Vis.SmartSpriteSlicer
             if (_model.SlicingSettings.ChunkGroups.Count == 0)
                 EditorGUILayout.LabelField(new GUIContent($"Start by dragging some chunks here..."));
             else
-            {
                 _model.SlicingSettings.ChunkGroups = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, SmartSpriteSlicerWindow.MaxConhtolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, onGroupClick, _blobStyle);
-            }
             EditorGUILayout.EndVertical();
         }
 
