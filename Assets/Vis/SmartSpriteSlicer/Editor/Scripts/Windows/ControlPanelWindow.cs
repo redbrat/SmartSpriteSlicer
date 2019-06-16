@@ -24,7 +24,7 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            var reserve = GUILayoutUtility.GetRect(1, 26);
+            var reserve = GUILayoutUtility.GetRect(1, 28);
             if (Event.current.type == EventType.Repaint)
                 _topPanelViewPosition = reserve;
 
