@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
@@ -9,10 +10,12 @@ namespace Vis.SmartSpriteSlicer
         public static GUIContent DraggingContent;
         public static GUIStyle DraggingStyle;
         public static Color DragableColor;
+        public static Rect AcceptDragArea;
+        public static bool ReadyToDrop;
 
-        public static bool Draw(GUIContent content, GUIStyle style, bool isDragable, params GUILayoutOption[] options)
+        public static DraggableButtonResult Draw(GUIContent content, GUIStyle style, bool isDragable, params GUILayoutOption[] options)
         {
-            var result = false;
+            var result = DraggableButtonResult.None;
             var controlId = GUIUtility.GetControlID(FocusType.Passive);
             var position = GUILayoutUtility.GetRect(content, style, options);
             switch (Event.current.GetTypeForControl(controlId))
@@ -33,9 +36,13 @@ namespace Vis.SmartSpriteSlicer
                     {
                         GUIUtility.hotControl = 0;
                         if (position.Contains(Event.current.mousePosition))
-                            result = true;
+                            result = DraggableButtonResult.Clicked;
                         if (isDragable)
+                        {
                             IsDragging = false;
+                            if (AcceptDragArea.Contains(Event.current.mousePosition))
+                                result = DraggableButtonResult.Droped;
+                        }
                         GUI.changed = true;
                         Event.current.Use();
                     }
@@ -50,6 +57,9 @@ namespace Vis.SmartSpriteSlicer
                 DraggingContent = new GUIContent($"{content.text} +", content.tooltip);
                 DraggingStyle = style;
                 DragableColor = GUI.backgroundColor;
+
+                ReadyToDrop = AcceptDragArea.Contains(Event.current.mousePosition);
+
                 Event.current.Use();
             }
             return result;

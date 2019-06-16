@@ -20,6 +20,10 @@ namespace Vis.SmartSpriteSlicer
 
             _model.BeginWindows();
             _model.ControlPanelRect = GUILayout.Window(0, _model.ControlPanelRect, _subWindow.WindowContentCallback, new GUIContent("Layout Settings"));
+            if (_model.ControlPanelRect.x < 0)
+                _model.ControlPanelRect.x = 0;
+            if (_model.ControlPanelRect.y < 0)
+                _model.ControlPanelRect.y = 0;
             _model.EndWindows();
         }
     }

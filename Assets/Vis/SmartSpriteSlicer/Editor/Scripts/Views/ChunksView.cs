@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
     internal class ChunksView : LayoutViewBase
     {
+        private const int _maxButtonsPerRow = 4;
+
         internal const string ChunksPanelStyleName = "ChunksPanel";
         internal const string ChunkEditPanelStyleName = "ChunkEditPanel";
         internal const string ChunkButtonStyleName = "ChunkButton";
+
+        internal static int EditorChunkId;
 
         private readonly GUIStyle _chunksPanelStyle;
         private readonly GUIStyle _chunkEditPanelStyle;
@@ -23,7 +28,102 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            SlicingSettingsEditor.RenderSlicingSettingsGUI(this, _model.SlicingSettings, _chunksPanelStyle, _chunkEditPanelStyle, _chunkButtonStyle);
+            //SlicingSettingsEditor.RenderSlicingSettingsGUI(this, _model.SlicingSettings, _chunksPanelStyle, _chunkEditPanelStyle, _chunkButtonStyle);
+
+
+            var chunks = _model.SlicingSettings.Chunks;
+
+            EditorGUILayout.LabelField($"Chunks");
+            EditorGUILayout.BeginVertical(_chunksPanelStyle);
+            var buttonsCount = chunks.Count + 1;
+            var currentButtonIndex = 0;
+            while (currentButtonIndex < buttonsCount)
+            {
+                EditorGUILayout.BeginHorizontal();
+                for (int i = 0; i < _maxButtonsPerRow; i++)
+                {
+                    if (currentButtonIndex == buttonsCount - 1)
+                    {
+                        if (DragableButton.Draw(new GUIContent("+", "Create new chunk"), _chunkButtonStyle, false, GUILayout.Width(34f)) == DraggableButtonResult.Clicked)
+                        {
+                            var defaultSize = Vector2Int.one * 64;
+                            if (chunks.Count > 0)
+                                defaultSize = chunks[chunks.Count - 1]._size;
+                            chunks.Add(new SpriteChunk(chunks.Count + 1, defaultSize));
+                        }
+                        currentButtonIndex++;
+                        i = _maxButtonsPerRow;
+                    }
+                    else
+                    {
+                        var chunk = chunks[currentButtonIndex++];
+                        var originalColor = GUI.backgroundColor;
+                        GUI.backgroundColor = chunk._color;
+                        GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
+                        var draggableButtonResult = DragableButton.Draw(new GUIContent($"{chunk._size.x}x{chunk._size.y}"), _chunkButtonStyle, true, GUILayout.MinWidth(80f));
+                        switch (draggableButtonResult)
+                        {
+                            case DraggableButtonResult.None:
+                                break;
+                            case DraggableButtonResult.Clicked:
+                                if (EditorChunkId == chunk.Id)
+                                    EditorChunkId = default;
+                                else
+                                    EditorChunkId = chunk.Id;
+                                GUI.FocusControl(default);
+                                break;
+                            case DraggableButtonResult.Droped:
+                                _model.SlicingSettings.ChunkGroups.Add(new SpriteGroup() { ChunkId = chunk.Id });
+                                break;
+                            default:
+                                break;
+                        }
+                        GUI.backgroundColor = originalColor;
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+            EditorGUILayout.EndVertical();
+
+            var targetChunkIndex = chunks.FindIndex(c => c.Id == EditorChunkId);
+            if (targetChunkIndex >= 0)
+            {
+                var chunk = chunks[targetChunkIndex];
+                EditorGUILayout.BeginVertical(_chunkEditPanelStyle);
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(new GUIContent("Width:"));
+                var newWidth = EditorGUILayout.IntField(chunk.Size.x);
+                if (newWidth != chunk.Size.x)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Chunk width changed");
+                    chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(newWidth, chunk.Size.y));
+                }
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                GUI.SetNextControlName("Height");
+                EditorGUILayout.LabelField(new GUIContent("Height:"));
+                var newHeight = EditorGUILayout.IntField(chunk.Size.y);
+                if (newHeight != chunk.Size.y)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Chunk height changed");
+                    chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(chunk.Size.x, newHeight));
+                }
+                EditorGUILayout.EndHorizontal();
+
+                var newColor = EditorGUILayout.ColorField(new GUIContent("Color:"), chunk._color);
+                if (newColor != chunk._color)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Chunk color changed");
+                    chunks[targetChunkIndex] = chunk.SetColor(newColor);
+                }
+
+                if (GUILayout.Button(new GUIContent($"Delete", "Remove chunk and all groups containing it")))
+                {
+                    chunks.RemoveAt(targetChunkIndex);
+                }
+                EditorGUILayout.EndVertical();
+            }
         }
     }
 }

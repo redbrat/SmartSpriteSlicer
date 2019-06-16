@@ -29,8 +29,8 @@ namespace Vis.SmartSpriteSlicer
                 _topPanelViewPosition = reserve;
 
             _chunksView.OnGUILayout();
-            _groupsView.OnGUILayout();
             EditorGUILayout.Space();
+            _groupsView.OnGUILayout();
 
             if (Event.current.type == EventType.Repaint)
                 _topPanelViewPosition.width = GUILayoutUtility.GetLastRect().width;
