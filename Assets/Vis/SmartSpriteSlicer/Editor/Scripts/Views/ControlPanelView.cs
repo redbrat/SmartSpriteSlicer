@@ -26,6 +26,7 @@ namespace Vis.SmartSpriteSlicer
                 _model.ControlPanelRect.y = 0;
             if (_model.ControlPanelRect.width != SmartSpriteSlicerWindow.MaxConhtolPanelWidth)
                 _model.ControlPanelRect.width = SmartSpriteSlicerWindow.MaxConhtolPanelWidth;
+            _model.ControlPanelRect.height = 0;
             _model.EndWindows();
         }
     }
