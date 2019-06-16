@@ -9,12 +9,14 @@ namespace Vis.SmartSpriteSlicer
         private LayoutViewBase _topPanelView;
         private LayoutViewBase _chunksView;
         private LayoutViewBase _groupsView;
+        private ViewBase _draggableButtonsView;
 
         public ControlPanelWindow(SmartSpriteSlicerWindow model) : base(model)
         {
             _chunksView = new ChunksView(model);
             _groupsView = new GroupsView(model);
             _topPanelView = new TopPanelView(model);
+            _draggableButtonsView = new DraggableButtonView(model);
         }
 
         public override void OnGUILayout()
@@ -26,18 +28,7 @@ namespace Vis.SmartSpriteSlicer
             EditorGUILayout.Space();
             _topPanelView.OnGUILayout();
 
-            manageDrag();
-        }
-
-        private void manageDrag()
-        {
-            switch(Event.current.type)
-            {
-                case EventType.DragUpdated:
-                    var focusedControl = GUI.GetNameOfFocusedControl();
-                    Debug.Log($"focusedControl = {focusedControl}");
-                    break;
-            }
+            _draggableButtonsView.OnGUI(Rect.zero);
         }
     }
 }
