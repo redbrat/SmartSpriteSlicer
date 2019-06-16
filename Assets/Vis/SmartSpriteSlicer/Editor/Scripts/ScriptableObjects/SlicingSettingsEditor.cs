@@ -9,6 +9,7 @@ namespace Vis.SmartSpriteSlicer
     [CustomEditor(typeof(SlicingSettings))]
     public class SlicingSettingsEditor : Editor
     {
+        private const int _maxButtonsPerRow = 4;
         private static Dictionary<object, int> _currentEditedChunks = new Dictionary<object, int>();
 
         private GUISkin _skin;
@@ -35,27 +36,57 @@ namespace Vis.SmartSpriteSlicer
             var chunks = target.Chunks;
 
             EditorGUILayout.LabelField($"Chunks");
-            EditorGUILayout.BeginHorizontal(chunksPanelStyle);
-            for (int i = 0; i < chunks.Count; i++)
+            EditorGUILayout.BeginVertical(chunksPanelStyle);
+            var buttonsCount = chunks.Count + 1;
+            var currentButtonIndex = 0;
+            while(currentButtonIndex < buttonsCount)
             {
-                var chunk = chunks[i];
-                var originalColor = GUI.backgroundColor;
-                GUI.backgroundColor = chunk._color;
-                if (GUILayout.Button($"{chunk._size.x}x{chunk._size.y}"))
+                EditorGUILayout.BeginHorizontal();
+                for (int i = 0; i < _maxButtonsPerRow; i++)
                 {
-                    _currentEditedChunks[sender] = chunk.Id;
-                    Debug.Log($"Choosed: {chunk.Id}");
+                    if (currentButtonIndex == buttonsCount - 1)
+                    {
+                        if (GUILayout.Button(new GUIContent("+", "Create new chunk"), GUILayout.Width(34f)))
+                        {
+                            var defaultSize = Vector2Int.one * 64;
+                            if (chunks.Count > 0)
+                                defaultSize = chunks[chunks.Count - 1]._size;
+                            chunks.Add(new SpriteChunk(chunks.Count, defaultSize));
+                        }
+                        currentButtonIndex++;
+                        i = _maxButtonsPerRow;
+                    }
+                    else
+                    {
+                        var chunk = chunks[currentButtonIndex++];
+                        var originalColor = GUI.backgroundColor;
+                        GUI.backgroundColor = chunk._color;
+                        if (GUILayout.Button($"{chunk._size.x}x{chunk._size.y}", GUILayout.MinWidth(80f)))
+                            _currentEditedChunks[sender] = chunk.Id;
+                        GUI.backgroundColor = originalColor;
+                    }
                 }
-                GUI.backgroundColor = originalColor;
+                EditorGUILayout.EndHorizontal();
             }
-            if (GUILayout.Button(new GUIContent("+", "Create new chunk"), GUILayout.Width(34f)))
-            {
-                var defaultSize = Vector2Int.one * 64;
-                if (chunks.Count > 0)
-                    defaultSize = chunks[chunks.Count - 1]._size;
-                chunks.Add(new SpriteChunk(chunks.Count, defaultSize));
-            }
-            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
+            //EditorGUILayout.BeginHorizontal();
+            //for (int i = 0; i < chunks.Count; i++)
+            //{
+            //    var chunk = chunks[i];
+            //    var originalColor = GUI.backgroundColor;
+            //    GUI.backgroundColor = chunk._color;
+            //    if (GUILayout.Button($"{chunk._size.x}x{chunk._size.y}", GUILayout.MinWidth(80f)))
+            //        _currentEditedChunks[sender] = chunk.Id;
+            //    GUI.backgroundColor = originalColor;
+            //}
+            //if (GUILayout.Button(new GUIContent("+", "Create new chunk"), GUILayout.Width(34f)))
+            //{
+            //    var defaultSize = Vector2Int.one * 64;
+            //    if (chunks.Count > 0)
+            //        defaultSize = chunks[chunks.Count - 1]._size;
+            //    chunks.Add(new SpriteChunk(chunks.Count, defaultSize));
+            //}
+            //EditorGUILayout.EndHorizontal();
 
             var targetChunkIndex = chunks.FindIndex(c => c.Id == _currentEditedChunks[sender]);
             if (targetChunkIndex >= 0)

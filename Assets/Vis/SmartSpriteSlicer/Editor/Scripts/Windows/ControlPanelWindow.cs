@@ -1,4 +1,6 @@
-﻿namespace Vis.SmartSpriteSlicer
+﻿using UnityEditor;
+
+namespace Vis.SmartSpriteSlicer
 {
     internal class ControlPanelWindow : LayoutViewBase
     {
@@ -19,6 +21,7 @@
 
             _chunksView.OnGUILayout();
             _groupsView.OnGUILayout();
+            EditorGUILayout.Space();
             _topPanelView.OnGUILayout();
         }
     }
