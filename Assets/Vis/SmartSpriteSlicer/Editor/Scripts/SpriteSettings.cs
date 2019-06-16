@@ -1,25 +1,38 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Vis.SmartSpriteSlicer
 {
     [Serializable]
     public struct SpriteChunk
     {
-        public readonly Guid Id;
-        public readonly Vector2Int Size;
+        [SerializeField]
+        private int _id;
+        public int Id => _id;
+        [SerializeField]
+        public Color _color;
+        public Color Color => _color;
+        [SerializeField]
+        public Vector2Int _size;
+        public Vector2Int Size => _size;
 
-        public SpriteChunk(Vector2Int size) : this()
+        public SpriteChunk(int id, Vector2Int size)
         {
-            Size = size;
+            _id = id;
+            _size = size;
+            _color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
         }
 
-        public SpriteChunk(Guid id, Vector2Int size)
+        public SpriteChunk(int id, Vector2Int size, Color color)
         {
-            Id = id;
-            Size = size;
+            _id = id;
+            _size = size;
+            _color = color;
         }
 
-        public SpriteChunk SetSize(Vector2Int newSize) => new SpriteChunk(Id, newSize);
+        public SpriteChunk SetSize(Vector2Int newSize) => new SpriteChunk(_id, newSize, _color);
+        public SpriteChunk SetColor(Color newColor) => new SpriteChunk(_id, _size, newColor);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Presets;
 using UnityEngine;
 
@@ -20,15 +19,26 @@ namespace Vis.SmartSpriteSlicer
 
             EditorGUILayout.BeginHorizontal(_topPanelStyle);
             EditorGUILayout.LabelField(new GUIContent($"Preset:"), GUILayout.Width(40f));
-            var newPreset = EditorGUILayout.ObjectField(_model.SlicingSettingsPreset, typeof(Preset), false, GUILayout.Width(140f));
+            var newPreset = (Preset)EditorGUILayout.ObjectField(_model.SlicingSettingsPreset, typeof(Preset), false, GUILayout.Width(140f));
+            if (newPreset != _model.SlicingSettingsPreset)
+            {
+                _model.SlicingSettingsPreset = newPreset;
+            }
             if (_model.SlicingSettingsPreset != null)
             {
                 if (!_model.SlicingSettingsPreset.DataEquals(_model.SlicingSettings))
                 {
                     EditorGUILayout.LabelField(new GUIContent($"*modified"), GUILayout.Width(60));
-                    if (GUILayout.Button(new GUIContent($"Save")))
+                    if (GUILayout.Button(new GUIContent($"Save", "Save values to preset")))
                     {
+                        if (Selection.activeObject == _model.SlicingSettingsPreset)
+                            Selection.activeObject = null; //There's an issue when preset we're saving into is opened in inspector: saving wouldn't work, inspector somehow overrides it's values with it's own. So we just close inspector in that case in order to be able to save.
+                        Undo.RecordObject(_model.SlicingSettingsPreset, "Preset values updated");
                         _model.SlicingSettingsPreset.UpdateProperties(_model.SlicingSettings);
+                    }
+                    if (GUILayout.Button(new GUIContent($"Reset", "Apply preset values")))
+                    {
+                        _model.SlicingSettingsPreset.ApplyTo(_model.SlicingSettings);
                     }
                 }
             }

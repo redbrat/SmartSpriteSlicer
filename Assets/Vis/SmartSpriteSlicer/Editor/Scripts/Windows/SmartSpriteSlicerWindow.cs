@@ -44,7 +44,7 @@ namespace Vis.SmartSpriteSlicer
         {
             Texture = sprite;
             Importer = importer;
-            Skin = Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
+            Skin = loadGuiSkin();
 
             SlicingSettings = getSlicingSettings();
 
@@ -62,6 +62,8 @@ namespace Vis.SmartSpriteSlicer
 
             _view?.OnGUI(position);
         }
+
+        internal static GUISkin loadGuiSkin() => Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
 
         private void manageDragAndDrop()
         {

@@ -14,5 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LayoutDirection: 0
   LayoutAnchor: 0
-  Chunks: []
+  Chunks:
+  - _id: 0
+    _color: {r: 0.9971312, g: 0.25948197, b: 0.76099956, a: 1}
+    _size: {x: 11, y: 225}
+  - _id: 1
+    _color: {r: 0.76057553, g: 0.58153695, b: 0.31599063, a: 1}
+    _size: {x: 3, y: 4}
+  - _id: 2
+    _color: {r: 0.068644166, g: 0.6288997, b: 0.088401675, a: 1}
+    _size: {x: 5, y: 6}
   ChunkGroups: []

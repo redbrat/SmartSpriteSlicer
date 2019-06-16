@@ -8,18 +8,18 @@
 
         public ControlPanelWindow(SmartSpriteSlicerWindow model) : base(model)
         {
-            _topPanelView = new TopPanelView(model);
             _chunksView = new ChunksView(model);
             _groupsView = new GroupsView(model);
+            _topPanelView = new TopPanelView(model);
         }
 
         public override void OnGUILayout()
         {
             base.OnGUILayout();
 
-            _topPanelView.OnGUILayout();
             _chunksView.OnGUILayout();
             _groupsView.OnGUILayout();
+            _topPanelView.OnGUILayout();
         }
     }
 }
