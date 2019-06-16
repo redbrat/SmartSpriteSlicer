@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,10 +11,10 @@ namespace Vis.SmartSpriteSlicer
         private int _id;
         public int Id => _id;
         [SerializeField]
-        public Color _color;
+        private Color _color;
         public Color Color => _color;
         [SerializeField]
-        public Vector2Int _size;
+        private Vector2Int _size;
         public Vector2Int Size => _size;
 
         public SpriteChunk(int id, Vector2Int size)

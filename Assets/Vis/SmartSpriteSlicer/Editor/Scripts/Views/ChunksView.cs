@@ -13,6 +13,8 @@ namespace Vis.SmartSpriteSlicer
 
         internal static int EditorChunkId;
 
+        private readonly GUIStyle _richTextStyle;
+
         private readonly GUIStyle _chunksPanelStyle;
         private readonly GUIStyle _chunkEditPanelStyle;
         private readonly GUIStyle _chunkButtonStyle;
@@ -22,6 +24,8 @@ namespace Vis.SmartSpriteSlicer
             _chunksPanelStyle = _model.Skin.GetStyle(ChunksPanelStyleName);
             _chunkEditPanelStyle = _model.Skin.GetStyle(ChunkEditPanelStyleName);
             _chunkButtonStyle = _model.Skin.GetStyle(ChunkButtonStyleName);
+
+            _richTextStyle = model.Skin.GetStyle("RichText");
         }
 
         public override void OnGUILayout()
@@ -33,7 +37,7 @@ namespace Vis.SmartSpriteSlicer
 
             var chunks = _model.SlicingSettings.Chunks;
 
-            EditorGUILayout.LabelField($"Chunks");
+            EditorGUILayout.LabelField(new GUIContent($"<b>Chunks</b>", "Here you can edit chunks"), _richTextStyle);
             EditorGUILayout.BeginVertical(_chunksPanelStyle);
             var buttonsCount = chunks.Count + 1;
             var currentButtonIndex = 0;
@@ -48,7 +52,7 @@ namespace Vis.SmartSpriteSlicer
                         {
                             var defaultSize = Vector2Int.one * 64;
                             if (chunks.Count > 0)
-                                defaultSize = chunks[chunks.Count - 1]._size;
+                                defaultSize = chunks[chunks.Count - 1].Size;
                             chunks.Add(new SpriteChunk(chunks.Count + 1, defaultSize));
                         }
                         currentButtonIndex++;
@@ -58,9 +62,9 @@ namespace Vis.SmartSpriteSlicer
                     {
                         var chunk = chunks[currentButtonIndex++];
                         var originalColor = GUI.backgroundColor;
-                        GUI.backgroundColor = chunk._color;
+                        GUI.backgroundColor = chunk.Color;
                         GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
-                        var draggableButtonResult = DragableButton.Draw(new GUIContent($"{chunk._size.x}x{chunk._size.y}"), _chunkButtonStyle, true, GUILayout.MinWidth(80f));
+                        var draggableButtonResult = DragableButton.Draw(new GUIContent($"{chunk.Size.x}x{chunk.Size.y}"), _chunkButtonStyle, true, GUILayout.MinWidth(80f));
                         switch (draggableButtonResult)
                         {
                             case DraggableButtonResult.None:
@@ -111,8 +115,8 @@ namespace Vis.SmartSpriteSlicer
                 }
                 EditorGUILayout.EndHorizontal();
 
-                var newColor = EditorGUILayout.ColorField(new GUIContent("Color:"), chunk._color);
-                if (newColor != chunk._color)
+                var newColor = EditorGUILayout.ColorField(new GUIContent("Color:"), chunk.Color);
+                if (newColor != chunk.Color)
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk color changed");
                     chunks[targetChunkIndex] = chunk.SetColor(newColor);

@@ -9,6 +9,8 @@ namespace Vis.SmartSpriteSlicer
         private readonly LayoutViewBase _groupsMainPanel;
         private readonly LayoutViewBase _groupEditPanel;
 
+        private readonly GUIStyle _richTextStyle;
+
         private Rect _mainRect;
 
         public GroupsView(SmartSpriteSlicerWindow model) : base(model)
@@ -16,13 +18,15 @@ namespace Vis.SmartSpriteSlicer
             _groupsTopPanel = new GroupsTopPanelView(model);
             _groupsMainPanel = new GroupsMainPanelView(model);
             _groupEditPanel = new GroupEditPanelView(model);
+
+            _richTextStyle = model.Skin.GetStyle("RichText");
         }
 
         public override void OnGUILayout()
         {
             base.OnGUILayout();
 
-            EditorGUILayout.LabelField(new GUIContent($"Groups", $"Here you can edit groups of chunks, eofs, spaces etc."));
+            EditorGUILayout.LabelField(new GUIContent($"<b>Groups</b>", $"Here you can edit groups of chunks, eofs, spaces etc."), _richTextStyle);
 
             _groupsTopPanel.OnGUILayout();
             

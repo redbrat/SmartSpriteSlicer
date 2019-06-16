@@ -15,13 +15,22 @@ MonoBehaviour:
   LayoutDirection: 0
   LayoutAnchor: 0
   Chunks:
-  - _id: 0
-    _color: {r: 0.9971312, g: 0.25948197, b: 0.76099956, a: 1}
-    _size: {x: 11, y: 225}
   - _id: 1
-    _color: {r: 0.76057553, g: 0.58153695, b: 0.31599063, a: 1}
-    _size: {x: 3, y: 4}
+    _color: {r: 0.054137945, g: 0.008345723, b: 0.9772122, a: 1}
+    _size: {x: 43, y: 64}
   - _id: 2
-    _color: {r: 0.068644166, g: 0.6288997, b: 0.088401675, a: 1}
-    _size: {x: 5, y: 6}
-  ChunkGroups: []
+    _color: {r: 0.7796267, g: 0.35259324, b: 0.108686924, a: 1}
+    _size: {x: 64, y: 64}
+  - _id: 3
+    _color: {r: 0.70570064, g: 0.7842792, b: 0.2430538, a: 1}
+    _size: {x: 22, y: 64}
+  - _id: 4
+    _color: {r: 0.872897, g: 0.51010805, b: 0.33690685, a: 1}
+    _size: {x: 77, y: 64}
+  ChunkGroups:
+  - Flavor: 0
+    ChunkId: 2
+    Times: 0
+  - Flavor: 0
+    ChunkId: 3
+    Times: 0
