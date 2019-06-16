@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
@@ -19,14 +18,27 @@ namespace Vis.SmartSpriteSlicer
             _draggableButtonsView = new DraggableButtonView(model);
         }
 
+        private Rect _topPanelViewPosition;
+
         public override void OnGUILayout()
         {
             base.OnGUILayout();
 
+            var reserve = GUILayoutUtility.GetRect(1, 26);
+            if (Event.current.type == EventType.Repaint)
+                _topPanelViewPosition = reserve;
+
             _chunksView.OnGUILayout();
             _groupsView.OnGUILayout();
             EditorGUILayout.Space();
+
+            if (Event.current.type == EventType.Repaint)
+                _topPanelViewPosition.width = GUILayoutUtility.GetLastRect().width;
+            if (_topPanelViewPosition == Rect.zero)
+                GUI.changed = true;
+            GUILayout.BeginArea(_topPanelViewPosition);
             _topPanelView.OnGUILayout();
+            GUILayout.EndArea();
 
             _draggableButtonsView.OnGUI(Rect.zero);
         }
