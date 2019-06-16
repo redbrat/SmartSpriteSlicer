@@ -14,21 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LayoutDirection: 0
   LayoutAnchor: 0
-  Chunks:
-  - _name: Left
-    _id: 1
-    _color: {r: 0.054137945, g: 0.008345723, b: 0.9772122, a: 1}
-    _size: {x: 43, y: 64}
-  - _name: 
-    _id: 2
-    _color: {r: 0.7796267, g: 0.35259324, b: 0.108686924, a: 1}
-    _size: {x: 64, y: 64}
-  - _name: asasdasdasdasdasdad
-    _id: 3
-    _color: {r: 0.70570064, g: 0.7842792, b: 0.2430538, a: 1}
-    _size: {x: 22, y: 64}
-  - _name: 
-    _id: 4
-    _color: {r: 0.872897, g: 0.51010805, b: 0.33690685, a: 1}
-    _size: {x: 77, y: 64}
+  Chunks: []
   ChunkGroups: []

@@ -6,7 +6,7 @@ namespace Vis.SmartSpriteSlicer
 {
     internal static class ReorderableBlobList
     {
-        internal static List<T> Draw<T>(List<T> list, int maxRowWidth, Func<T, GUIContent> blobContentFunc, Func<T, Color> getColorFunc, GUIStyle blobsStyle)
+        internal static List<T> Draw<T>(List<T> list, int maxRowWidth, Func<T, GUIContent> blobContentFunc, Func<T, Color> getColorFunc, Action<T> onClick, GUIStyle blobsStyle)
         {
             var result = list;
             //var controlId = GUIUtility.GetControlID(FocusType.Passive);
@@ -50,6 +50,19 @@ namespace Vis.SmartSpriteSlicer
                             GUI.backgroundColor = color;
                             blobsStyle.Draw(position, content, blobControlId);
                             GUI.backgroundColor = originalColor;
+                            break;
+                        case EventType.MouseDown:
+                            if (Event.current.button == 0 && position.Contains(Event.current.mousePosition))
+                                GUIUtility.hotControl = blobControlId;
+                            break;
+                        case EventType.MouseUp:
+                            if (GUIUtility.hotControl == blobControlId)
+                            {
+                                if (position.Contains(Event.current.mousePosition))
+                                    onClick?.Invoke(element);
+                                GUI.changed = true;
+                                Event.current.Use();
+                            }
                             break;
                     }
                 }

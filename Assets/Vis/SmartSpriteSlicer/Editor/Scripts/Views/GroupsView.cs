@@ -1,10 +1,13 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
     internal class GroupsView : LayoutViewBase
     {
+        public static int EditedGroupId;
+
         private readonly LayoutViewBase _groupsTopPanel;
         private readonly LayoutViewBase _groupsMainPanel;
         private readonly LayoutViewBase _groupEditPanel;
@@ -39,7 +42,8 @@ namespace Vis.SmartSpriteSlicer
             }
             DragableButton.AcceptDragArea = _mainRect;
 
-            _groupEditPanel.OnGUILayout();
+            if (_model.SlicingSettings.ChunkGroups.Count(group => group.Id == EditedGroupId) > 0)
+                _groupEditPanel.OnGUILayout();
         }
     }
 }

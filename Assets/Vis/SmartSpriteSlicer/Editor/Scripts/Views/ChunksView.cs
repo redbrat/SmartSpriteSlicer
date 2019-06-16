@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
@@ -73,7 +74,10 @@ namespace Vis.SmartSpriteSlicer
                                 GUI.FocusControl(default);
                                 break;
                             case DraggableButtonResult.Droped:
-                                _model.SlicingSettings.ChunkGroups.Add(new SpriteGroup() { ChunkId = chunk.Id });
+                                var newGroupId = 1;
+                                if (_model.SlicingSettings.ChunkGroups.Count > 0)
+                                    newGroupId = _model.SlicingSettings.ChunkGroups.OrderByDescending(c => c.Id).First().Id + 1;
+                                _model.SlicingSettings.ChunkGroups.Add(new SpriteGroup(newGroupId, chunk.Id));
                                 break;
                             default:
                                 break;

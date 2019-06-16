@@ -17,6 +17,7 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUILayout();
 
             EditorGUILayout.BeginVertical(_panelStyle);
+            EditorGUILayout.LabelField($"asjdioasjdio");
             EditorGUILayout.EndVertical();
         }
     }

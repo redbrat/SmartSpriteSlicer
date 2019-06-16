@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,9 +27,17 @@ namespace Vis.SmartSpriteSlicer
                 EditorGUILayout.LabelField(new GUIContent($"Start by dragging some chunks here..."));
             else
             {
-                _model.SlicingSettings.ChunkGroups = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, SmartSpriteSlicerWindow.MaxConhtolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, _blobStyle);
+                _model.SlicingSettings.ChunkGroups = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, SmartSpriteSlicerWindow.MaxConhtolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, onGroupClick, _blobStyle);
             }
             EditorGUILayout.EndVertical();
+        }
+
+        private void onGroupClick(SpriteGroup group)
+        {
+            if (GroupsView.EditedGroupId == group.Id)
+                GroupsView.EditedGroupId = 0;
+            else
+                GroupsView.EditedGroupId = group.Id;
         }
 
         private GUIContent getBlobContent(SpriteChunk chunk) => new GUIContent($"{chunk.GetHumanFriendlyName()}");
