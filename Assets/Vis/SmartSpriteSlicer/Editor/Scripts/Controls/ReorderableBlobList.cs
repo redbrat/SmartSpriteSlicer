@@ -29,7 +29,7 @@ namespace Vis.SmartSpriteSlicer
                 }
                 
                 var blobSize = blobsStyle.CalcSize(content);
-                var estimatedLinePosition = currentLine.LinePosition + blobSize.x;
+                var estimatedLinePosition = Mathf.CeilToInt(currentLine.LinePosition + blobSize.x);
                 if (estimatedLinePosition > maxRowWidth && currentLine.BlobsCount > 0) //if BlobsCount == 0 and we already exceeded max width, we must draw anyway to avoid infinite loop
                 {
                     currentLine.State = BlobState.Populated;
@@ -38,8 +38,11 @@ namespace Vis.SmartSpriteSlicer
 
                 if (currentLine.State != BlobState.Populated)
                 {
+                    currentLine.BlobsCount++;
+                    currentLine.LinePosition = estimatedLinePosition;
                     var blobControlId = GUIUtility.GetControlID(FocusType.Passive);
                     var position = GUILayoutUtility.GetRect(content, blobsStyle);
+
                     switch (Event.current.type)
                     {
                         case EventType.Repaint:

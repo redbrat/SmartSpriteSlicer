@@ -8,6 +8,8 @@ namespace Vis.SmartSpriteSlicer
 {
     public class SmartSpriteSlicerWindow : EditorWindow
     {
+        public const int MaxConhtolPanelWidth = 450;
+
         private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
         private const string _slicingSettingsName = "SlicingSettings.asset";
 
@@ -19,7 +21,7 @@ namespace Vis.SmartSpriteSlicer
         /// <summary>
         /// Local rect of control panel window
         /// </summary>
-        public Rect ControlPanelRect = new Rect(100, 100, 240, 360);
+        public Rect ControlPanelRect = new Rect(100, 100, 240, MaxConhtolPanelWidth);
 
         /// <summary>
         /// Current slicing settings

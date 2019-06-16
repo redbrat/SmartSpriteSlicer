@@ -60,7 +60,7 @@ namespace Vis.SmartSpriteSlicer
                         var originalColor = GUI.backgroundColor;
                         GUI.backgroundColor = chunk.Color;
                         GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
-                        var draggableButtonResult = DragableButton.Draw(new GUIContent($"{chunk.Size.x}x{chunk.Size.y}"), _chunkButtonStyle, true, GUILayout.MinWidth(80f));
+                        var draggableButtonResult = DragableButton.Draw(new GUIContent(chunk.GetHumanFriendlyName()), _chunkButtonStyle, true, GUILayout.MinWidth(80f));
                         switch (draggableButtonResult)
                         {
                             case DraggableButtonResult.None:
@@ -110,6 +110,13 @@ namespace Vis.SmartSpriteSlicer
                     chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(chunk.Size.x, newHeight));
                 }
                 EditorGUILayout.EndHorizontal();
+
+                var newName = EditorGUILayout.TextField(new GUIContent($"Name:"), chunk.Name);
+                if (newName != chunk.Name)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Chunk name changed");
+                    chunks[targetChunkIndex] = chunk.SetName(newName);
+                }
 
                 var newColor = EditorGUILayout.ColorField(new GUIContent("Color:"), chunk.Color);
                 if (newColor != chunk.Color)

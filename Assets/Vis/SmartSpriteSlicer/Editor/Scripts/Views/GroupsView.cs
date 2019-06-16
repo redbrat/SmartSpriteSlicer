@@ -22,7 +22,7 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            EditorGUILayout.LabelField(new GUIContent($"<b>Groups</b>", $"Here you can edit groups of chunks, eofs, spaces etc."), _model.RichTextStyle);
+            EditorGUILayout.LabelField(new GUIContent($"<b>Groups</b>", $"Here you can edit groups of chunks, end-of-lines, spaces etc."), _model.RichTextStyle);
 
             _groupsTopPanel.OnGUILayout();
             
