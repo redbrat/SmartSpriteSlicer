@@ -1950,7 +1950,7 @@ MonoBehaviour:
     m_StretchHeight: 0
   - m_Name: GroupsMainPanel
     m_Normal:
-      m_Background: {fileID: 2800000, guid: 76ae3f71e9dead047812b169f84f9fde, type: 3}
+      m_Background: {fileID: 2800000, guid: 8be92a8ed11968040b0642fade4ba5a8, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Hover:
@@ -1989,8 +1989,8 @@ MonoBehaviour:
     m_Margin:
       m_Left: 4
       m_Right: 4
-      m_Top: 4
-      m_Bottom: 4
+      m_Top: 0
+      m_Bottom: 0
     m_Padding:
       m_Left: 8
       m_Right: 8
@@ -2016,7 +2016,7 @@ MonoBehaviour:
     m_StretchHeight: 0
   - m_Name: GroupsTopPanel
     m_Normal:
-      m_Background: {fileID: 2800000, guid: 13a80e0bd03a47348acab2f40a04452f, type: 3}
+      m_Background: {fileID: 2800000, guid: 62772951808fe5b468cbec18240d9ebe, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Hover:
@@ -2055,8 +2055,8 @@ MonoBehaviour:
     m_Margin:
       m_Left: 4
       m_Right: 4
-      m_Top: 4
-      m_Bottom: 4
+      m_Top: 0
+      m_Bottom: 0
     m_Padding:
       m_Left: 8
       m_Right: 8
@@ -2121,8 +2121,8 @@ MonoBehaviour:
     m_Margin:
       m_Left: 4
       m_Right: 4
-      m_Top: 4
-      m_Bottom: 4
+      m_Top: 0
+      m_Bottom: 0
     m_Padding:
       m_Left: 8
       m_Right: 8
