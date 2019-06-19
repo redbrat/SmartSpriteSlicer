@@ -5,10 +5,12 @@ namespace Vis.SmartSpriteSlicer
 {
     public static class BinaryButton
     {
-        public static (bool clicked, bool pressed) Draw(GUIContent content, Rect rect, Color outlineColor, Color color0, Color color1, float fadingAmountPerFrame = 0.1f)
+        public static (bool clicked, bool pressed) Draw(GUIContent content, Rect rect, Color outlineColor, Color color0, Color color1, bool? pressed = null, float fadingAmountPerFrame = 0.1f)
         {
             var controlId = GUIUtility.GetControlID(FocusType.Passive);
             var state = (BinaryButtonState)GUIUtility.GetStateObject(typeof(BinaryButtonState), controlId);
+            if (pressed != null)
+                state.Pressed = pressed.Value;
             var result = (clicked: false, pressed: state.Pressed);
 
             Handles.BeginGUI();

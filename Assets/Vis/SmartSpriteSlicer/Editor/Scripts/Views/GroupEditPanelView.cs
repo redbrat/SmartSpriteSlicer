@@ -60,7 +60,7 @@ namespace Vis.SmartSpriteSlicer
                 Undo.RecordObject(_model.SlicingSettings, "Group individual margin changed");
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetIndividualMargin(newIndividualMargin);
             }
-            if (GUILayout.Button(new GUIContent($"Delete")))
+            if (GUILayout.Button(new GUIContent($"Delete group")))
             {
                 Undo.RecordObject(_model.SlicingSettings, "Group deleted");
                 _model.SlicingSettings.ChunkGroups.RemoveAt(groupIndex);

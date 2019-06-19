@@ -19,9 +19,35 @@ namespace Vis.SmartSpriteSlicer
         
         public override void OnGUI(Rect position)
         {
+            var textureRatio = (float)_model.Texture.width / _model.Texture.height;
+            var screenRatio = position.width / position.height;
+            var fitX = 0f;
+            var fitY = 0f;
+            var fitWidth = 0f;
+            var fitHeight = 0f;
+            if (screenRatio < textureRatio)
+            {
+                fitWidth = position.width;
+                fitHeight = fitWidth / textureRatio;
+                fitX = 0;
+                fitY = (position.height - fitHeight) / 2f;
+            }
+            else
+            {
+                fitHeight = position.height;
+                fitWidth = fitHeight * textureRatio;
+                fitY = 0;
+                fitX = (position.width - fitWidth) / 2f;
+            }
+            _model.TextureRect = new Rect(Mathf.RoundToInt(fitX), Mathf.RoundToInt(fitY), Mathf.RoundToInt(fitWidth), Mathf.RoundToInt(fitHeight));
+
             _background.OnGUI(position);
             _image.OnGUI(position);
+
+            _model.BeginWindows();
             _controlPanel.OnGUI(position);
+            _previewSpriteView.OnGUI(position);
+            _model.EndWindows();
         }
     }
 }

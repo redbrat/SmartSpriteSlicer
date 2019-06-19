@@ -6,6 +6,8 @@ namespace Vis.SmartSpriteSlicer
     {
         public LayoutViewBase(SmartSpriteSlicerWindow model) : base(model) { }
 
+        public Rect WindowPosition;
+
         public override sealed void OnGUI(Rect position) {}
 
         public void WindowContentCallback(int index)

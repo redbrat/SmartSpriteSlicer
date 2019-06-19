@@ -31,7 +31,7 @@ namespace Vis.SmartSpriteSlicer
                     EditorGUILayout.LabelField(new GUIContent($"<i><color=#888888>Drag'n'Drop some chunks here to create a group.</color></i>"), _model.RichTextStyle);
             }
             else
-                _model.SlicingSettings.ChunkGroups = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, SmartSpriteSlicerWindow.MaxConhtolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, onGroupClick, _blobStyle);
+                _model.SlicingSettings.ChunkGroups = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, onGroupClick, _blobStyle);
             EditorGUILayout.EndVertical();
         }
 

@@ -8,7 +8,8 @@ namespace Vis.SmartSpriteSlicer
 {
     public class SmartSpriteSlicerWindow : EditorWindow
     {
-        public const int MaxConhtolPanelWidth = 450;
+        public const int MaxContolPanelWidth = 450;
+        public const int MaxPreviewWindowRect = 300;
 
         private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
         private const string _slicingSettingsName = "SlicingSettings.asset";
@@ -21,7 +22,12 @@ namespace Vis.SmartSpriteSlicer
         /// <summary>
         /// Local rect of control panel window
         /// </summary>
-        public Rect ControlPanelRect = new Rect(100, 100, 240, MaxConhtolPanelWidth);
+        public Rect ControlPanelRect = new Rect(100, 100, 240, MaxContolPanelWidth);
+
+        /// <summary>
+        /// Local rect of control panel window
+        /// </summary>
+        public Rect PreviewWindowRect = new Rect(100, 100, 240, MaxPreviewWindowRect);
 
         /// <summary>
         /// Current slicing settings
@@ -42,6 +48,9 @@ namespace Vis.SmartSpriteSlicer
         public TextureImporter Importer;
 
         private MainView _view;
+        internal Rect? PreviewedArea;
+        internal Rect TextureRect;
+        internal Texture2D PreviewBackground;
 
         internal void Initialize(Texture2D sprite, TextureImporter importer)
         {
@@ -49,9 +58,18 @@ namespace Vis.SmartSpriteSlicer
             Importer = importer;
             Skin = loadGuiSkin();
 
+            PreviewBackground = new Texture2D(1, 1);
+            PreviewBackground.SetPixel(0, 0, Color.black);
+            PreviewBackground.Apply();
+
             SlicingSettings = getSlicingSettings();
 
             _view = new MainView(this);
+        }
+
+        private void OnDestroy()
+        {
+            DestroyImmediate(PreviewBackground);
         }
 
         private void OnGUI()
