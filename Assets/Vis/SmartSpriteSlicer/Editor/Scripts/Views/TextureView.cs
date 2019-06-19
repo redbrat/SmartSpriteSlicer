@@ -4,8 +4,11 @@ namespace Vis.SmartSpriteSlicer
 {
     internal class TextureView : ViewBase
     {
+        private readonly AreasView _areas;
+
         public TextureView(SmartSpriteSlicerWindow model) : base(model)
         {
+            _areas = new AreasView(model);
         }
 
         public override void OnGUI(Rect position)
@@ -34,6 +37,8 @@ namespace Vis.SmartSpriteSlicer
             }
             var rect = new Rect(fitX, fitY, fitWidth, fitHeight);
             GUI.DrawTexture(rect, _model.Texture, ScaleMode.StretchToFill);
+
+            _areas.OnGUI(rect);
         }
     }
 }

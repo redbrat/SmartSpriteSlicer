@@ -84,6 +84,9 @@ namespace Vis.SmartSpriteSlicer
                         }
                         GUI.backgroundColor = originalColor;
                     }
+
+                    if (buttonsCount == 1)
+                        EditorGUILayout.LabelField(new GUIContent($"<i><color=#888888>Create some chunks with \"+\" button.</color></i>"), _model.RichTextStyle);
                 }
                 EditorGUILayout.EndHorizontal();
             }

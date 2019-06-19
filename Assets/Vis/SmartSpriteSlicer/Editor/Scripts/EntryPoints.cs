@@ -8,7 +8,7 @@ namespace Vis.SmartSpriteSlicer
         private const string _editMenuPath = "Assets/Vis/SmartPriteSlicer/Edit";
 
         [MenuItem(_editMenuPath, false)]
-        public static void CreateNew()
+        public static void EditWindow()
         {
             var window = EditorWindow.GetWindow<SmartSpriteSlicerWindow>("Smart Sprite Slicer", true, typeof(SceneView));
             window.Initialize(Selection.activeObject as Texture2D, GetTextureImporter(Selection.activeObject));
@@ -22,7 +22,7 @@ namespace Vis.SmartSpriteSlicer
         }
 
         [MenuItem(_editMenuPath, true)]
-        public static bool CreateNewValidation()
+        public static bool EditorWindowValidation()
         {
             if (Selection.activeObject == null)
                 return false;

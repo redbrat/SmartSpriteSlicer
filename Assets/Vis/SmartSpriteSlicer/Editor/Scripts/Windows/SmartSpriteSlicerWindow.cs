@@ -54,11 +54,6 @@ namespace Vis.SmartSpriteSlicer
             _view = new MainView(this);
         }
 
-        private void OnDestroy()
-        {
-            DestroyImmediate(SlicingSettings);
-        }
-
         private void OnGUI()
         {
             manageDragAndDrop();

@@ -30,6 +30,12 @@ namespace Vis.SmartSpriteSlicer
             }
 
             EditorGUILayout.BeginVertical(_panelStyle);
+            var newTimes = EditorGUILayout.IntField(new GUIContent($"Times:"), group.Times);
+            if (newTimes != group.Times)
+            {
+                Undo.RecordObject(_model.SlicingSettings, "Group times changed");
+                _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetTimes(newTimes);
+            }
             var newFlavor = (SpriteGroupFlavor)EditorGUILayout.EnumPopup(new GUIContent($"Group type:"), group.Flavor);
             if (newFlavor != group.Flavor)
             {
@@ -48,12 +54,17 @@ namespace Vis.SmartSpriteSlicer
                 Undo.RecordObject(_model.SlicingSettings, "Group offset changed");
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetOffset(newOffset);
             }
-            //var newIndividualMargin = (new GUIContent($"Individual Margin:"), group.IndividualMargin);
-            //if (newIndividualMargin != group.IndividualMargin)
-            //{
-            //    Undo.RecordObject(_model.SlicingSettings, "Group individual margin changed");
-            //    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetIndividualMargin(newIndividualMargin);
-            //}
+            var newIndividualMargin = RectOffsetDrawer.Draw(new GUIContent($"Individual Margin:"), group.IndividualMargin);
+            if (newIndividualMargin != group.IndividualMargin)
+            {
+                Undo.RecordObject(_model.SlicingSettings, "Group individual margin changed");
+                _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetIndividualMargin(newIndividualMargin);
+            }
+            if (GUILayout.Button(new GUIContent($"Delete")))
+            {
+                Undo.RecordObject(_model.SlicingSettings, "Group deleted");
+                _model.SlicingSettings.ChunkGroups.RemoveAt(groupIndex);
+            }
             EditorGUILayout.EndVertical();
         }
     }
