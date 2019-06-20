@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +19,7 @@ namespace Vis.SmartSpriteSlicer
             _panelDragAcceptanceStyle = model.Skin.GetStyle("GroupsMainPanelDragAcceptence");
             _blobStyle = model.Skin.GetStyle("BlobStyle");
             _selectedBlobStyle = model.Skin.GetStyle("SelectedBlobStyle");
+            _selectedGroupIndex = -1;
         }
 
         public override void OnGUILayout()
@@ -35,7 +35,23 @@ namespace Vis.SmartSpriteSlicer
                     EditorGUILayout.LabelField(new GUIContent($"<i><color=#888888>Drag'n'Drop some chunks here to create a group.</color></i>"), _model.RichTextStyle);
             }
             else
-                _model.SlicingSettings.ChunkGroups = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _selectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, onGroupClick, _blobStyle, _selectedBlobStyle);
+            {
+                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _selectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, _blobStyle, _selectedBlobStyle);
+                if (reorderableListResult.clicked.Id != 0)
+                {
+
+                }
+                _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
+                if (reorderableListResult.reordered)
+                {
+                    if (_selectedGroupIndex >= 0)
+                        _selectedGroupIndex = reorderableListResult.selected;
+                }
+                else
+                    _selectedGroupIndex = reorderableListResult.selected;
+                if (reorderableListResult.clicked.Id != 0 && !reorderableListResult.reordered)
+                    onGroupClick(reorderableListResult.clicked);
+            }
             EditorGUILayout.EndVertical();
         }
 
@@ -47,15 +63,7 @@ namespace Vis.SmartSpriteSlicer
                 _selectedGroupIndex = -1;
             }
             else
-            {
                 GroupsView.EditedGroupId = group.Id;
-                for (int i = 0; i < _model.SlicingSettings.ChunkGroups.Count; i++)
-                    if (_model.SlicingSettings.ChunkGroups[i].Id == group.Id)
-                    {
-                        _selectedGroupIndex = i;
-                        break;
-                    }
-            }
         }
 
         private GUIContent getBlobContent(SpriteChunk chunk) => new GUIContent($"{chunk.GetHumanFriendlyName()}");

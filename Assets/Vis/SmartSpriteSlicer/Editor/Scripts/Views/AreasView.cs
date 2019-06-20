@@ -43,7 +43,7 @@ namespace Vis.SmartSpriteSlicer
             var chunk = _model.SlicingSettings.Chunks.Where(ch => ch.Id == group.ChunkId).First();
 
             var topLeft = new Vector3(offset.x + group.IndividualMargin.left, offset.y + group.IndividualMargin.top);
-            var topRight = new Vector3(topLeft.x + chunk.Size.x, topLeft.y);
+            var topRight = new Vector3(topLeft.x + chunk.Size.x, topLeft.y); 
             var bottomLeft = new Vector3(topLeft.x, topLeft.y + chunk.Size.y);
             var bottomRight = new Vector3(topRight.x, bottomLeft.y);
 

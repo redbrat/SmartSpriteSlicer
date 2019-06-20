@@ -49,7 +49,7 @@ namespace Vis.SmartSpriteSlicer
             _times = default;
             _offset = default;
             _direction = default;
-            _individualMargin = default;
+            _individualMargin = new RectOffset();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Vis.SmartSpriteSlicer
             _times = 1;
             _offset = default;
             _direction = default;
-            _individualMargin = default;
+            _individualMargin = new RectOffset();
         }
 
         /// <summary>
