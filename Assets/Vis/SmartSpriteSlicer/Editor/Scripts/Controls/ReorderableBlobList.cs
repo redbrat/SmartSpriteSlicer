@@ -6,7 +6,7 @@ namespace Vis.SmartSpriteSlicer
 {
     internal static class ReorderableBlobList
     {
-        internal static List<T> Draw<T>(List<T> list, int maxRowWidth, Func<T, GUIContent> blobContentFunc, Func<T, Color> getColorFunc, Action<T> onClick, GUIStyle blobsStyle)
+        internal static List<T> Draw<T>(List<T> list, int selected, int maxRowWidth, Func<T, GUIContent> blobContentFunc, Func<T, Color> getColorFunc, Action<T> onClick, GUIStyle blobsStyle, GUIStyle selectedBlobsStyle)
         {
             var result = list;
             //var controlId = GUIUtility.GetControlID(FocusType.Passive);
@@ -18,6 +18,8 @@ namespace Vis.SmartSpriteSlicer
             var currentLine = new BlobLine();
             while (blobIndex < list.Count)
             {
+                //var style = blobsStyle;
+                var style = selected == blobIndex ? selectedBlobsStyle : blobsStyle;
                 var element = list[blobIndex++];
                 var content = blobContentFunc(element);
                 var color = getColorFunc(element);
@@ -28,7 +30,7 @@ namespace Vis.SmartSpriteSlicer
                     currentLine.State = BlobState.Started;
                 }
                 
-                var blobSize = blobsStyle.CalcSize(content);
+                var blobSize = style.CalcSize(content);
                 var estimatedLinePosition = Mathf.CeilToInt(currentLine.LinePosition + blobSize.x);
                 if (estimatedLinePosition > maxRowWidth && currentLine.BlobsCount > 0) //if BlobsCount == 0 and we already exceeded max width, we must draw anyway to avoid infinite loop
                 {
@@ -41,14 +43,14 @@ namespace Vis.SmartSpriteSlicer
                     currentLine.BlobsCount++;
                     currentLine.LinePosition = estimatedLinePosition;
                     var blobControlId = GUIUtility.GetControlID(FocusType.Passive);
-                    var position = GUILayoutUtility.GetRect(content, blobsStyle);
+                    var position = GUILayoutUtility.GetRect(content, style);
 
                     switch (Event.current.type)
                     {
                         case EventType.Repaint:
                             var originalColor = GUI.backgroundColor;
                             GUI.backgroundColor = color;
-                            blobsStyle.Draw(position, content, blobControlId);
+                            style.Draw(position, content, blobControlId);
                             GUI.backgroundColor = originalColor;
                             break;
                         case EventType.MouseDown:
