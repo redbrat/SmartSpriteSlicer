@@ -25,7 +25,7 @@ namespace Vis.SmartSpriteSlicer
             while (blobIndex < renderedList.Count)
             {
                 var element = renderedList[blobIndex++];
-                var style = result.selected == blobIndex ? getSelectedStyleFunc(element) : getStyleFunc(element);
+                var style = result.selected == blobIndex - 1 ? getSelectedStyleFunc(element) : getStyleFunc(element);
                 var content = blobContentFunc(element);
                 var color = getColorFunc(element);
 
@@ -64,8 +64,9 @@ namespace Vis.SmartSpriteSlicer
                                 state.DraggedIndex = blobIndex - 1;
                                 state.IsDragging = true;
                                 state.Content = content;
-                                state.Style = style;
+                                state.Style = new GUIStyle(style);
                                 state.Color = color;
+                                state.Position = position;
 
                                 state.TempList = new List<T>();
                                 for (int i = 0; i < list.Count; i++)
@@ -115,8 +116,7 @@ namespace Vis.SmartSpriteSlicer
                         }
                         if (GUIUtility.hotControl == blobControlId)
                         {
-                            state.Position = position;
-                            state.DraggingPosition = Event.current.mousePosition - position.size / 2f;
+                            state.DraggingPosition = Event.current.mousePosition - state.Position.size / 2f;
 
                             GUI.changed = true;
                         }
