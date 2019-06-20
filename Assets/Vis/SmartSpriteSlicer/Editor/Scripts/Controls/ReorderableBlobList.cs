@@ -6,7 +6,7 @@ namespace Vis.SmartSpriteSlicer
 {
     internal static class ReorderableBlobList
     {
-        internal static (List<T> list, int selected, T clicked, bool reordered) Draw<T>(List<T> list, int selected, int maxRowWidth, Func<T, GUIContent> blobContentFunc, Func<T, Color> getColorFunc/*, Action<T> onClick*/, GUIStyle blobsStyle, GUIStyle selectedBlobsStyle)
+        internal static (List<T> list, int selected, T clicked, bool reordered) Draw<T>(List<T> list, int selected, int maxRowWidth, Func<T, GUIContent> blobContentFunc, Func<T, Color> getColorFunc, Func<T, GUIStyle> getStyleFunc, Func<T, GUIStyle> getSelectedStyleFunc)
         {
             (List<T> list, int selected, T clicked, bool reordered) result = (list, selected, default, false);
 
@@ -24,8 +24,8 @@ namespace Vis.SmartSpriteSlicer
             var currentLine = new BlobLine();
             while (blobIndex < renderedList.Count)
             {
-                var style = result.selected == blobIndex ? selectedBlobsStyle : blobsStyle;
                 var element = renderedList[blobIndex++];
+                var style = result.selected == blobIndex ? getSelectedStyleFunc(element) : getStyleFunc(element);
                 var content = blobContentFunc(element);
                 var color = getColorFunc(element);
 

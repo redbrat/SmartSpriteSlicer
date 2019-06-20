@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,11 +37,7 @@ namespace Vis.SmartSpriteSlicer
             }
             else
             {
-                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _selectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, _blobStyle, _selectedBlobStyle);
-                if (reorderableListResult.clicked.Id != 0)
-                {
-
-                }
+                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _selectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, getBlobStyle, getSelectedBlobStyle);
                 _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
                 if (reorderableListResult.reordered)
                 {
@@ -53,6 +50,27 @@ namespace Vis.SmartSpriteSlicer
                     onGroupClick(reorderableListResult.clicked);
             }
             EditorGUILayout.EndVertical();
+        }
+
+        private GUIStyle getSelectedBlobStyle(SpriteGroup group) => formatStyle(_selectedBlobStyle, group);
+        private GUIStyle getBlobStyle(SpriteGroup group) => formatStyle(_blobStyle, group);
+        private GUIStyle formatStyle(GUIStyle style, SpriteGroup group)
+        {
+            switch (group.Flavor)
+            {
+                case SpriteGroupFlavor.Group:
+                    style.normal.textColor = _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().TextColor;
+                    break;
+                case SpriteGroupFlavor.EndOfLine:
+                    style.normal.textColor = Color.black;
+                    break;
+                case SpriteGroupFlavor.EmptySpace:
+                    style.normal.textColor = Color.white * 0.25f;
+                    break;
+                default:
+                    break;
+            }
+            return style;
         }
 
         private void onGroupClick(SpriteGroup group)

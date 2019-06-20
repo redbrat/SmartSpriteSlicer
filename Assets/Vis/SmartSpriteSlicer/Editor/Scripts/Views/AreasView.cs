@@ -63,10 +63,14 @@ namespace Vis.SmartSpriteSlicer
                 else
                     _model.PreviewedAreaControlId = controlId;
             }
-            if (_model.PreviewedAreaControlId == null)
-                _model.PreviewedArea = null;
-            else
-                _model.PreviewedArea = rect;
+            
+            if (_model.PreviewedAreaControlId == controlId)
+            {
+                if (_model.PreviewedAreaControlId == null)
+                    _model.PreviewedArea = null;
+                else
+                    _model.PreviewedArea = rect;
+            }
 
             switch (group.Direction)
             {

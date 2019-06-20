@@ -17,6 +17,9 @@ namespace Vis.SmartSpriteSlicer
         private Color _color;
         public Color Color => _color;
         [SerializeField]
+        private Color _textColor;
+        public Color TextColor => _textColor;
+        [SerializeField]
         private Vector2Int _size;
         public Vector2Int Size => _size;
 
@@ -32,6 +35,7 @@ namespace Vis.SmartSpriteSlicer
             _id = id;
             _size = size;
             _color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            _textColor = Color.white;
             _name = string.Empty;
         }
 
@@ -42,16 +46,18 @@ namespace Vis.SmartSpriteSlicer
         /// <param name="size"></param>
         /// <param name="color"></param>
         /// <param name="name"></param>
-        public SpriteChunk(int id, Vector2Int size, Color color, string name)
+        public SpriteChunk(int id, Vector2Int size, Color color, Color textColor, string name)
         {
             _id = id;
             _name = name;
             _size = size;
             _color = color;
+            _textColor = textColor;
         }
 
-        public SpriteChunk SetSize(Vector2Int newSize) => new SpriteChunk(_id, newSize, _color, _name);
-        public SpriteChunk SetColor(Color newColor) => new SpriteChunk(_id, _size, newColor, _name);
-        public SpriteChunk SetName(string newName) => new SpriteChunk(_id, _size, _color, newName);
+        public SpriteChunk SetSize(Vector2Int newSize) => new SpriteChunk(_id, newSize, _color, _textColor, _name);
+        public SpriteChunk SetColor(Color newColor) => new SpriteChunk(_id, _size, newColor, _textColor, _name);
+        public SpriteChunk SetTextColor(Color newColor) => new SpriteChunk(_id, _size, _color, newColor, _name);
+        public SpriteChunk SetName(string newName) => new SpriteChunk(_id, _size, _color, _textColor, newName);
     }
 }

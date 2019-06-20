@@ -61,6 +61,7 @@ namespace Vis.SmartSpriteSlicer
                         var originalColor = GUI.backgroundColor;
                         GUI.backgroundColor = chunk.Color;
                         GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
+                        _chunkButtonStyle.normal.textColor = chunk.TextColor;
                         var draggableButtonResult = DragableButton.Draw(new GUIContent(chunk.GetHumanFriendlyName()), _chunkButtonStyle, true, GUILayout.MinWidth(80f));
                         switch (draggableButtonResult)
                         {
@@ -130,6 +131,13 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk color changed");
                     chunks[targetChunkIndex] = chunk.SetColor(newColor);
+                }
+
+                var newTextColor = EditorGUILayout.ColorField(new GUIContent("Text Color:"), chunk.TextColor);
+                if (newTextColor != chunk.TextColor)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Chunk's text color changed");
+                    chunks[targetChunkIndex] = chunk.SetTextColor(newTextColor);
                 }
 
                 if (GUILayout.Button(new GUIContent($"Delete", "Remove chunk and all groups containing it")))
