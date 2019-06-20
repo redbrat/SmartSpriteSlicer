@@ -55,14 +55,18 @@ namespace Vis.SmartSpriteSlicer
             var rect = new Rect(topLeft.x, topRight.y, chunk.Size.x, chunk.Size.y);
             var controlId = GUIUtility.GetControlID(FocusType.Passive);
 
-            var binaryButtonResult = BinaryButton.Draw(GUIContent.none, rect, outlineColor, faceColor0, faceColor1, _model.PreviewedArea == rect);
+            var binaryButtonResult = BinaryButton.Draw(GUIContent.none, rect, outlineColor, faceColor0, faceColor1, _model.PreviewedAreaControlId == controlId);
             if (binaryButtonResult.clicked)
             {
-                if (_model.PreviewedArea == rect)
-                    _model.PreviewedArea = null;
+                if (_model.PreviewedAreaControlId == controlId)
+                    _model.PreviewedAreaControlId = null;
                 else
-                    _model.PreviewedArea = rect;
+                    _model.PreviewedAreaControlId = controlId;
             }
+            if (_model.PreviewedAreaControlId == null)
+                _model.PreviewedArea = null;
+            else
+                _model.PreviewedArea = rect;
 
             switch (group.Direction)
             {

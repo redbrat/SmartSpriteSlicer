@@ -48,6 +48,7 @@ namespace Vis.SmartSpriteSlicer
         public TextureImporter Importer;
 
         private MainView _view;
+        internal int? PreviewedAreaControlId;
         internal Rect? PreviewedArea;
         internal Rect TextureRect;
         internal Texture2D PreviewBackground;

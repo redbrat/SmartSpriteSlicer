@@ -14,5 +14,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LayoutDirection: 0
   LayoutAnchor: 0
-  Chunks: []
-  ChunkGroups: []
+  Chunks:
+  - _name: 
+    _id: 1
+    _color: {r: 0.7690984, g: 0.053441525, b: 0.7490103, a: 1}
+    _size: {x: 32, y: 64}
+  - _name: 
+    _id: 2
+    _color: {r: 0.7314149, g: 0.301418, b: 0.15259612, a: 1}
+    _size: {x: 40, y: 64}
+  ChunkGroups:
+  - _id: 1
+    _flavor: 0
+    _chunkId: 1
+    _times: 2
+    _offset: {x: 4, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 4
+      m_Right: 4
+      m_Top: 0
+      m_Bottom: 0
+  - _id: 2
+    _flavor: 0
+    _chunkId: 2
+    _times: 5
+    _offset: {x: 10, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
