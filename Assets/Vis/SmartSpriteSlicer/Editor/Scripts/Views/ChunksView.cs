@@ -145,7 +145,8 @@ namespace Vis.SmartSpriteSlicer
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
-                if (GUILayout.Button(new GUIContent($"Delete", "Remove chunk and all groups containing it")))
+                if (GUILayout.Button(new GUIContent($"Delete", "Remove chunk and all groups containing it")) &&
+                    (!_model.SlicingSettings.ChunkGroups.Where(g => g.ChunkId == chunks[targetChunkIndex].Id).Any() || EditorUtility.DisplayDialog("Warning!", "This action will delete all groups containing that chunk. Are you sure you want to delete it?", "Yes", "No")))
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk deleted");
                     var deletedChunk = chunks[targetChunkIndex];
