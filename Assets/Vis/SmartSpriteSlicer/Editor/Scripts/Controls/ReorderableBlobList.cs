@@ -17,15 +17,17 @@ namespace Vis.SmartSpriteSlicer
             var state = (ReorderableBlobListState<T>)GUIUtility.GetStateObject(typeof(ReorderableBlobListState<T>), controlId);
 
             var renderedList = state.IsDragging ? state.TempList : list;
-            //Debug.Log($"state.IsDragging = {state.IsDragging}");
-            //Debug.Log($"result.selected = {result.selected}");
 
             var blobIndex = 0;
             var currentLine = new BlobLine();
             while (blobIndex < renderedList.Count)
             {
                 var element = renderedList[blobIndex++];
-                var style = result.selected == blobIndex - 1 ? getSelectedStyleFunc(element) : getStyleFunc(element);
+                var style = default(GUIStyle);
+                //if (state.IsDragging)
+                //    style = state.CachedStyleList[blobIndex - 1];
+                //else
+                    style = (state.IsDragging ? state.CachedSelectedList[blobIndex - 1] : result.selected == blobIndex - 1) ? getSelectedStyleFunc(element) : getStyleFunc(element);
                 var content = blobContentFunc(element);
                 var color = getColorFunc(element);
 
@@ -68,9 +70,17 @@ namespace Vis.SmartSpriteSlicer
                                 state.Color = color;
                                 state.Position = position;
 
+                                //state.CachedStyleList = new List<GUIStyle>();
+                                state.CachedSelectedList = new List<bool>();
                                 state.TempList = new List<T>();
                                 for (int i = 0; i < list.Count; i++)
-                                    state.TempList.Add(list[i]);
+                                {
+                                    var tempElement = list[i];
+                                    var tempStyle = result.selected == i ? getSelectedStyleFunc(tempElement) : getStyleFunc(tempElement);
+                                    state.TempList.Add(tempElement);
+                                    //state.CachedStyleList.Add(new GUIStyle(tempStyle));
+                                    state.CachedSelectedList.Add(result.selected == i);
+                                }
                             }
                             break;
                         case EventType.MouseLeaveWindow:
@@ -86,7 +96,8 @@ namespace Vis.SmartSpriteSlicer
                                 else if (state.IsDragging)
                                 {
                                     result.clicked = state.TempList[state.DraggedIndex];
-                                    result.selected = state.DraggedIndex;
+                                    //result.selected = state.DraggedIndex;
+                                    result.selected = state.CachedSelectedList.IndexOf(true);
                                 }
 
                                 if (state.IsDragging)
@@ -108,10 +119,15 @@ namespace Vis.SmartSpriteSlicer
                         {
                             if (state.DraggedIndex != blobIndex - 1)
                             {
+                                var draggedSelected = state.CachedSelectedList[state.DraggedIndex];
+                                state.CachedSelectedList.RemoveAt(state.DraggedIndex);
+
                                 var draggedEntry = renderedList[state.DraggedIndex];
                                 renderedList.RemoveAt(state.DraggedIndex);
                                 state.DraggedIndex = blobIndex - 1;
                                 renderedList.Insert(state.DraggedIndex, draggedEntry);
+
+                                state.CachedSelectedList.Insert(state.DraggedIndex, draggedSelected);
                             }
                         }
                         if (GUIUtility.hotControl == blobControlId)

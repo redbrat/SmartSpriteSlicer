@@ -14,6 +14,8 @@ namespace Vis.SmartSpriteSlicer
         internal Rect Position;
         internal List<T> TempList;
         internal int DraggedIndex;
+        //internal List<GUIStyle> CachedStyleList;
+        internal List<bool> CachedSelectedList;
 
         internal void Purge()
         {
@@ -25,6 +27,8 @@ namespace Vis.SmartSpriteSlicer
             Position = default;
             TempList = default;
             DraggedIndex = default;
+            //CachedStyleList = default;
+            CachedSelectedList = default;
         }
     }
 }
