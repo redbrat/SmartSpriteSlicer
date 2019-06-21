@@ -37,7 +37,7 @@ namespace Vis.SmartSpriteSlicer
             }
             else
             {
-                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _selectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, group => getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First()), group => _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color, getBlobStyle, getSelectedBlobStyle);
+                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _selectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
                 _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
                 if (reorderableListResult.reordered)
                 {
@@ -50,6 +50,33 @@ namespace Vis.SmartSpriteSlicer
                     onGroupClick(reorderableListResult.clicked);
             }
             EditorGUILayout.EndVertical();
+        }
+
+        private Color getBlobColor(SpriteGroup group)
+        {
+            switch (group.Flavor)
+            {
+                case SpriteGroupFlavor.Group:
+                    return _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First().Color;
+                case SpriteGroupFlavor.EndOfLine:
+                case SpriteGroupFlavor.EmptySpace:
+                default:
+                    return Color.white * 0.95f;
+            }
+        }
+
+        private GUIContent getBlobContent(SpriteGroup group)
+        {
+            switch (group.Flavor)
+            {
+                case SpriteGroupFlavor.Group:
+                    return getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First());
+                case SpriteGroupFlavor.EndOfLine:
+                    return new GUIContent($"<color=#000000><i>End of line</i></color>");
+                case SpriteGroupFlavor.EmptySpace:
+                default:
+                    return new GUIContent($"<color=#000000><i>Empty space</i></color>");
+            }
         }
 
         private GUIStyle getSelectedBlobStyle(SpriteGroup group) => formatStyle(_selectedBlobStyle, group);

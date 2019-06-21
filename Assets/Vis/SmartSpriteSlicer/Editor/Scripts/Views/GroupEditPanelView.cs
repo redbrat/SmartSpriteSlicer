@@ -44,30 +44,50 @@ namespace Vis.SmartSpriteSlicer
             //    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetFlavor(newFlavor);
             //    EditorUtility.SetDirty(_model.SlicingSettings);
             //}
-            var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Direction:"), group.Direction);
-            if (newDirection != group.Direction)
+            if (group.Flavor == SpriteGroupFlavor.Group)
             {
-                Undo.RecordObject(_model.SlicingSettings, "Group direction changed");
-                _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetDirection(newDirection);
-                EditorUtility.SetDirty(_model.SlicingSettings);
+                var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Direction:"), group.Direction);
+                if (newDirection != group.Direction)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Group direction changed");
+                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetDirection(newDirection);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
             }
-            var newOffset = EditorGUILayout.Vector2IntField(new GUIContent($"Offset:"), group.Offset);
+
+            var offsetAlias = "Offset";
+            if (group.Flavor == SpriteGroupFlavor.EmptySpace)
+                offsetAlias = "Size";
+            else if (group.Flavor == SpriteGroupFlavor.EndOfLine)
+                offsetAlias = "Additional Offset";
+
+            var newOffset = EditorGUILayout.Vector2IntField(new GUIContent($"{offsetAlias}:"), group.Offset);
             if (newOffset != group.Offset)
             {
                 Undo.RecordObject(_model.SlicingSettings, "Group offset changed");
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetOffset(newOffset);
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
-            var newIndividualMargin = RectOffsetDrawer.Draw(new GUIContent($"Individual Margin:"), group.IndividualMargin);
-            if (newIndividualMargin != group.IndividualMargin)
+            
+            if (group.Flavor == SpriteGroupFlavor.Group)
             {
-                Undo.RecordObject(_model.SlicingSettings, "Group individual margin changed");
-                _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetIndividualMargin(newIndividualMargin);
-                EditorUtility.SetDirty(_model.SlicingSettings);
+                var newIndividualMargin = RectOffsetDrawer.Draw(new GUIContent($"Individual Margin:"), group.IndividualMargin);
+                if (newIndividualMargin != group.IndividualMargin)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Group individual margin changed");
+                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetIndividualMargin(newIndividualMargin);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
             }
-            if (GUILayout.Button(new GUIContent($"Delete group")))
+
+            var friendlyName = "group";
+            if (group.Flavor == SpriteGroupFlavor.EndOfLine)
+                friendlyName = "end of line";
+            else if (group.Flavor == SpriteGroupFlavor.EmptySpace)
+                friendlyName = "empty space";
+            if (GUILayout.Button(new GUIContent($"Delete {friendlyName}")))
             {
-                Undo.RecordObject(_model.SlicingSettings, "Group deleted");
+                Undo.RecordObject(_model.SlicingSettings, $"{friendlyName} deleted");
                 _model.SlicingSettings.ChunkGroups.RemoveAt(groupIndex);
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }

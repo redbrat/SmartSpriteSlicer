@@ -45,7 +45,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     if (currentButtonIndex == buttonsCount - 1)
                     {
-                        if (DragableButton.Draw(new GUIContent("+", "Create new chunk"), _chunkButtonStyle, false, GUILayout.Width(34f)) == DraggableButtonResult.Clicked)
+                        if (DragableButton.Draw(new GUIContent("<color=#000000>+</color>", "Create new chunk"), _chunkButtonStyle, false, GUILayout.Width(34f)) == DraggableButtonResult.Clicked)
                         {
                             var defaultSize = Vector2Int.one * 64;
                             if (chunks.Count > 0)

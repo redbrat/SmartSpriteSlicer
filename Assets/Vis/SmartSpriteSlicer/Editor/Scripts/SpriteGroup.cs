@@ -67,6 +67,20 @@ namespace Vis.SmartSpriteSlicer
         }
 
         /// <summary>
+        /// Default ctor fot non-chunks groups
+        /// </summary>
+        public SpriteGroup(int id, SpriteGroupFlavor flavor, Vector2Int offset = default)
+        {
+            _id = id;
+            _chunkId = 0;
+            _flavor = flavor;
+            _times = 1;
+            _offset = offset;
+            _direction = default;
+            _individualMargin = new RectOffset();
+        }
+
+        /// <summary>
         /// Ctor with full set of features
         /// </summary>
         public SpriteGroup(int id, int chunkId, SpriteGroupFlavor flavor, int times, Vector2Int offset, LayoutDirection direction, RectOffset individualMargin)

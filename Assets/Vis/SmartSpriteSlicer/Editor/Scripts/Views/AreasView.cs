@@ -21,30 +21,30 @@ namespace Vis.SmartSpriteSlicer
             var offset = getGlobalAnchorPoint(globalAnchor, position);
             offset.x += formatX(_model.SlicingSettings.Offset.x, globalAnchor);
             offset.y += formatY(_model.SlicingSettings.Offset.y, globalAnchor);
-            Debug.Log($"offset = {offset}");
+            var initialX = offset.x;
+            var initialY = offset.y;
             var groups = _model.SlicingSettings.ChunkGroups;
             for (int i = 0; i < groups.Count; i++)
             {
                 var group = groups[i];
-                offset.x += formatX(group.Offset.x, globalAnchor);
-                offset.y += formatY(group.Offset.y, globalAnchor);
-                //switch (group.Direction)
-                //{
-                //    case LayoutDirection.Horizontal:
-                //        offset.x += formatX(group.Offset.x, globalAnchor);
-                //        break;
-                //    case LayoutDirection.Vertical:
-                //        offset.y += formatY(group.Offset.y, globalAnchor);
-                //        break;
-                //}
-                for (int j = 0; j < group.Times; j++)
+
+                switch (group.Flavor)
                 {
-                    switch (group.Flavor)
-                    {
-                        case SpriteGroupFlavor.Group:
+                    case SpriteGroupFlavor.Group:
+                        for (int t = 0; t < group.Times; t++)
+                        {
+                            offset.x += formatX(group.Offset.x, globalAnchor);
+                            offset.y += formatY(group.Offset.y, globalAnchor);
                             offset = drawGroupArea(offset, group, globalAnchor);
-                            break;
-                    }
+                        }
+                        break;
+                    case SpriteGroupFlavor.EndOfLine:
+                        for (int t = 0; t < group.Times; t++)
+                        {
+                            offset.y += formatY(group.Offset.y, globalAnchor);
+                            offset.x = initialX + formatX(group.Offset.x, globalAnchor);
+                        }
+                        break;
                 }
             }
         }
