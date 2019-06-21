@@ -12,10 +12,6 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUI(position);
 
             var rect = new Rect(Vector2.zero, position.size);
-            //Handles.BeginGUI();
-            //var ctrlId = GUIUtility.GetControlID(FocusType.Passive);
-            //Handles.DrawSolidRectangleWithOutline(rect, Color.red * 0.3f, Color.black);
-            //Handles.EndGUI();
 
             if (Event.current.type == EventType.MouseUp && rect.Contains(Event.current.mousePosition))
             {
@@ -24,6 +20,30 @@ namespace Vis.SmartSpriteSlicer
                 GUI.changed = true;
                 Event.current.Use();
             }
+
+            if (AreasView.PreviewedIndex.HasValue && Event.current.type == EventType.KeyDown &&
+                (Event.current.keyCode == KeyCode.LeftArrow || Event.current.keyCode == KeyCode.RightArrow))
+            {
+                if (Event.current.keyCode == KeyCode.LeftArrow)
+                {
+                    AreasView.PreviewedIndex = AreasView.PreviewedIndex.Value - 1;
+                    if (AreasView.PreviewedIndex.Value < 0)
+                        AreasView.PreviewedIndex = AreasView.IterableCtrlIds.Count - 1;
+                }
+                else
+                {
+                    AreasView.PreviewedIndex = AreasView.PreviewedIndex.Value + 1;
+                    if (AreasView.PreviewedIndex.Value >= AreasView.IterableCtrlIds.Count)
+                        AreasView.PreviewedIndex = 0;
+                }
+
+                _model.PreviewedAreaControlId = AreasView.IterableCtrlIds[AreasView.PreviewedIndex.Value];
+                _model.PreviewedArea = AreasView.IterableAreas[AreasView.PreviewedIndex.Value];
+
+                Event.current.Use();
+            }
+            AreasView.IterableCtrlIds.Clear();
+            AreasView.IterableAreas.Clear();
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using UnityEditor;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
@@ -7,6 +7,10 @@ namespace Vis.SmartSpriteSlicer
     internal class AreasView : ViewBase
     {
         public AreasView(SmartSpriteSlicerWindow model) : base(model) { }
+
+        public static List<int> IterableCtrlIds = new List<int>();
+        public static List<Rect> IterableAreas = new List<Rect>();
+        public static int? PreviewedIndex;
 
         public override void OnGUI(Rect position)
         {
@@ -43,7 +47,7 @@ namespace Vis.SmartSpriteSlicer
             var chunk = _model.SlicingSettings.Chunks.Where(ch => ch.Id == group.ChunkId).First();
 
             var topLeft = new Vector3(offset.x + group.IndividualMargin.left, offset.y + group.IndividualMargin.top);
-            var topRight = new Vector3(topLeft.x + chunk.Size.x, topLeft.y); 
+            var topRight = new Vector3(topLeft.x + chunk.Size.x, topLeft.y);
             var bottomLeft = new Vector3(topLeft.x, topLeft.y + chunk.Size.y);
             var bottomRight = new Vector3(topRight.x, bottomLeft.y);
 
@@ -54,6 +58,8 @@ namespace Vis.SmartSpriteSlicer
             faceColor0.a = 0.025f;
             var rect = new Rect(topLeft.x, topRight.y, chunk.Size.x, chunk.Size.y);
             var controlId = GUIUtility.GetControlID(FocusType.Passive);
+            IterableCtrlIds.Add(controlId);
+            IterableAreas.Add(rect);
 
             var binaryButtonResult = BinaryButton.Draw(GUIContent.none, rect, outlineColor, faceColor0, faceColor1, _model.PreviewedAreaControlId == controlId);
             if (binaryButtonResult.clicked)
@@ -62,17 +68,24 @@ namespace Vis.SmartSpriteSlicer
                 {
                     _model.PreviewedAreaControlId = null;
                     _model.PreviewedArea = null;
+                    PreviewedIndex = null;
                 }
                 else
                     _model.PreviewedAreaControlId = controlId;
             }
-            
+
             if (_model.PreviewedAreaControlId == controlId)
             {
                 if (_model.PreviewedAreaControlId == null)
+                {
                     _model.PreviewedArea = null;
+                    PreviewedIndex = null;
+                }
                 else
+                {
                     _model.PreviewedArea = rect;
+                    PreviewedIndex = IterableCtrlIds.Count - 1;
+                }
             }
 
             switch (group.Direction)
