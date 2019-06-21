@@ -13,39 +13,54 @@ MonoBehaviour:
   m_Name: SlicingSettings
   m_EditorClassIdentifier: 
   Offset: {x: 0, y: 0}
-  LayoutDirection: 0
-  LayoutAnchor: 0
+  LayoutAnchor: 3
   Chunks:
   - _name: 
     _id: 1
-    _color: {r: 0.7690984, g: 0.053441525, b: 0.7490103, a: 1}
+    _color: {r: 0.9221561, g: 0.83679605, b: 0.5657658, a: 1}
     _textColor: {r: 1, g: 1, b: 1, a: 1}
-    _size: {x: 32, y: 64}
-  - _name: <b>ASDJiosadjoiasjdi</b>
+    _size: {x: 64, y: 64}
+  - _name: 
+    _id: 2
+    _color: {r: 0.60970086, g: 0.9962263, b: 0.17663121, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _size: {x: 64, y: 64}
+  - _name: 
     _id: 3
-    _color: {r: 0.98178107, g: 1, b: 0.6509804, a: 1}
-    _textColor: {r: 0, g: 0, b: 0, a: 1}
-    _size: {x: 120, y: 64}
+    _color: {r: 0.3903045, g: 0.19993794, b: 0.91735065, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _size: {x: 64, y: 64}
   ChunkGroups:
-  - _id: 3
+  - _id: 1
     _flavor: 0
-    _chunkId: 3
-    _times: 2
-    _offset: {x: 10, y: 10}
+    _chunkId: 1
+    _times: 1
+    _offset: {x: 0, y: 0}
     _direction: 0
     _individualMargin:
       m_Left: 0
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
-  - _id: 1
+  - _id: 2
     _flavor: 0
-    _chunkId: 1
-    _times: 2
-    _offset: {x: 48, y: -15}
-    _direction: 1
+    _chunkId: 2
+    _times: 1
+    _offset: {x: 0, y: 0}
+    _direction: 0
     _individualMargin:
-      m_Left: 4
-      m_Right: 4
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+  - _id: 3
+    _flavor: 0
+    _chunkId: 3
+    _times: 1
+    _offset: {x: 0, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
       m_Top: 0
       m_Bottom: 0

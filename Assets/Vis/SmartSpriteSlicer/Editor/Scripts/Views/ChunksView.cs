@@ -50,7 +50,7 @@ namespace Vis.SmartSpriteSlicer
                             var defaultSize = Vector2Int.one * 64;
                             if (chunks.Count > 0)
                                 defaultSize = chunks[chunks.Count - 1].Size;
-                            chunks.Add(new SpriteChunk(chunks.Count + 1, defaultSize));
+                            chunks.Add(new SpriteChunk(_model.SlicingSettings.Chunks.Count == 0 ? 1 : _model.SlicingSettings.Chunks.OrderByDescending(c => c.Id).First().Id + 1, defaultSize));
                         }
                         currentButtonIndex++;
                         i = _maxButtonsPerRow;

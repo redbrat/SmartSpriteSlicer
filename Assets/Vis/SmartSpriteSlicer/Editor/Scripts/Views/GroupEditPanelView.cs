@@ -37,13 +37,13 @@ namespace Vis.SmartSpriteSlicer
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetTimes(newTimes);
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
-            var newFlavor = (SpriteGroupFlavor)EditorGUILayout.EnumPopup(new GUIContent($"Group type:"), group.Flavor);
-            if (newFlavor != group.Flavor)
-            {
-                Undo.RecordObject(_model.SlicingSettings, "Group type changed");
-                _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetFlavor(newFlavor);
-                EditorUtility.SetDirty(_model.SlicingSettings);
-            }
+            //var newFlavor = (SpriteGroupFlavor)EditorGUILayout.EnumPopup(new GUIContent($"Group type:"), group.Flavor);
+            //if (newFlavor != group.Flavor)
+            //{
+            //    Undo.RecordObject(_model.SlicingSettings, "Group type changed");
+            //    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetFlavor(newFlavor);
+            //    EditorUtility.SetDirty(_model.SlicingSettings);
+            //}
             var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Direction:"), group.Direction);
             if (newDirection != group.Direction)
             {
