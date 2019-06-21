@@ -8,6 +8,7 @@ namespace Vis.SmartSpriteSlicer
         private readonly TextureView _image;
         private readonly ControlPanelView _controlPanel;
         private readonly PreviewSpriteView _previewSpriteView;
+        private readonly ForegroundView _foreground;
 
         public MainView(SmartSpriteSlicerWindow model) : base(model)
         {
@@ -15,6 +16,7 @@ namespace Vis.SmartSpriteSlicer
             _image = new TextureView(model);
             _controlPanel = new ControlPanelView(model);
             _previewSpriteView = new PreviewSpriteView(model);
+            _foreground = new ForegroundView(model);
         }
         
         public override void OnGUI(Rect position)
@@ -48,6 +50,8 @@ namespace Vis.SmartSpriteSlicer
             _controlPanel.OnGUI(position);
             _previewSpriteView.OnGUI(position);
             _model.EndWindows();
+
+            _foreground.OnGUI(position);
         }
     }
 }

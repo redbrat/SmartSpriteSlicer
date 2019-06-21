@@ -17,6 +17,10 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUI(position);
 
+            //var use = false;
+            //if (Event.current.type == EventType.MouseUp && _model.PreviewWindowRect.Contains(Event.current.mousePosition))
+            //    use = true;
+
             if (_model.PreviewedArea == null)
                 return;
 
@@ -29,8 +33,20 @@ namespace Vis.SmartSpriteSlicer
                 _model.PreviewWindowRect.y = 0;
             if (_model.PreviewWindowRect.width != SmartSpriteSlicerWindow.MaxPreviewWindowRect)
                 _model.PreviewWindowRect.width = SmartSpriteSlicerWindow.MaxPreviewWindowRect;
+            var yMax = _model.PreviewWindowRect.height;
             _model.PreviewWindowRect.height = 0;
             //_model.EndWindows();
+
+            var windowRect = _model.PreviewWindowRect;
+            windowRect.yMax = yMax;
+            if (Event.current.type == EventType.MouseUp && windowRect.Contains(Event.current.mousePosition))
+                Event.current.Use();
+
+            //if (use)
+            //{
+            //    Event.current.Use();
+            //    Debug.Log($"USED!!!");
+            //}
         }
     }
 }

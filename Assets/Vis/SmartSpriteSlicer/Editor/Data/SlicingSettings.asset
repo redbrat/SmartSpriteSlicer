@@ -18,10 +18,12 @@ MonoBehaviour:
   - _name: 
     _id: 1
     _color: {r: 0.7690984, g: 0.053441525, b: 0.7490103, a: 1}
+    _textColor: {r: 0, g: 0, b: 0, a: 0}
     _size: {x: 32, y: 64}
   - _name: 
     _id: 2
     _color: {r: 0.7314149, g: 0.301418, b: 0.15259612, a: 1}
+    _textColor: {r: 0, g: 0, b: 0, a: 1}
     _size: {x: 40, y: 64}
   ChunkGroups:
   - _id: 1

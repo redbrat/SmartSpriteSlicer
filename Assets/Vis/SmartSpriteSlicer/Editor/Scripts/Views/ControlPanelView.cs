@@ -25,8 +25,13 @@ namespace Vis.SmartSpriteSlicer
                 _model.ControlPanelRect.y = 0;
             if (_model.ControlPanelRect.width != SmartSpriteSlicerWindow.MaxContolPanelWidth)
                 _model.ControlPanelRect.width = SmartSpriteSlicerWindow.MaxContolPanelWidth;
+            var yMax = _model.ControlPanelRect.yMax;
             _model.ControlPanelRect.height = 0;
-            //_model.EndWindows();
+
+            var windowRect = _model.ControlPanelRect;
+            windowRect.yMax = yMax;
+            if (Event.current.type == EventType.MouseUp && windowRect.Contains(Event.current.mousePosition))
+                Event.current.Use();
         }
     }
 }

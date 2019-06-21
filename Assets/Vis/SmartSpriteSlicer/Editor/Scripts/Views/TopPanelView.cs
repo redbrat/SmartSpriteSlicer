@@ -35,6 +35,7 @@ namespace Vis.SmartSpriteSlicer
                             Selection.activeObject = null; //There's an issue when preset we're saving into is opened in inspector: saving wouldn't work, inspector somehow overrides it's values with it's own. So we just close inspector in that case in order to be able to save.
                         Undo.RecordObject(_model.SlicingSettingsPreset, "Preset values updated");
                         _model.SlicingSettingsPreset.UpdateProperties(_model.SlicingSettings);
+                        EditorUtility.SetDirty(_model.SlicingSettingsPreset);
                     }
                     if (GUILayout.Button(new GUIContent($"Reset", "Apply preset values")))
                     {

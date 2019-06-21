@@ -59,7 +59,10 @@ namespace Vis.SmartSpriteSlicer
             if (binaryButtonResult.clicked)
             {
                 if (_model.PreviewedAreaControlId == controlId)
+                {
                     _model.PreviewedAreaControlId = null;
+                    _model.PreviewedArea = null;
+                }
                 else
                     _model.PreviewedAreaControlId = controlId;
             }

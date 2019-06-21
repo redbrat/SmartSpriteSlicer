@@ -106,6 +106,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk width changed");
                     chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(newWidth, chunk.Size.y));
+                    EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.BeginHorizontal();
@@ -116,6 +117,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk height changed");
                     chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(chunk.Size.x, newHeight));
+                    EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 EditorGUILayout.EndHorizontal();
 
@@ -124,6 +126,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk name changed");
                     chunks[targetChunkIndex] = chunk.SetName(newName);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
                 var newColor = EditorGUILayout.ColorField(new GUIContent("Color:"), chunk.Color);
@@ -131,6 +134,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk color changed");
                     chunks[targetChunkIndex] = chunk.SetColor(newColor);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
                 var newTextColor = EditorGUILayout.ColorField(new GUIContent("Text Color:"), chunk.TextColor);
@@ -138,11 +142,21 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk's text color changed");
                     chunks[targetChunkIndex] = chunk.SetTextColor(newTextColor);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
                 if (GUILayout.Button(new GUIContent($"Delete", "Remove chunk and all groups containing it")))
                 {
+                    Undo.RecordObject(_model.SlicingSettings, "Chunk deleted");
+                    var deletedChunk = chunks[targetChunkIndex];
+                    for (int i = 0; i < _model.SlicingSettings.ChunkGroups.Count; i++)
+                    {
+                        var group = _model.SlicingSettings.ChunkGroups[i];
+                        if (group.ChunkId == deletedChunk.Id)
+                            _model.SlicingSettings.ChunkGroups.RemoveAt(i--);
+                    }
                     chunks.RemoveAt(targetChunkIndex);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 EditorGUILayout.EndVertical();
             }
