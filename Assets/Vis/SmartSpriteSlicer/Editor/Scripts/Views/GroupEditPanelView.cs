@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
@@ -37,13 +36,6 @@ namespace Vis.SmartSpriteSlicer
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetTimes(newTimes);
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
-            //var newFlavor = (SpriteGroupFlavor)EditorGUILayout.EnumPopup(new GUIContent($"Group type:"), group.Flavor);
-            //if (newFlavor != group.Flavor)
-            //{
-            //    Undo.RecordObject(_model.SlicingSettings, "Group type changed");
-            //    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetFlavor(newFlavor);
-            //    EditorUtility.SetDirty(_model.SlicingSettings);
-            //}
             if (group.Flavor == SpriteGroupFlavor.Group)
             {
                 var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Direction:"), group.Direction);
@@ -68,7 +60,7 @@ namespace Vis.SmartSpriteSlicer
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetOffset(newOffset);
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
-            
+
             if (group.Flavor == SpriteGroupFlavor.Group)
             {
                 var newIndividualMargin = RectOffsetDrawer.Draw(new GUIContent($"Individual Margin:"), group.IndividualMargin);

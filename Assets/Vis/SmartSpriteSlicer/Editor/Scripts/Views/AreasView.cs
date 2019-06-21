@@ -45,6 +45,13 @@ namespace Vis.SmartSpriteSlicer
                             offset.x = initialX + formatX(group.Offset.x, globalAnchor);
                         }
                         break;
+                    case SpriteGroupFlavor.EmptySpace:
+                        for (int t = 0; t < group.Times; t++)
+                        {
+                            offset.y += formatY(group.Offset.y, globalAnchor);
+                            offset.x += formatX(group.Offset.x, globalAnchor);
+                        }
+                        break;
                 }
             }
         }
