@@ -5,14 +5,16 @@ namespace Vis.SmartSpriteSlicer
 {
     internal class ControlPanelWindow : LayoutViewBase
     {
-        private LayoutViewBase _topPanelView;
-        private LayoutViewBase _chunksView;
-        private LayoutViewBase _groupsView;
-        private ViewBase _draggableButtonsView;
+        private readonly LayoutViewBase _topPanelView;
+        private readonly LayoutViewBase _chunksView;
+        private readonly LayoutViewBase _globalSettingsView;
+        private readonly LayoutViewBase _groupsView;
+        private readonly ViewBase _draggableButtonsView;
 
         public ControlPanelWindow(SmartSpriteSlicerWindow model) : base(model)
         {
             _chunksView = new ChunksView(model);
+            _globalSettingsView = new GlobalSettingsView(model);
             _groupsView = new GroupsView(model);
             _topPanelView = new TopPanelView(model);
             _draggableButtonsView = new DraggableButtonView(model);
@@ -29,6 +31,8 @@ namespace Vis.SmartSpriteSlicer
                 _topPanelViewPosition = reserve;
 
             _chunksView.OnGUILayout();
+            EditorGUILayout.Space();
+            _globalSettingsView.OnGUILayout();
             EditorGUILayout.Space();
             _groupsView.OnGUILayout();
 
