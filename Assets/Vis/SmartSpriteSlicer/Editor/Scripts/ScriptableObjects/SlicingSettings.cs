@@ -6,6 +6,9 @@ namespace Vis.SmartSpriteSlicer
 {
     public class SlicingSettings : ScriptableObject
     {
+        public bool UseCustomSpriteName;
+        public string CustomName = "sprite";
+        public string NamePartsSeparator = "-";
         public Vector2Int Offset;
         public LayoutAnchor LayoutAnchor;
         public List<SpriteChunk> Chunks = new List<SpriteChunk>();

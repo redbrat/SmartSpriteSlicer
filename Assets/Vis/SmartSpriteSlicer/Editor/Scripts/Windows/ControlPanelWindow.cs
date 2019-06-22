@@ -26,14 +26,13 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            var reserve = GUILayoutUtility.GetRect(1, 28);
+            var reserve = GUILayoutUtility.GetRect(1, 30);
             if (Event.current.type == EventType.Repaint)
                 _topPanelViewPosition = reserve;
 
             _chunksView.OnGUILayout();
             EditorGUILayout.Space();
             _globalSettingsView.OnGUILayout();
-            EditorGUILayout.Space();
             _groupsView.OnGUILayout();
 
             if (Event.current.type == EventType.Repaint)
