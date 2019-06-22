@@ -42,6 +42,9 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
   - _id: 2
     _flavor: 0
     _chunkId: 2
@@ -53,6 +56,9 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
+    _naming: 1
+    _useCustomName: 1
+    _customName: Group1111
   - _id: 3
     _flavor: 0
     _chunkId: 3
@@ -64,10 +70,13 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
   - _id: 6
     _flavor: 1
     _chunkId: 0
-    _times: 2
+    _times: 1
     _offset: {x: 32, y: 64}
     _direction: 0
     _individualMargin:
@@ -75,9 +84,26 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
   - _id: 5
     _flavor: 0
     _chunkId: 1
+    _times: 2
+    _offset: {x: 0, y: 0}
+    _direction: 1
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+  - _id: 7
+    _flavor: 0
+    _chunkId: 3
     _times: 2
     _offset: {x: 0, y: 0}
     _direction: 0
@@ -86,3 +112,34 @@ MonoBehaviour:
       m_Right: 0
       m_Top: 0
       m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+  - _id: 8
+    _flavor: 2
+    _chunkId: 0
+    _times: 2
+    _offset: {x: 64, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+  - _id: 9
+    _flavor: 0
+    _chunkId: 2
+    _times: 1
+    _offset: {x: 0, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 

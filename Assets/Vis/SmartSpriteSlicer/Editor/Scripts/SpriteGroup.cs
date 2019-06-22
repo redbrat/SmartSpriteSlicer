@@ -38,6 +38,16 @@ namespace Vis.SmartSpriteSlicer
         [SerializeField]
         private RectOffset _individualMargin;
 
+        public bool Naming => _naming;
+        [SerializeField]
+        private bool _naming;
+        public bool UseCustomName => _useCustomName;
+        [SerializeField]
+        private bool _useCustomName;
+        public string CustomName => _customName;
+        [SerializeField]
+        private string _customName;
+
         /// <summary>
         /// Ctor with only nessessary properties
         /// </summary>
@@ -50,6 +60,9 @@ namespace Vis.SmartSpriteSlicer
             _offset = default;
             _direction = default;
             _individualMargin = new RectOffset();
+            _naming = default;
+            _useCustomName = default;
+            _customName = default;
         }
 
         /// <summary>
@@ -64,6 +77,9 @@ namespace Vis.SmartSpriteSlicer
             _offset = default;
             _direction = default;
             _individualMargin = new RectOffset();
+            _naming = default;
+            _useCustomName = default;
+            _customName = default;
         }
 
         /// <summary>
@@ -78,12 +94,15 @@ namespace Vis.SmartSpriteSlicer
             _offset = offset;
             _direction = default;
             _individualMargin = new RectOffset();
+            _naming = default;
+            _useCustomName = default;
+            _customName = default;
         }
 
         /// <summary>
         /// Ctor with full set of features
         /// </summary>
-        public SpriteGroup(int id, int chunkId, SpriteGroupFlavor flavor, int times, Vector2Int offset, LayoutDirection direction, RectOffset individualMargin)
+        public SpriteGroup(int id, int chunkId, SpriteGroupFlavor flavor, int times, Vector2Int offset, LayoutDirection direction, RectOffset individualMargin, bool naming, bool useCustomName, string customName)
         {
             _id = id;
             _chunkId = chunkId;
@@ -92,13 +111,19 @@ namespace Vis.SmartSpriteSlicer
             _offset = offset;
             _direction = direction;
             _individualMargin = individualMargin;
+            _naming = naming;
+            _useCustomName = useCustomName;
+            _customName = customName;
         }
 
-        internal SpriteGroup SetChunk(int chunkId) => new SpriteGroup(_id, chunkId, _flavor, _times, _offset, _direction, _individualMargin);
-        internal SpriteGroup SetTimes(int times) => new SpriteGroup(_id, _chunkId, _flavor, times, _offset, _direction, _individualMargin);
-        internal SpriteGroup SetFlavor(SpriteGroupFlavor flavor) => new SpriteGroup(_id, _chunkId, flavor, _times, _offset, _direction, _individualMargin);
-        internal SpriteGroup SetOffset(Vector2Int offset) => new SpriteGroup(_id, _chunkId, _flavor, _times, offset, _direction, _individualMargin);
-        internal SpriteGroup SetDirection(LayoutDirection direction) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, direction, _individualMargin);
-        internal SpriteGroup SetIndividualMargin(RectOffset individualMargin) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, individualMargin);
+        internal SpriteGroup SetChunk(int chunkId) => new SpriteGroup(_id, chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName);
+        internal SpriteGroup SetTimes(int times) => new SpriteGroup(_id, _chunkId, _flavor, times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName);
+        internal SpriteGroup SetFlavor(SpriteGroupFlavor flavor) => new SpriteGroup(_id, _chunkId, flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName);
+        internal SpriteGroup SetOffset(Vector2Int offset) => new SpriteGroup(_id, _chunkId, _flavor, _times, offset, _direction, _individualMargin, _naming, _useCustomName, _customName);
+        internal SpriteGroup SetDirection(LayoutDirection direction) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, direction, _individualMargin, _naming, _useCustomName, _customName);
+        internal SpriteGroup SetIndividualMargin(RectOffset individualMargin) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, individualMargin, _naming, _useCustomName, _customName);
+        internal SpriteGroup SetNaming(bool naming) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, naming, _useCustomName, _customName);
+        internal SpriteGroup SetUseCustomName(bool useCustomName) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, useCustomName, _customName);
+        internal SpriteGroup SetCustomName(string customName) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, customName);
     }
 }

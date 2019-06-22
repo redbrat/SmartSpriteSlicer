@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
@@ -38,6 +39,35 @@ namespace Vis.SmartSpriteSlicer
             }
             if (group.Flavor == SpriteGroupFlavor.Group)
             {
+                var newNaming = EditorGUILayout.Toggle(new GUIContent($"Modify name", "Modify final sprite name"), group.Naming);
+                if (newNaming != group.Naming)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Group naming setting changed");
+                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetNaming(newNaming);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
+                if (newNaming)
+                {
+                    var newUseCustomName = !EditorGUILayout.Toggle(new GUIContent($"Use chunk name", $"Final sprite name will include chunk name ({_model.SlicingSettings.Chunks.Where(c => c.Id == group.ChunkId).First().GetHumanFriendlyName()})"), !group.UseCustomName);
+                    if (newUseCustomName != group.UseCustomName)
+                    {
+                        Undo.RecordObject(_model.SlicingSettings, "Group naming setting changed");
+                        _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetUseCustomName(newUseCustomName);
+                        EditorUtility.SetDirty(_model.SlicingSettings);
+                    }
+
+                    if (newUseCustomName)
+                    {
+                        var newCustomName = EditorGUILayout.TextField(new GUIContent($"Custom group name", "Final sprite will include this name"), group.CustomName);
+                        if (newCustomName != group.CustomName)
+                        {
+                            Undo.RecordObject(_model.SlicingSettings, "Group naming setting changed");
+                            _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetCustomName(newCustomName);
+                            EditorUtility.SetDirty(_model.SlicingSettings);
+                        }
+                    }
+                }
+
                 var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Direction:"), group.Direction);
                 if (newDirection != group.Direction)
                 {
