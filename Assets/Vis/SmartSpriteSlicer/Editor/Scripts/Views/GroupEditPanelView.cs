@@ -67,23 +67,34 @@ namespace Vis.SmartSpriteSlicer
                         }
                     }
                 }
-                
-                var newPivotPoint = (PivotPoint)EditorGUILayout.EnumPopup(new GUIContent($"Pivot Point"), group.PivotPoint);
-                if (newPivotPoint != group.PivotPoint)
+
+                var newUseGroupPivotPointSettings = !EditorGUILayout.Toggle(new GUIContent($"Use global pivot point:"), !group.UseGroupPivotPointSettings);
+                if (newUseGroupPivotPointSettings != group.UseGroupPivotPointSettings)
                 {
-                    Undo.RecordObject(_model.SlicingSettings, "Group pivot point changed");
-                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetPivotPoint(newPivotPoint);
+                    Undo.RecordObject(_model.SlicingSettings, "Group new use global pivot point settings changed");
+                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetUseGroupPivotPointSettings(newUseGroupPivotPointSettings);
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
-                if (newPivotPoint == PivotPoint.Absolute)
+                if (newUseGroupPivotPointSettings)
                 {
-                    var newAbsolutePivot = EditorGUILayout.Vector2IntField(new GUIContent($"Absolute Pivot:"), group.AbsolutePivot);
-                    if (newAbsolutePivot != group.AbsolutePivot)
+                    var newPivotPoint = (PivotPoint)EditorGUILayout.EnumPopup(new GUIContent($"Pivot Point"), group.PivotPoint);
+                    if (newPivotPoint != group.PivotPoint)
                     {
-                        Undo.RecordObject(_model.SlicingSettings, "Group absolute pivot changed");
-                        _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetAbsolutePivot(newAbsolutePivot);
+                        Undo.RecordObject(_model.SlicingSettings, "Group pivot point changed");
+                        _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetPivotPoint(newPivotPoint);
                         EditorUtility.SetDirty(_model.SlicingSettings);
+                    }
+
+                    if (newPivotPoint == PivotPoint.Absolute)
+                    {
+                        var newAbsolutePivot = EditorGUILayout.Vector2IntField(new GUIContent($"Absolute Pivot:"), group.AbsolutePivot);
+                        if (newAbsolutePivot != group.AbsolutePivot)
+                        {
+                            Undo.RecordObject(_model.SlicingSettings, "Group absolute pivot changed");
+                            _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetAbsolutePivot(newAbsolutePivot);
+                            EditorUtility.SetDirty(_model.SlicingSettings);
+                        }
                     }
                 }
             }

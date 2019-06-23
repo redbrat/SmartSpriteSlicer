@@ -70,6 +70,25 @@ namespace Vis.SmartSpriteSlicer
                     _model.SlicingSettings.Offset = newOffset;
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
+
+                var newPivotPoint = (PivotPoint)EditorGUILayout.EnumPopup(new GUIContent($"Pivot Point"), _model.SlicingSettings.GlobalPivotPoint);
+                if (newPivotPoint != _model.SlicingSettings.GlobalPivotPoint)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Global pivot point changed");
+                    _model.SlicingSettings.GlobalPivotPoint = newPivotPoint;
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
+
+                if (newPivotPoint == PivotPoint.Absolute)
+                {
+                    var newAbsolutePivot = EditorGUILayout.Vector2IntField(new GUIContent($"Absolute Pivot:"), _model.SlicingSettings.GlobalAbsolutePivot);
+                    if (newAbsolutePivot != _model.SlicingSettings.GlobalAbsolutePivot)
+                    {
+                        Undo.RecordObject(_model.SlicingSettings, "Global absolute pivot changed");
+                        _model.SlicingSettings.GlobalAbsolutePivot = newAbsolutePivot;
+                        EditorUtility.SetDirty(_model.SlicingSettings);
+                    }
+                }
                 EditorGUI.indentLevel--;
             }
         }

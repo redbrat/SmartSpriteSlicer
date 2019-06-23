@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
-    public struct Layout : IEnumerable<(Rect position, SpriteGroup group, SpriteChunk chunk)>
+    public struct Layout : IEnumerable<(Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk)>
     {
         private readonly SlicingSettings _slicingSettings;
         private readonly Rect _position;
@@ -16,7 +16,7 @@ namespace Vis.SmartSpriteSlicer
             _position = position;
         }
 
-        public IEnumerator<(Rect position, SpriteGroup group, SpriteChunk chunk)> GetEnumerator()
+        public IEnumerator<(Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk)> GetEnumerator()
         {
             var globalAnchor = _slicingSettings.LayoutAnchor;
             var offset = getGlobalAnchorPoint(globalAnchor, _position);
@@ -36,7 +36,7 @@ namespace Vis.SmartSpriteSlicer
                         {
                             offset.x += formatX(group.Offset.x, globalAnchor);
                             offset.y += formatY(group.Offset.y, globalAnchor);
-                            (Rect position, SpriteGroup group, SpriteChunk chunk) result;
+                            (Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) result;
                             offset = drawGroupArea(offset, group, globalAnchor, out result);
                             yield return result;
                         }
@@ -103,9 +103,9 @@ namespace Vis.SmartSpriteSlicer
             }
         }
 
-        private (Rect position, SpriteGroup group, SpriteChunk chunk) getFormattedGroupRect(Vector2Int offset, SpriteChunk chunk, SpriteGroup group, LayoutAnchor globalAnchor)
+        private (Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) getFormattedGroupRect(Vector2Int offset, SpriteChunk chunk, SpriteGroup group, LayoutAnchor globalAnchor)
         {
-            var result = (position: Rect.zero, group, chunk);
+            var result = (position: Rect.zero, pivotPoint: Vector2Int.zero, group, chunk);
             switch (globalAnchor)
             {
                 case LayoutAnchor.TopLeft:
@@ -130,10 +130,43 @@ namespace Vis.SmartSpriteSlicer
                         chunk.Size.x, chunk.Size.y);
                     break;
             }
+
+            PivotPoint pivotPoint;
+            if (group.UseGroupPivotPointSettings)
+                pivotPoint = group.PivotPoint;
+            else
+                pivotPoint = _slicingSettings.GlobalPivotPoint;
+
+
+            Vector2Int pivotPointCoords;
+            switch (pivotPoint)
+            {
+                case PivotPoint.Center:
+                    pivotPointCoords = toVector2Int(result.position.position + result.position.size * 0.5f);
+                    break;
+                case PivotPoint.TopLeft:
+                    pivotPointCoords = toVector2Int(result.position.position);
+                    break;
+                case PivotPoint.TopRight:
+                    pivotPointCoords = toVector2Int(result.position.position + result.position.size * Vector2.right);
+                    break;
+                case PivotPoint.BottomLeft:
+                    pivotPointCoords = toVector2Int(result.position.position + result.position.size * Vector2.up);
+                    break;
+                case PivotPoint.BottomRight:
+                    pivotPointCoords = toVector2Int(result.position.position + result.position.size);
+                    break;
+                case PivotPoint.Absolute:
+                default:
+                    pivotPointCoords = toVector2Int(result.position.position + result.group.AbsolutePivot);
+                    break;
+            }
+            result.pivotPoint = pivotPointCoords;
+
             return result;
         }
 
-        private Vector2Int drawGroupArea(Vector2Int offset, SpriteGroup group, LayoutAnchor globalAnchor, out (Rect position, SpriteGroup group, SpriteChunk chunk) result)
+        private Vector2Int drawGroupArea(Vector2Int offset, SpriteGroup group, LayoutAnchor globalAnchor, out (Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) result)
         {
             var chunk = _slicingSettings.Chunks.Where(ch => ch.Id == group.ChunkId).First();
 
@@ -154,5 +187,7 @@ namespace Vis.SmartSpriteSlicer
         {
             return GetEnumerator();
         }
+
+        private Vector2Int toVector2Int(Vector2 vector2) => new Vector2Int(Mathf.RoundToInt(vector2.x), Mathf.RoundToInt(vector2.y));
     }
 }

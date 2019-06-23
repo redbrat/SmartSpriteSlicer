@@ -13,6 +13,8 @@ namespace Vis.SmartSpriteSlicer
         public LayoutAnchor LayoutAnchor;
         public List<SpriteChunk> Chunks = new List<SpriteChunk>();
         public List<SpriteGroup> ChunkGroups = new List<SpriteGroup>();
+        public PivotPoint GlobalPivotPoint;
+        public Vector2Int GlobalAbsolutePivot;
 
         public int GetNextChunkId()
         {

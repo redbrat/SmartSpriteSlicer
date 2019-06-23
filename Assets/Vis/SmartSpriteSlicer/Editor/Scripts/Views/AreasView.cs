@@ -57,32 +57,8 @@ namespace Vis.SmartSpriteSlicer
                     }
                 }
 
-                var pivotPoint = default(Vector2Int);
-                switch (area.group.PivotPoint)
-                {
-                    case PivotPoint.Center:
-                        pivotPoint = toVector2Int(area.position.position + area.position.size * 0.5f);
-                        break;
-                    case PivotPoint.TopLeft:
-                        pivotPoint = toVector2Int(area.position.position);
-                        break;
-                    case PivotPoint.TopRight:
-                        pivotPoint = toVector2Int(area.position.position + area.position.size * Vector2.right);
-                        break;
-                    case PivotPoint.BottomLeft:
-                        pivotPoint = toVector2Int(area.position.position + area.position.size * Vector2.up);
-                        break;
-                    case PivotPoint.BottomRight:
-                        pivotPoint = toVector2Int(area.position.position + area.position.size);
-                        break;
-                    case PivotPoint.Absolute:
-                    default:
-                        pivotPoint = toVector2Int(area.position.position + area.group.AbsolutePivot);
-                        break;
-                }
-
-                var worldPos = new Vector3(pivotPoint.x, pivotPoint.y, 0);
-                var newWorldPos = DraggableDisc.Draw(new Vector3(pivotPoint.x, pivotPoint.y, 0), Vector3.back, 4f, area.chunk.Color);
+                var worldPos = new Vector3(area.pivotPoint.x, area.pivotPoint.y, 0);
+                var newWorldPos = DraggableDisc.Draw(worldPos, Vector3.back, 4f, area.chunk.Color);
                 if (newWorldPos != worldPos)
                 {
                     if (newWorldPos.x < area.position.x)
@@ -108,19 +84,9 @@ namespace Vis.SmartSpriteSlicer
                         newPivotPoint = PivotPoint.Center;
 
                     Undo.RecordObject(_model.SlicingSettings, "Pivot point of group manually changed");
-                    _model.SlicingSettings.ChunkGroups[getIndexOf(_model.SlicingSettings.ChunkGroups, area.group)] = area.group.SetPivotPoint(newPivotPoint).SetAbsolutePivot(absolutePivot);
+                    _model.SlicingSettings.ChunkGroups[getIndexOf(_model.SlicingSettings.ChunkGroups, area.group)] = area.group.SetUseGroupPivotPointSettings(true).SetPivotPoint(newPivotPoint).SetAbsolutePivot(absolutePivot);
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
-
-                //Handles.BeginGUI();
-                //var ctrlId = GUIUtility.GetControlID(FocusType.Passive);
-                //var originalColor = Handles.color;
-                //Handles.color = makeOpaque(Color.white - area.chunk.Color);
-                //Handles.DrawWireDisc(new Vector3(pivotPoint.x, pivotPoint.y, 0), Vector3.back, 4f);
-                //Handles.color = area.chunk.Color;
-                //Handles.DrawSolidDisc(new Vector3(pivotPoint.x, pivotPoint.y, 0), Vector3.back, 3f);
-                //Handles.color = originalColor;
-                //Handles.EndGUI();
             }
         }
 

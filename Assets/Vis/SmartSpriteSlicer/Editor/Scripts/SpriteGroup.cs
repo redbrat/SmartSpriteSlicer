@@ -48,6 +48,9 @@ namespace Vis.SmartSpriteSlicer
         [SerializeField]
         private string _customName;
 
+        public bool UseGroupPivotPointSettings => _useGroupPivotPointSettings;
+        [SerializeField]
+        private bool _useGroupPivotPointSettings;
         public PivotPoint PivotPoint => _pivotPoint;
         [SerializeField]
         private PivotPoint _pivotPoint;
@@ -72,6 +75,7 @@ namespace Vis.SmartSpriteSlicer
             _customName = default;
             _pivotPoint = default;
             _absolutePivot = default;
+            _useGroupPivotPointSettings = default;
         }
 
         /// <summary>
@@ -91,6 +95,7 @@ namespace Vis.SmartSpriteSlicer
             _customName = default;
             _pivotPoint = default;
             _absolutePivot = default;
+            _useGroupPivotPointSettings = default;
         }
 
         /// <summary>
@@ -110,12 +115,13 @@ namespace Vis.SmartSpriteSlicer
             _customName = default;
             _pivotPoint = default;
             _absolutePivot = default;
+            _useGroupPivotPointSettings = default;
         }
 
         /// <summary>
         /// Ctor with full set of features
         /// </summary>
-        public SpriteGroup(int id, int chunkId, SpriteGroupFlavor flavor, int times, Vector2Int offset, LayoutDirection direction, RectOffset individualMargin, bool naming, bool useCustomName, string customName, PivotPoint pivotPoint, Vector2Int absolutePivot)
+        public SpriteGroup(int id, int chunkId, SpriteGroupFlavor flavor, int times, Vector2Int offset, LayoutDirection direction, RectOffset individualMargin, bool naming, bool useCustomName, string customName, bool useGgroupPivotPointSettings, PivotPoint pivotPoint, Vector2Int absolutePivot)
         {
             _id = id;
             _chunkId = chunkId;
@@ -129,18 +135,20 @@ namespace Vis.SmartSpriteSlicer
             _customName = customName;
             _pivotPoint = pivotPoint;
             _absolutePivot = absolutePivot;
+            _useGroupPivotPointSettings = useGgroupPivotPointSettings;
         }
 
-        internal SpriteGroup SetChunk(int chunkId) => new SpriteGroup(_id, chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetTimes(int times) => new SpriteGroup(_id, _chunkId, _flavor, times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetFlavor(SpriteGroupFlavor flavor) => new SpriteGroup(_id, _chunkId, flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetOffset(Vector2Int offset) => new SpriteGroup(_id, _chunkId, _flavor, _times, offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetDirection(LayoutDirection direction) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, direction, _individualMargin, _naming, _useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetIndividualMargin(RectOffset individualMargin) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, individualMargin, _naming, _useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetNaming(bool naming) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, naming, _useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetUseCustomName(bool useCustomName) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, useCustomName, _customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetCustomName(string customName) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, customName, _pivotPoint, _absolutePivot);
-        internal SpriteGroup SetPivotPoint(PivotPoint pivotPoint) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, pivotPoint, _absolutePivot);
-        internal SpriteGroup SetAbsolutePivot(Vector2Int absolutePivot) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _pivotPoint, absolutePivot);
+        internal SpriteGroup SetChunk(int chunkId) => new SpriteGroup(_id, chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetTimes(int times) => new SpriteGroup(_id, _chunkId, _flavor, times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetFlavor(SpriteGroupFlavor flavor) => new SpriteGroup(_id, _chunkId, flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetOffset(Vector2Int offset) => new SpriteGroup(_id, _chunkId, _flavor, _times, offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetDirection(LayoutDirection direction) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, direction, _individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetIndividualMargin(RectOffset individualMargin) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetNaming(bool naming) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetUseCustomName(bool useCustomName) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetCustomName(string customName) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, customName, _useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetUseGroupPivotPointSettings(bool useGroupPivotPointSettings) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, useGroupPivotPointSettings, _pivotPoint, _absolutePivot);
+        internal SpriteGroup SetPivotPoint(PivotPoint pivotPoint) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, pivotPoint, _absolutePivot);
+        internal SpriteGroup SetAbsolutePivot(Vector2Int absolutePivot) => new SpriteGroup(_id, _chunkId, _flavor, _times, _offset, _direction, _individualMargin, _naming, _useCustomName, _customName, _useGroupPivotPointSettings, _pivotPoint, absolutePivot);
     }
 }
