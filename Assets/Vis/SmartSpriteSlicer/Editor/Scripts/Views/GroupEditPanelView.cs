@@ -67,13 +67,24 @@ namespace Vis.SmartSpriteSlicer
                         }
                     }
                 }
-
-                var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Direction:"), group.Direction);
-                if (newDirection != group.Direction)
+                
+                var newPivotPoint = (PivotPoint)EditorGUILayout.EnumPopup(new GUIContent($"Pivot Point"), group.PivotPoint);
+                if (newPivotPoint != group.PivotPoint)
                 {
-                    Undo.RecordObject(_model.SlicingSettings, "Group direction changed");
-                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetDirection(newDirection);
+                    Undo.RecordObject(_model.SlicingSettings, "Group pivot point changed");
+                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetPivotPoint(newPivotPoint);
                     EditorUtility.SetDirty(_model.SlicingSettings);
+                }
+
+                if (newPivotPoint == PivotPoint.Absolute)
+                {
+                    var newAbsolutePivot = EditorGUILayout.Vector2IntField(new GUIContent($"Absolute Pivot:"), group.AbsolutePivot);
+                    if (newAbsolutePivot != group.AbsolutePivot)
+                    {
+                        Undo.RecordObject(_model.SlicingSettings, "Group absolute pivot changed");
+                        _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetAbsolutePivot(newAbsolutePivot);
+                        EditorUtility.SetDirty(_model.SlicingSettings);
+                    }
                 }
             }
 

@@ -114,5 +114,14 @@ namespace Vis.SmartSpriteSlicer
             }
             return instance;
         }
+
+        public void Slice()
+        {
+            var layout = new Layout(SlicingSettings, TextureRect);
+            foreach (var area in layout)
+            {
+                //var sprite = Sprite.Create(Texture, ;
+            }
+        }
     }
 }

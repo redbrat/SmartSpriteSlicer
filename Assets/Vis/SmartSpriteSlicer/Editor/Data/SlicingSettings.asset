@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e36d81dd46d3340aa1b71ce17af25d, type: 3}
   m_Name: SlicingSettings
   m_EditorClassIdentifier: 
+  UseCustomSpriteName: 1
+  CustomName: mySprite
+  NamePartsSeparator: '---'
   Offset: {x: 40, y: 40}
   LayoutAnchor: 0
   Chunks:
@@ -45,6 +48,8 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
   - _id: 2
     _flavor: 0
     _chunkId: 2
@@ -59,6 +64,8 @@ MonoBehaviour:
     _naming: 1
     _useCustomName: 1
     _customName: Group1111
+    _pivotPoint: 2
+    _absolutePivot: {x: 64, y: 0}
   - _id: 3
     _flavor: 0
     _chunkId: 3
@@ -73,6 +80,8 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
+    _pivotPoint: 5
+    _absolutePivot: {x: 10, y: 10}
   - _id: 6
     _flavor: 1
     _chunkId: 0
@@ -87,6 +96,8 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
   - _id: 5
     _flavor: 0
     _chunkId: 1
@@ -101,6 +112,8 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
+    _pivotPoint: 0
+    _absolutePivot: {x: 32, y: 42}
   - _id: 7
     _flavor: 0
     _chunkId: 3
@@ -115,6 +128,8 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
+    _pivotPoint: 4
+    _absolutePivot: {x: 64, y: 64}
   - _id: 8
     _flavor: 2
     _chunkId: 0
@@ -129,6 +144,8 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
   - _id: 9
     _flavor: 0
     _chunkId: 2
@@ -143,3 +160,37 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
+    _pivotPoint: 0
+    _absolutePivot: {x: 32, y: 32}
+  - _id: 11
+    _flavor: 1
+    _chunkId: 0
+    _times: 1
+    _offset: {x: 0, y: 64}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
+  - _id: 10
+    _flavor: 0
+    _chunkId: 2
+    _times: 1
+    _offset: {x: 0, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}

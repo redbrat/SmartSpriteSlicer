@@ -53,6 +53,13 @@ namespace Vis.SmartSpriteSlicer
                 _model.SlicingSettingsPreset = preset;
             }
             EditorGUILayout.EndHorizontal();
+
+            if (!_model.SlicingSettings.HaveChunkGroups())
+                return;
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button(new GUIContent($"Apply", $"Slice texture")))
+                _model.Slice();
+            EditorGUILayout.EndHorizontal();
         }
     }
 }
