@@ -23,10 +23,11 @@ namespace Vis.SmartSpriteSlicer
         {
             var textureRatio = (float)_model.Texture.width / _model.Texture.height;
             var screenRatio = position.width / position.height;
-            var fitX = 0f;
-            var fitY = 0f;
-            var fitWidth = 0f;
-            var fitHeight = 0f;
+
+            float fitX;
+            float fitY;
+            float fitWidth;
+            float fitHeight;
             if (screenRatio < textureRatio)
             {
                 fitWidth = position.width;

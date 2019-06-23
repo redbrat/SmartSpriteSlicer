@@ -6,8 +6,6 @@ namespace Vis.SmartSpriteSlicer
 {
     internal class GroupsView : LayoutViewBase
     {
-        public static int EditedGroupId;
-
         private readonly LayoutViewBase _groupsTopPanel;
         private readonly LayoutViewBase _groupsMainPanel;
         private readonly LayoutViewBase _groupEditPanel;
@@ -42,8 +40,20 @@ namespace Vis.SmartSpriteSlicer
             }
             DragableButton.AcceptDragArea = _mainRect;
 
-            if (_model.SlicingSettings.ChunkGroups.Count(group => group.Id == EditedGroupId) > 0)
+            if (_model.SlicingSettings.ChunkGroups.Count(group => group.Id == _model.EditedGroupId) > 0)
                 _groupEditPanel.OnGUILayout();
+
+            //switch (Event.current.type) //This doesn't work, but would be great to make it somehow...
+            //{
+            //    case EventType.KeyDown:
+            //        Debug.Log($"keyCode: {Event.current.keyCode}");
+            //        if (_model.EditedGroupId > 0 && Event.current.keyCode == KeyCode.Delete && EditorUtility.DisplayDialog($"Confirmation", "Are you sure you want to delete this group?", "Yes", "No"))
+            //        {
+            //            _model.RemoveGroupAt(_model.SlicingSettings.GetGroupInfoById(_model.EditedGroupId).index);
+            //            Event.current.Use();
+            //        }
+            //        break;
+            //}
         }
     }
 }

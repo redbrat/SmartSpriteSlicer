@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Presets;
@@ -9,10 +10,12 @@ namespace Vis.SmartSpriteSlicer
     public class SmartSpriteSlicerWindow : EditorWindow
     {
         public const int MaxContolPanelWidth = 450;
-        public const int MaxPreviewWindowRect = 300;
-
+        public const int MaxPreviewWindowWidth = 300;
+        internal int EditedGroupId;
         private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
         private const string _slicingSettingsName = "SlicingSettings.asset";
+
+        public Vector2 TextureScale => new Vector2(TextureRect.width / Texture.width, TextureRect.height / Texture.height);
 
         /// <summary>
         /// Background tile size
@@ -22,12 +25,12 @@ namespace Vis.SmartSpriteSlicer
         /// <summary>
         /// Local rect of control panel window
         /// </summary>
-        public Rect ControlPanelRect = new Rect(100, 100, 240, MaxContolPanelWidth);
+        public Rect ControlPanelRect = new Rect(100, 100, MaxContolPanelWidth, 0);
 
         /// <summary>
         /// Local rect of control panel window
         /// </summary>
-        public Rect PreviewWindowRect = new Rect(100, 100, 240, MaxPreviewWindowRect);
+        public Rect PreviewWindowRect = new Rect(100, 100, MaxPreviewWindowWidth, 0);
 
         /// <summary>
         /// Current slicing settings
@@ -48,10 +51,20 @@ namespace Vis.SmartSpriteSlicer
         public TextureImporter Importer;
 
         private MainView _view;
-        internal int? PreviewedAreaControlId;
-        internal Rect? PreviewedArea;
         internal Rect TextureRect;
         internal Texture2D PreviewBackground;
+
+        public List<int> IterableCtrlIds = new List<int>();
+        public List<Rect> IterableAreas = new List<Rect>();
+
+        public SpriteIterationMode IterationMode;
+
+        internal string PreviewName;
+        internal int? PreviewedAreaControlId;
+        internal Rect? PreviewedArea;
+        internal int? PreviewedGlobalIndex;
+        internal SpriteGroup? PreviewGroup;
+        internal SpriteChunk? PreviewChunk;
 
         internal void Initialize(Texture2D sprite, TextureImporter importer)
         {
@@ -117,11 +130,53 @@ namespace Vis.SmartSpriteSlicer
 
         public void Slice()
         {
-            var layout = new Layout(SlicingSettings, TextureRect);
+            Importer.spriteImportMode = SpriteImportMode.Single;
+            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(Texture), ImportAssetOptions.Default);
+            Importer.spriteImportMode = SpriteImportMode.Multiple;
+            var sprites = new List<SpriteMetaData>();
+
+            var globalName = Texture.name;
+            if (SlicingSettings.UseCustomSpriteName)
+                globalName = SlicingSettings.CustomName;
+
+            var layout = new Layout(SlicingSettings, new Rect(Vector2.zero, TextureRect.position));
             foreach (var area in layout)
             {
-                //var sprite = Sprite.Create(Texture, ;
+                var groupName = area.chunk.GetHumanFriendlyName();
+                if (area.group.UseCustomName)
+                    groupName = area.group.CustomName;
+
+                var name = $"{globalName}{SlicingSettings.NamePartsSeparator}{groupName}{SlicingSettings.NamePartsSeparator}{area.groupIndex}";
+                Debug.Log($"Adding {name}");
+
+                var flippedYRect = area.position;
+                flippedYRect.y = Texture.height - area.position.y - area.position.height;
+                var flippedYPivot = area.pivotPoint;
+                flippedYPivot.y = Texture.height - area.pivotPoint.y;
+
+                sprites.Add(new SpriteMetaData()
+                {
+                    name = name,
+                    rect = flippedYRect,
+                    pivot = flippedYPivot
+                });
             }
+
+            Importer.spritesheet = sprites.ToArray();
+            AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(Texture), ImportAssetOptions.Default);
+        }
+
+        public void RemoveGroupAt(int groupIndex)
+        {
+            var group = SlicingSettings.ChunkGroups[groupIndex];
+            var groupsFriendlyName = "Group";
+            if (group.Flavor == SpriteGroupFlavor.EndOfLine)
+                groupsFriendlyName = "End of line";
+            else if (group.Flavor == SpriteGroupFlavor.EmptySpace)
+                groupsFriendlyName = "Empty space";
+            Undo.RecordObject(SlicingSettings, $"{groupsFriendlyName} deleted");
+            SlicingSettings.ChunkGroups.RemoveAt(groupIndex);
+            EditorUtility.SetDirty(SlicingSettings);
         }
     }
 }

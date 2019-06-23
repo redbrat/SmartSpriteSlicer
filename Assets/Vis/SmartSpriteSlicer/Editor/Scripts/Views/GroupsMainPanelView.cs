@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -102,13 +101,13 @@ namespace Vis.SmartSpriteSlicer
 
         private void onGroupClick(SpriteGroup group)
         {
-            if (GroupsView.EditedGroupId == group.Id)
+            if (_model.EditedGroupId == group.Id)
             {
-                GroupsView.EditedGroupId = 0;
+                _model.EditedGroupId = 0;
                 _selectedGroupIndex = -1;
             }
             else
-                GroupsView.EditedGroupId = group.Id;
+                _model.EditedGroupId = group.Id;
         }
 
         private GUIContent getBlobContent(SpriteChunk chunk) => new GUIContent($"{chunk.GetHumanFriendlyName()}");

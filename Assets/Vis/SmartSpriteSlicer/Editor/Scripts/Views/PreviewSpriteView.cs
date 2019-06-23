@@ -17,36 +17,28 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUI(position);
 
-            //var use = false;
-            //if (Event.current.type == EventType.MouseUp && _model.PreviewWindowRect.Contains(Event.current.mousePosition))
-            //    use = true;
-
             if (_model.PreviewedArea == null)
                 return;
 
-            //_model.BeginWindows();
             _subWindow.WindowPosition = _model.PreviewWindowRect;
-            _model.PreviewWindowRect = GUILayout.Window(1154, _model.PreviewWindowRect, _subWindow.WindowContentCallback, new GUIContent("Preview sprite"));
+            var futureSpriteName = _model.PreviewName;
+            if (!_model.SlicingSettings.UseCustomSpriteName)
+                futureSpriteName = $"{_model.Texture.name}{futureSpriteName}";
+            _model.PreviewWindowRect = GUILayout.Window(1, _model.PreviewWindowRect, _subWindow.WindowContentCallback, new GUIContent($"Preview: {futureSpriteName}"));
             if (_model.PreviewWindowRect.x < 0)
                 _model.PreviewWindowRect.x = 0;
             if (_model.PreviewWindowRect.y < 0)
                 _model.PreviewWindowRect.y = 0;
-            if (_model.PreviewWindowRect.width != SmartSpriteSlicerWindow.MaxPreviewWindowRect)
-                _model.PreviewWindowRect.width = SmartSpriteSlicerWindow.MaxPreviewWindowRect;
+            if (_model.PreviewWindowRect.width != SmartSpriteSlicerWindow.MaxPreviewWindowWidth)
+                _model.PreviewWindowRect.width = SmartSpriteSlicerWindow.MaxPreviewWindowWidth;
             var yMax = _model.PreviewWindowRect.height;
             _model.PreviewWindowRect.height = 0;
-            //_model.EndWindows();
+            //_model.PreviewWindowRect.height = _subWindow.LastRect.y - _model.PreviewWindowRect.y;
 
             var windowRect = _model.PreviewWindowRect;
             windowRect.yMax = yMax;
             if (Event.current.type == EventType.MouseUp && windowRect.Contains(Event.current.mousePosition))
                 Event.current.Use();
-
-            //if (use)
-            //{
-            //    Event.current.Use();
-            //    Debug.Log($"USED!!!");
-            //}
         }
     }
 }

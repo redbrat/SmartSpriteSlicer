@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
-    public struct Layout : IEnumerable<(Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk)>
+    public struct Layout : IEnumerable<(int globalIndex, int groupIndex, string name, Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk)>
     {
         private readonly SlicingSettings _slicingSettings;
         private readonly Rect _position;
@@ -16,7 +16,7 @@ namespace Vis.SmartSpriteSlicer
             _position = position;
         }
 
-        public IEnumerator<(Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk)> GetEnumerator()
+        public IEnumerator<(int globalIndex, int groupIndex, string name, Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk)> GetEnumerator()
         {
             var globalAnchor = _slicingSettings.LayoutAnchor;
             var offset = getGlobalAnchorPoint(globalAnchor, _position);
@@ -25,6 +25,12 @@ namespace Vis.SmartSpriteSlicer
             var initialX = offset.x;
             var initialY = offset.y;
             var groups = _slicingSettings.ChunkGroups;
+
+            var globalName = string.Empty;
+            if (_slicingSettings.UseCustomSpriteName)
+                globalName = _slicingSettings.CustomName;
+
+            var globalIndex = 0;
             for (int i = 0; i < groups.Count; i++)
             {
                 var group = groups[i];
@@ -32,12 +38,20 @@ namespace Vis.SmartSpriteSlicer
                 switch (group.Flavor)
                 {
                     case SpriteGroupFlavor.Group:
+                        var chunk = _slicingSettings.Chunks.Where(c => c.Id == group.ChunkId).First();
+                        var groupName = chunk.GetHumanFriendlyName();
+                        if (group.UseCustomName)
+                            groupName = group.CustomName;
+
+                        offset.x += formatX(group.Offset.x, globalAnchor);
+                        offset.y += formatY(group.Offset.y, globalAnchor);
                         for (int t = 0; t < group.Times; t++)
                         {
-                            offset.x += formatX(group.Offset.x, globalAnchor);
-                            offset.y += formatY(group.Offset.y, globalAnchor);
-                            (Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) result;
+                            (int globalIndex, int groupIndex, string name, Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) result;
                             offset = drawGroupArea(offset, group, globalAnchor, out result);
+                            result.globalIndex = globalIndex++;
+                            result.groupIndex = t;
+                            result.name = $"{globalName}{_slicingSettings.NamePartsSeparator}{groupName}{_slicingSettings.NamePartsSeparator}{t}";
                             yield return result;
                         }
                         break;
@@ -103,9 +117,9 @@ namespace Vis.SmartSpriteSlicer
             }
         }
 
-        private (Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) getFormattedGroupRect(Vector2Int offset, SpriteChunk chunk, SpriteGroup group, LayoutAnchor globalAnchor)
+        private (int globalIndex, int groupIndex, string name, Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) getFormattedGroupRect(Vector2Int offset, SpriteChunk chunk, SpriteGroup group, LayoutAnchor globalAnchor)
         {
-            var result = (position: Rect.zero, pivotPoint: Vector2Int.zero, group, chunk);
+            var result = (globalIndex: 0, groupIndex: 0, name: string.Empty, position: Rect.zero, pivotPoint: Vector2Int.zero, group, chunk);
             switch (globalAnchor)
             {
                 case LayoutAnchor.TopLeft:
@@ -166,7 +180,7 @@ namespace Vis.SmartSpriteSlicer
             return result;
         }
 
-        private Vector2Int drawGroupArea(Vector2Int offset, SpriteGroup group, LayoutAnchor globalAnchor, out (Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) result)
+        private Vector2Int drawGroupArea(Vector2Int offset, SpriteGroup group, LayoutAnchor globalAnchor, out (int globalIndex, int groupIndex, string name, Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk) result)
         {
             var chunk = _slicingSettings.Chunks.Where(ch => ch.Id == group.ChunkId).First();
 

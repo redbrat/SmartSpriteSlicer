@@ -17,17 +17,21 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            var groupIndex = default(int);
-            var group = default(SpriteGroup);
-            for (int i = 0; i < _model.SlicingSettings.ChunkGroups.Count; i++)
-            {
-                if (_model.SlicingSettings.ChunkGroups[i].Id == GroupsView.EditedGroupId)
-                {
-                    groupIndex = i;
-                    group = _model.SlicingSettings.ChunkGroups[i];
-                    break;
-                }
-            }
+            var groupInfo = _model.SlicingSettings.GetGroupInfoById(_model.EditedGroupId);
+            var groupIndex = groupInfo.index;
+            var group = groupInfo.group;
+
+            //var groupIndex = default(int);
+            //var group = default(SpriteGroup);
+            //for (int i = 0; i < _model.SlicingSettings.ChunkGroups.Count; i++)
+            //{
+            //    if (_model.SlicingSettings.ChunkGroups[i].Id == _model.EditedGroupId)
+            //    {
+            //        groupIndex = i;
+            //        group = _model.SlicingSettings.ChunkGroups[i];
+            //        break;
+            //    }
+            //}
 
             EditorGUILayout.BeginVertical(_panelStyle);
             var newTimes = EditorGUILayout.IntField(new GUIContent($"Times:"), group.Times);
@@ -130,11 +134,7 @@ namespace Vis.SmartSpriteSlicer
             else if (group.Flavor == SpriteGroupFlavor.EmptySpace)
                 friendlyName = "empty space";
             if (GUILayout.Button(new GUIContent($"Delete {friendlyName}")))
-            {
-                Undo.RecordObject(_model.SlicingSettings, $"{friendlyName} deleted");
-                _model.SlicingSettings.ChunkGroups.RemoveAt(groupIndex);
-                EditorUtility.SetDirty(_model.SlicingSettings);
-            }
+                _model.RemoveGroupAt(groupIndex);
             EditorGUILayout.EndVertical();
         }
     }

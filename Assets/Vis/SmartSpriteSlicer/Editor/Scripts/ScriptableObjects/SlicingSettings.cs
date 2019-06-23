@@ -49,5 +49,12 @@ namespace Vis.SmartSpriteSlicer
         }
 
         internal bool HaveChunkGroups() => ChunkGroups.Count > 0 && ChunkGroups.Where(cg => cg.Flavor == SpriteGroupFlavor.Group).Any();
+        internal (int index, SpriteGroup group) GetGroupInfoById(int groupIndex)
+        {
+            for (int i = 0; i < ChunkGroups.Count; i++)
+                if (ChunkGroups[i].Id == groupIndex)
+                    return (i, ChunkGroups[i]);
+            return (-1, default);
+        }
     }
 }

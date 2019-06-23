@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
@@ -21,29 +22,67 @@ namespace Vis.SmartSpriteSlicer
                 Event.current.Use();
             }
 
-            if (AreasView.PreviewedIndex.HasValue && Event.current.type == EventType.KeyDown &&
+            if (_model.PreviewedGlobalIndex.HasValue && Event.current.type == EventType.KeyDown &&
                 (Event.current.keyCode == KeyCode.LeftArrow || Event.current.keyCode == KeyCode.RightArrow))
             {
                 if (Event.current.keyCode == KeyCode.LeftArrow)
                 {
-                    AreasView.PreviewedIndex = AreasView.PreviewedIndex.Value - 1;
-                    if (AreasView.PreviewedIndex.Value < 0)
-                        AreasView.PreviewedIndex = AreasView.IterableCtrlIds.Count - 1;
+                    _model.PreviewedGlobalIndex = _model.PreviewedGlobalIndex.Value - 1;
+                    if (_model.PreviewedGlobalIndex.Value < 0)
+                        _model.PreviewedGlobalIndex = _model.IterableCtrlIds.Count - 1;
+                    while (!validIterableItem(_model.PreviewedGlobalIndex.Value))
+                    {
+                        _model.PreviewedGlobalIndex = _model.PreviewedGlobalIndex.Value - 1;
+                        if (_model.PreviewedGlobalIndex.Value < 0)
+                            _model.PreviewedGlobalIndex = _model.IterableCtrlIds.Count - 1;
+                    }
                 }
                 else
                 {
-                    AreasView.PreviewedIndex = AreasView.PreviewedIndex.Value + 1;
-                    if (AreasView.PreviewedIndex.Value >= AreasView.IterableCtrlIds.Count)
-                        AreasView.PreviewedIndex = 0;
+                    _model.PreviewedGlobalIndex = _model.PreviewedGlobalIndex.Value + 1;
+                    if (_model.PreviewedGlobalIndex.Value >= _model.IterableCtrlIds.Count)
+                        _model.PreviewedGlobalIndex = 0;
+                    while (!validIterableItem(_model.PreviewedGlobalIndex.Value))
+                    {
+                        _model.PreviewedGlobalIndex = _model.PreviewedGlobalIndex.Value + 1;
+                        if (_model.PreviewedGlobalIndex.Value >= _model.IterableCtrlIds.Count)
+                            _model.PreviewedGlobalIndex = 0;
+                    }
                 }
 
-                _model.PreviewedAreaControlId = AreasView.IterableCtrlIds[AreasView.PreviewedIndex.Value];
-                _model.PreviewedArea = AreasView.IterableAreas[AreasView.PreviewedIndex.Value];
+                _model.PreviewedAreaControlId = _model.IterableCtrlIds[_model.PreviewedGlobalIndex.Value];
+                _model.PreviewedArea = _model.IterableAreas[_model.PreviewedGlobalIndex.Value];
 
                 Event.current.Use();
             }
-            AreasView.IterableCtrlIds.Clear();
-            AreasView.IterableAreas.Clear();
+            _model.IterableCtrlIds.Clear();
+            _model.IterableAreas.Clear();
+        }
+
+        private bool validIterableItem(int globalIndex)
+        {
+            switch (_model.IterationMode)
+            {
+                case SpriteIterationMode.Group:
+                    {
+                        var layout = new Layout(_model.SlicingSettings, Rect.zero);
+                        foreach (var area in layout)
+                            if (area.globalIndex == globalIndex)
+                                return _model.PreviewGroup.Value.Id == area.group.Id;
+                        return false;
+                    }
+                case SpriteIterationMode.Chunk:
+                    {
+                        var layout = new Layout(_model.SlicingSettings, Rect.zero);
+                        foreach (var area in layout)
+                            if (area.globalIndex == globalIndex)
+                                return _model.PreviewChunk.Value.Id == area.chunk.Id;
+                        return false;
+                    }
+                case SpriteIterationMode.Global:
+                default:
+                    return true;
+            }
         }
     }
 }

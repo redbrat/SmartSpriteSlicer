@@ -9,10 +9,6 @@ namespace Vis.SmartSpriteSlicer
     {
         public AreasView(SmartSpriteSlicerWindow model) : base(model) { }
 
-        public static List<int> IterableCtrlIds = new List<int>();
-        public static List<Rect> IterableAreas = new List<Rect>();
-        public static int? PreviewedIndex;
-
         public override void OnGUI(Rect position)
         {
             base.OnGUI(position);
@@ -27,17 +23,25 @@ namespace Vis.SmartSpriteSlicer
                 var faceColor0 = faceColor1;
                 faceColor0.a = 0.1f;
                 var controlId = GUIUtility.GetControlID(FocusType.Passive);
-                IterableCtrlIds.Add(controlId);
-                IterableAreas.Add(area.position);
+                _model.IterableCtrlIds.Add(controlId);
+                _model.IterableAreas.Add(area.position);
 
-                var binaryButtonResult = BinaryButton.Draw(GUIContent.none, area.position, outlineColor, faceColor0, faceColor1, _model.PreviewedAreaControlId == controlId);
+                var scaledPart = area.position.position - position.position;
+                //var scale = Vector2.one;
+                var scaledPos = new Rect(Vector2.Scale(_model.TextureScale, scaledPart), Vector2.Scale(_model.TextureScale, area.position.size));
+                scaledPos.position += position.position;
+
+                var binaryButtonResult = BinaryButton.Draw(GUIContent.none, scaledPos, outlineColor, faceColor0, faceColor1, _model.PreviewedAreaControlId == controlId);
                 if (binaryButtonResult.clicked)
                 {
                     if (_model.PreviewedAreaControlId == controlId)
                     {
                         _model.PreviewedAreaControlId = null;
                         _model.PreviewedArea = null;
-                        PreviewedIndex = null;
+                        _model.PreviewedGlobalIndex = null;
+                        _model.PreviewName = null;
+                        _model.PreviewGroup = null;
+                        _model.PreviewChunk = null;
                     }
                     else
                         _model.PreviewedAreaControlId = controlId;
@@ -48,16 +52,25 @@ namespace Vis.SmartSpriteSlicer
                     if (_model.PreviewedAreaControlId == null)
                     {
                         _model.PreviewedArea = null;
-                        PreviewedIndex = null;
+                        _model.PreviewedGlobalIndex = null;
+                        _model.PreviewName = null;
+                        _model.PreviewGroup = null;
+                        _model.PreviewChunk = null;
                     }
                     else
                     {
                         _model.PreviewedArea = area.position;
-                        PreviewedIndex = IterableCtrlIds.Count - 1;
+                        _model.PreviewedGlobalIndex = _model.IterableCtrlIds.Count - 1;
+                        _model.PreviewName = area.name;
+                        _model.PreviewGroup = area.group;
+                        _model.PreviewChunk = area.chunk;
                     }
                 }
 
-                var worldPos = new Vector3(area.pivotPoint.x, area.pivotPoint.y, 0);
+                scaledPart = area.pivotPoint - position.position;
+                var scaledPivot = Vector2.Scale(_model.TextureScale, scaledPart);
+                scaledPivot += position.position;
+                var worldPos = new Vector3(scaledPivot.x, scaledPivot.y, 0);
                 var newWorldPos = DraggableDisc.Draw(worldPos, Vector3.back, 4f, area.chunk.Color);
                 if (newWorldPos != worldPos)
                 {
