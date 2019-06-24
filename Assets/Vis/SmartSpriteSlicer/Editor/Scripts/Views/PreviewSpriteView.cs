@@ -4,12 +4,10 @@ namespace Vis.SmartSpriteSlicer
 {
     internal class PreviewSpriteView : ViewBase
     {
-        private readonly GUIStyle _backgroundStyle;
         private readonly SpritePreviewWindow _subWindow;
 
         public PreviewSpriteView(SmartSpriteSlicerWindow model) : base(model)
         {
-            _backgroundStyle = model.Skin.GetStyle("PreviewSprite");
             _subWindow = new SpritePreviewWindow(model);
         }
 
@@ -31,9 +29,12 @@ namespace Vis.SmartSpriteSlicer
                 _model.PreviewWindowRect.y = 0;
             if (_model.PreviewWindowRect.width != SmartSpriteSlicerWindow.MaxPreviewWindowWidth)
                 _model.PreviewWindowRect.width = SmartSpriteSlicerWindow.MaxPreviewWindowWidth;
+            if (_model.PreviewWindowRect.x >= _model.position.width - _subWindow.WindowWorkaroundRect.width)
+                _model.PreviewWindowRect.x = _model.position.width - _subWindow.WindowWorkaroundRect.width;
+            if (_model.PreviewWindowRect.y >= _model.position.height - 16)
+                _model.PreviewWindowRect.y = _model.position.height - 16;
             var yMax = _model.PreviewWindowRect.height;
             _model.PreviewWindowRect.height = 0;
-            //_model.PreviewWindowRect.height = _subWindow.LastRect.y - _model.PreviewWindowRect.y;
 
             var windowRect = _model.PreviewWindowRect;
             windowRect.yMax = yMax;

@@ -16,6 +16,9 @@ namespace Vis.SmartSpriteSlicer
         private const string _slicingSettingsName = "SlicingSettings.asset";
 
         public Vector2 TextureScale => new Vector2(TextureRect.width / Texture.width, TextureRect.height / Texture.height);
+        public Texture2D WhiteTexture { get; private set; }
+        internal Texture2D BlackTexture { get; private set; }
+        public Rect Position => position;
 
         /// <summary>
         /// Background tile size
@@ -52,7 +55,6 @@ namespace Vis.SmartSpriteSlicer
 
         private MainView _view;
         internal Rect TextureRect;
-        internal Texture2D PreviewBackground;
 
         public List<int> IterableCtrlIds = new List<int>();
         public List<Rect> IterableAreas = new List<Rect>();
@@ -72,9 +74,13 @@ namespace Vis.SmartSpriteSlicer
             Importer = importer;
             Skin = loadGuiSkin();
 
-            PreviewBackground = new Texture2D(1, 1);
-            PreviewBackground.SetPixel(0, 0, Color.black);
-            PreviewBackground.Apply();
+            BlackTexture = new Texture2D(1, 1);
+            BlackTexture.SetPixel(0, 0, Color.black);
+            BlackTexture.Apply();
+
+            WhiteTexture = new Texture2D(1, 1);
+            WhiteTexture.SetPixel(0, 0, Color.white);
+            WhiteTexture.Apply();
 
             SlicingSettings = getSlicingSettings();
 
@@ -83,7 +89,7 @@ namespace Vis.SmartSpriteSlicer
 
         private void OnDestroy()
         {
-            DestroyImmediate(PreviewBackground);
+            DestroyImmediate(BlackTexture);
         }
 
         private void OnGUI()
@@ -147,7 +153,6 @@ namespace Vis.SmartSpriteSlicer
                     groupName = area.group.CustomName;
 
                 var name = $"{globalName}{SlicingSettings.NamePartsSeparator}{groupName}{SlicingSettings.NamePartsSeparator}{area.groupIndex}";
-                Debug.Log($"Adding {name}");
 
                 var flippedYRect = area.position;
                 flippedYRect.y = Texture.height - area.position.y - area.position.height;

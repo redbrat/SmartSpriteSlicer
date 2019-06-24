@@ -22,23 +22,23 @@ MonoBehaviour:
     _id: 1
     _color: {r: 0.9221561, g: 0.83679605, b: 0.5657658, a: 1}
     _textColor: {r: 1, g: 1, b: 1, a: 1}
-    _size: {x: 44, y: 72}
+    _size: {x: 44, y: 71}
   - _name: BreathBottom
     _id: 2
     _color: {r: 0.60970086, g: 0.9962263, b: 0.17663121, a: 1}
     _textColor: {r: 1, g: 1, b: 1, a: 1}
-    _size: {x: 30, y: 72}
+    _size: {x: 30, y: 70}
   - _name: BreathLeft
     _id: 3
     _color: {r: 0.3903045, g: 0.19993794, b: 0.91735065, a: 1}
     _textColor: {r: 1, g: 1, b: 1, a: 1}
-    _size: {x: 44, y: 72}
+    _size: {x: 44, y: 70}
   ChunkGroups:
   - _id: 12
     _flavor: 0
     _chunkId: 1
     _times: 11
-    _offset: {x: 0, y: 0}
+    _offset: {x: 0, y: 1}
     _direction: 0
     _individualMargin:
       m_Left: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
     _flavor: 0
     _chunkId: 2
     _times: 21
-    _offset: {x: 0, y: 0}
+    _offset: {x: 0, y: 1}
     _direction: 0
     _individualMargin:
       m_Left: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
     _flavor: 0
     _chunkId: 3
     _times: 15
-    _offset: {x: 0, y: 0}
+    _offset: {x: 0, y: -1}
     _direction: 0
     _individualMargin:
       m_Left: 0

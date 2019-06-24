@@ -25,6 +25,10 @@ namespace Vis.SmartSpriteSlicer
                 _model.ControlPanelRect.y = 0;
             if (_model.ControlPanelRect.width != SmartSpriteSlicerWindow.MaxContolPanelWidth)
                 _model.ControlPanelRect.width = SmartSpriteSlicerWindow.MaxContolPanelWidth;
+            if (_model.ControlPanelRect.x >= _model.position.width - _model.ControlPanelRect.width)
+                _model.ControlPanelRect.x = _model.position.width - _model.ControlPanelRect.width;
+            if (_model.ControlPanelRect.y >= _model.position.height - 16)
+                _model.ControlPanelRect.y = _model.position.height - 16;
             var yMax = _model.ControlPanelRect.yMax;
             _model.ControlPanelRect.height = 0;
 
