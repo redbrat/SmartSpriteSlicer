@@ -18,7 +18,7 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUI(position);
 
             //_model.BeginWindows();
-            _model.ControlPanelRect = GUILayout.Window(0, _model.ControlPanelRect, _subWindow.WindowContentCallback, new GUIContent("Layout Settings"));
+            _model.ControlPanelRect = GUILayout.Window(0, _model.ControlPanelRect, _subWindow.WindowContentCallback, new GUIContent("Layout Settings"), _backgroundStyle);
             if (_model.ControlPanelRect.x < 0)
                 _model.ControlPanelRect.x = 0;
             if (_model.ControlPanelRect.y < 0)
@@ -27,8 +27,8 @@ namespace Vis.SmartSpriteSlicer
                 _model.ControlPanelRect.width = SmartSpriteSlicerWindow.MaxContolPanelWidth;
             if (_model.ControlPanelRect.x >= _model.position.width - _model.ControlPanelRect.width)
                 _model.ControlPanelRect.x = _model.position.width - _model.ControlPanelRect.width;
-            if (_model.ControlPanelRect.y >= _model.position.height - 16)
-                _model.ControlPanelRect.y = _model.position.height - 16;
+            if (_model.ControlPanelRect.y >= _model.position.height - 18)
+                _model.ControlPanelRect.y = _model.position.height - 18;
             var yMax = _model.ControlPanelRect.yMax;
             _model.ControlPanelRect.height = 0;
 
