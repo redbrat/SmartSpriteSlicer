@@ -33,15 +33,15 @@ namespace Vis.SmartSpriteSlicer
             }
             else
             {
-                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _model.SlicingSettings.SelectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
+                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _model.SelectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
                 _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
                 if (reorderableListResult.reordered)
                 {
-                    if (_model.SlicingSettings.SelectedGroupIndex >= 0)
-                        _model.SlicingSettings.SelectedGroupIndex = reorderableListResult.selected;
+                    if (_model.SelectedGroupIndex >= 0)
+                        _model.SelectedGroupIndex = reorderableListResult.selected;
                 }
                 else
-                    _model.SlicingSettings.SelectedGroupIndex = reorderableListResult.selected;
+                    _model.SelectedGroupIndex = reorderableListResult.selected;
                 if (reorderableListResult.clicked.Id != 0 && !reorderableListResult.reordered)
                     onGroupClick(reorderableListResult.clicked);
             }
@@ -101,7 +101,7 @@ namespace Vis.SmartSpriteSlicer
             if (_model.EditedGroupId == group.Id)
             {
                 _model.EditedGroupId = 0;
-                _model.SlicingSettings.SelectedGroupIndex = -1;
+                _model.SelectedGroupIndex = -1;
             }
             else
                 _model.EditedGroupId = group.Id;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -25,9 +24,10 @@ namespace Vis.SmartSpriteSlicer
                 var controlId = GUIUtility.GetControlID(FocusType.Passive);
                 _model.IterableCtrlIds.Add(controlId);
                 _model.IterableAreas.Add(area.position);
+                if (!_model.IterableCtrlIdsToGroupsIds.ContainsKey(controlId))
+                    _model.IterableCtrlIdsToGroupsIds.Add(controlId, area.group.Id);
 
                 var scaledPart = area.position.position - position.position;
-                //var scale = Vector2.one;
                 var scaledPos = new Rect(Vector2.Scale(_model.TextureScale, scaledPart), Vector2.Scale(_model.TextureScale, area.position.size));
                 scaledPos.position += position.position;
 
@@ -44,7 +44,11 @@ namespace Vis.SmartSpriteSlicer
                         _model.PreviewChunk = null;
                     }
                     else
+                    {
                         _model.PreviewedAreaControlId = controlId;
+                        _model.SelectedGroupIndex = getIndexOf(_model.SlicingSettings.ChunkGroups, area.group);
+                        _model.EditedGroupId = area.group.Id;
+                    }
                 }
 
                 if (_model.PreviewedAreaControlId == controlId)

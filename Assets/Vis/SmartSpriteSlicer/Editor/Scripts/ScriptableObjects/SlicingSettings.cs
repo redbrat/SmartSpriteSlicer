@@ -16,7 +16,6 @@ namespace Vis.SmartSpriteSlicer
         public PivotPoint GlobalPivotPoint;
         public Vector2Int GlobalAbsolutePivot;
         public bool GroupsDependentEditing;
-        public int SelectedGroupIndex;
 
         public int GetNextChunkId()
         {

@@ -58,6 +58,7 @@ namespace Vis.SmartSpriteSlicer
 
         public List<int> IterableCtrlIds = new List<int>();
         public List<Rect> IterableAreas = new List<Rect>();
+        public Dictionary<int, int> IterableCtrlIdsToGroupsIds = new Dictionary<int, int>();
 
         public SpriteIterationMode IterationMode;
 
@@ -67,6 +68,7 @@ namespace Vis.SmartSpriteSlicer
         internal int? PreviewedGlobalIndex;
         internal SpriteGroup? PreviewGroup;
         internal SpriteChunk? PreviewChunk;
+        internal int SelectedGroupIndex;
 
         internal void Initialize(Texture2D sprite, TextureImporter importer)
         {
