@@ -11,26 +11,11 @@ namespace Vis.SmartSpriteSlicer
             state.Unfolded = EditorGUILayout.Foldout(state.Unfolded, content);
             if (state.Unfolded)
             {
-                var newValue = EditorGUILayout.IntField(new GUIContent("Left:"), value.left);
-                if (newValue != value.left)
-                {
-                    value.left = newValue;
-                }
-                newValue = EditorGUILayout.IntField(new GUIContent("Right:"), value.right);
-                if (newValue != value.right)
-                {
-                    value.right = newValue;
-                }
-                newValue = EditorGUILayout.IntField(new GUIContent("Top:"), value.top);
-                if (newValue != value.top)
-                {
-                    value.top = newValue;
-                }
-                newValue = EditorGUILayout.IntField(new GUIContent("Bottom:"), value.bottom);
-                if (newValue != value.bottom)
-                {
-                    value.bottom = newValue;
-                }
+                value = new RectOffset(value.left, value.right, value.top, value.bottom);
+                value.left = EditorGUILayout.IntField(new GUIContent("Left:"), value.left);
+                value.right = EditorGUILayout.IntField(new GUIContent("Right:"), value.right);
+                value.top = EditorGUILayout.IntField(new GUIContent("Top:"), value.top);
+                value.bottom = EditorGUILayout.IntField(new GUIContent("Bottom:"), value.bottom);
             }
             return value;
         }

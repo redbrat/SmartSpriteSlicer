@@ -89,6 +89,14 @@ namespace Vis.SmartSpriteSlicer
                         EditorUtility.SetDirty(_model.SlicingSettings);
                     }
                 }
+
+                var newGroupsDependentEditing = !EditorGUILayout.Toggle(new GUIContent($"Groups independent editing:", $"If false - changes to preceding groups will cause changes to positions of further groups"), !_model.SlicingSettings.GroupsDependentEditing);
+                if (newGroupsDependentEditing != _model.SlicingSettings.GroupsDependentEditing)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Groups dependent editing setting changed");
+                    _model.SlicingSettings.GroupsDependentEditing = newGroupsDependentEditing;
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
                 EditorGUI.indentLevel--;
             }
         }

@@ -11,15 +11,12 @@ namespace Vis.SmartSpriteSlicer
         private readonly GUIStyle _blobStyle;
         private readonly GUIStyle _selectedBlobStyle;
 
-        private int _selectedGroupIndex;
-
         public GroupsMainPanelView(SmartSpriteSlicerWindow model) : base(model)
         {
             _panelStyle = model.Skin.GetStyle("GroupsMainPanel");
             _panelDragAcceptanceStyle = model.Skin.GetStyle("GroupsMainPanelDragAcceptence");
             _blobStyle = model.Skin.GetStyle("BlobStyle");
             _selectedBlobStyle = model.Skin.GetStyle("SelectedBlobStyle");
-            _selectedGroupIndex = -1;
         }
 
         public override void OnGUILayout()
@@ -36,15 +33,15 @@ namespace Vis.SmartSpriteSlicer
             }
             else
             {
-                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _selectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
+                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _model.SlicingSettings.SelectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
                 _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
                 if (reorderableListResult.reordered)
                 {
-                    if (_selectedGroupIndex >= 0)
-                        _selectedGroupIndex = reorderableListResult.selected;
+                    if (_model.SlicingSettings.SelectedGroupIndex >= 0)
+                        _model.SlicingSettings.SelectedGroupIndex = reorderableListResult.selected;
                 }
                 else
-                    _selectedGroupIndex = reorderableListResult.selected;
+                    _model.SlicingSettings.SelectedGroupIndex = reorderableListResult.selected;
                 if (reorderableListResult.clicked.Id != 0 && !reorderableListResult.reordered)
                     onGroupClick(reorderableListResult.clicked);
             }
@@ -104,7 +101,7 @@ namespace Vis.SmartSpriteSlicer
             if (_model.EditedGroupId == group.Id)
             {
                 _model.EditedGroupId = 0;
-                _selectedGroupIndex = -1;
+                _model.SlicingSettings.SelectedGroupIndex = -1;
             }
             else
                 _model.EditedGroupId = group.Id;

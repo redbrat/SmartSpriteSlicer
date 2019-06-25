@@ -170,5 +170,41 @@ MonoBehaviour:
     _useGroupPivotPointSettings: 0
     _pivotPoint: 0
     _absolutePivot: {x: 0, y: 0}
+  - _id: 21
+    _flavor: 0
+    _chunkId: 2
+    _times: 4
+    _offset: {x: 0, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 0
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
+  - _id: 20
+    _flavor: 0
+    _chunkId: 3
+    _times: 3
+    _offset: {x: 8, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 0
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
   GlobalPivotPoint: 0
   GlobalAbsolutePivot: {x: 0, y: 0}
+  GroupsDependentEditing: 0
+  SelectedGroupIndex: 0
