@@ -33,7 +33,7 @@ namespace Vis.SmartSpriteSlicer
             }
             else
             {
-                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _model.SelectedGroupIndex, SmartSpriteSlicerWindow.MaxContolPanelWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
+                var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _model.SelectedGroupIndex, (int)WindowWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
                 _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
                 if (reorderableListResult.reordered)
                 {

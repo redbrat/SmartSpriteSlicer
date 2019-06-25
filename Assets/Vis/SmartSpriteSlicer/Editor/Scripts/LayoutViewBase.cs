@@ -8,6 +8,7 @@ namespace Vis.SmartSpriteSlicer
 
         public Rect WindowPosition;
         public float ReservedHeight;
+        public float WindowWidth;
 
         public override sealed void OnGUI(Rect position) {}
 

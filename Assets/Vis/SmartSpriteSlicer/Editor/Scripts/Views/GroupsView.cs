@@ -32,6 +32,7 @@ namespace Vis.SmartSpriteSlicer
                 _mainRect = GUILayoutUtility.GetLastRect();
                 _mainRect.y = _mainRect.y + _mainRect.height;
             }
+            _groupsMainPanel.WindowWidth = WindowWidth;
             _groupsMainPanel.OnGUILayout();
             if (Event.current.type == EventType.Repaint)
             {

@@ -9,7 +9,7 @@ namespace Vis.SmartSpriteSlicer
 {
     public class SmartSpriteSlicerWindow : EditorWindow
     {
-        public const int MaxContolPanelWidth = 450;
+        public const int MaxContolPanelWidth = 460;
         public const int MaxPreviewWindowWidth = 300;
         internal int EditedGroupId;
         private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
@@ -18,6 +18,15 @@ namespace Vis.SmartSpriteSlicer
         public Vector2 TextureScale => new Vector2(TextureRect.width / Texture.width, TextureRect.height / Texture.height);
         public Texture2D WhiteTexture { get; private set; }
         internal Texture2D BlackTexture { get; private set; }
+
+        public string GetPreviewTitle()
+        {
+            var result = PreviewName;
+            if (!SlicingSettings.UseCustomSpriteName)
+                result = $"{Texture.name}{result}";
+            return $"Preview: {result}";
+        }
+
         public Rect Position => position;
 
         /// <summary>

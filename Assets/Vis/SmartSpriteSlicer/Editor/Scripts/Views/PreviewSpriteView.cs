@@ -12,6 +12,8 @@ namespace Vis.SmartSpriteSlicer
         private Rect _leftResizeArea;
         private Rect _rightResizeArea;
 
+        private ExtractedPreviewWindow _windowInstanceCache;
+
         public PreviewSpriteView(SmartSpriteSlicerWindow model) : base(model)
         {
             _subWindow = new SpritePreviewWindow(model);
@@ -24,11 +26,25 @@ namespace Vis.SmartSpriteSlicer
             if (_model.PreviewedArea == null)
                 return;
 
+            if (!SpritePreviewWindow.Extracted)
+            {
+                if (_windowInstanceCache != null)
+                {
+                    _windowInstanceCache.Model = null;
+                    _windowInstanceCache.Close();
+                }
+            }
+            else if (_windowInstanceCache == null)
+            {
+                _windowInstanceCache = (ExtractedPreviewWindow)EditorWindow.GetWindow(typeof(ExtractedPreviewWindow), true, _model.GetPreviewTitle());
+                _windowInstanceCache.Model = _model;
+            }
+
+            if (SpritePreviewWindow.Extracted)
+                return;
+
             _subWindow.WindowPosition = _model.PreviewWindowRect;
-            var futureSpriteName = _model.PreviewName;
-            if (!_model.SlicingSettings.UseCustomSpriteName)
-                futureSpriteName = $"{_model.Texture.name}{futureSpriteName}";
-            _model.PreviewWindowRect = GUILayout.Window(1, _model.PreviewWindowRect, _subWindow.WindowContentCallback, new GUIContent($"Preview: {futureSpriteName}"));
+            _model.PreviewWindowRect = GUILayout.Window(1, _model.PreviewWindowRect, _subWindow.WindowContentCallback, new GUIContent(_model.GetPreviewTitle()));
             if (_model.PreviewWindowRect.x < 0)
                 _model.PreviewWindowRect.x = 0;
             if (_model.PreviewWindowRect.y < 0)
