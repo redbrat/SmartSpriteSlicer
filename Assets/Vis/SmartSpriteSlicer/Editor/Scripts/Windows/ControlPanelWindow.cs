@@ -27,6 +27,7 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUILayout();
             
             var reserve = GUILayoutUtility.GetRect(1, _model.SlicingSettings.HaveChunkGroups() ? 60 : 30);
+            _topPanelView.ReservedHeight = reserve.height;
             if (Event.current.type == EventType.Repaint)
                 _topPanelViewPosition = reserve;
 
