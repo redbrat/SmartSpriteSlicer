@@ -29,9 +29,6 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            //SlicingSettingsEditor.RenderSlicingSettingsGUI(this, _model.SlicingSettings, _chunksPanelStyle, _chunkEditPanelStyle, _chunkButtonStyle);
-
-
             var chunks = _model.SlicingSettings.Chunks;
 
             EditorGUILayout.LabelField(new GUIContent($"<b>Chunks</b>", "Here you can edit chunks"), _model.RichTextStyle);

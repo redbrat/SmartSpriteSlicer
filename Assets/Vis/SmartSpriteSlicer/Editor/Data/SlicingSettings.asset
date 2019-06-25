@@ -184,9 +184,9 @@ MonoBehaviour:
     _naming: 0
     _useCustomName: 0
     _customName: 
-    _useGroupPivotPointSettings: 0
+    _useGroupPivotPointSettings: 1
     _pivotPoint: 0
-    _absolutePivot: {x: 0, y: 0}
+    _absolutePivot: {x: 0, y: 51}
   - _id: 20
     _flavor: 0
     _chunkId: 3
@@ -204,7 +204,17 @@ MonoBehaviour:
     _useGroupPivotPointSettings: 0
     _pivotPoint: 0
     _absolutePivot: {x: 0, y: 0}
+  ScriptableNodes:
+  - _id: 1
+    _type: 0
+    _color: {r: 0.6917883, g: 0.45071405, b: 0.9142852, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _pattern: 1231232
+  - _id: 3
+    _type: 0
+    _color: {r: 0.8951316, g: 0.8547752, b: 0.32152838, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _pattern: 
   GlobalPivotPoint: 0
   GlobalAbsolutePivot: {x: 0, y: 0}
   GroupsDependentEditing: 0
-  SelectedGroupIndex: 0

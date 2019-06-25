@@ -34,11 +34,14 @@ namespace Vis.SmartSpriteSlicer
             else
             {
                 var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _model.SelectedGroupIndex, (int)WindowWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
+                if (reorderableListResult.reordered)
+                    Undo.RecordObject(_model.SlicingSettings, $"Chunk groups reordered");
                 _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
                 if (reorderableListResult.reordered)
                 {
                     if (_model.SelectedGroupIndex >= 0)
                         _model.SelectedGroupIndex = reorderableListResult.selected;
+                    EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 else
                     _model.SelectedGroupIndex = reorderableListResult.selected;

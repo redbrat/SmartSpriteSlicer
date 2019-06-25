@@ -7,19 +7,13 @@ namespace Vis.SmartSpriteSlicer
     {
         private readonly LayoutViewBase _topPanelView;
 
-        public static LayoutViewBase ChunksView;
-        public static LayoutViewBase GlobalSettingsView;
-        public static LayoutViewBase GroupsView;
-        public static ViewBase DraggableButtonsView;
+        public static LayoutViewBase TabsView;
 
         public ControlPanelWindow(SmartSpriteSlicerWindow model) : base(model)
         {
             _topPanelView = new TopPanelView(model);
 
-            ChunksView = new ChunksView(model);
-            GlobalSettingsView = new GlobalSettingsView(model);
-            GroupsView = new GroupsView(model);
-            DraggableButtonsView = new DraggableButtonView(model);
+            TabsView = new ControlPanelTabsView(model);
         }
 
         private Rect _topPanelViewPosition;
@@ -57,13 +51,8 @@ namespace Vis.SmartSpriteSlicer
 
         public static void DrawControlPanel(float windowWidth)
         {
-            ChunksView.OnGUILayout();
-            EditorGUILayout.Space();
-            GlobalSettingsView.OnGUILayout();
-            GroupsView.WindowWidth = windowWidth;
-            GroupsView.OnGUILayout();
-
-            DraggableButtonsView.OnGUI(Rect.zero);
+            TabsView.WindowWidth = windowWidth;
+            TabsView.OnGUILayout();
         }
     }
 }

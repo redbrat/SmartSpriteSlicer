@@ -11,13 +11,13 @@ namespace Vis.SmartSpriteSlicer
     {
         public const int MaxContolPanelWidth = 460;
         public const int MaxPreviewWindowWidth = 300;
-        internal int EditedGroupId;
+        public int EditedGroupId;
         private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
         private const string _slicingSettingsName = "SlicingSettings.asset";
 
         public Vector2 TextureScale => new Vector2(TextureRect.width / Texture.width, TextureRect.height / Texture.height);
         public Texture2D WhiteTexture { get; private set; }
-        internal Texture2D BlackTexture { get; private set; }
+        public Texture2D BlackTexture { get; private set; }
 
         public string GetPreviewTitle()
         {
@@ -63,7 +63,7 @@ namespace Vis.SmartSpriteSlicer
         public TextureImporter Importer;
 
         private MainView _view;
-        internal Rect TextureRect;
+        public Rect TextureRect;
 
         public List<int> IterableCtrlIds = new List<int>();
         public List<Rect> IterableAreas = new List<Rect>();
@@ -71,15 +71,19 @@ namespace Vis.SmartSpriteSlicer
 
         public SpriteIterationMode IterationMode;
 
-        internal string PreviewName;
-        internal int? PreviewedAreaControlId;
-        internal Rect? PreviewedArea;
-        internal int? PreviewedGlobalIndex;
-        internal SpriteGroup? PreviewGroup;
-        internal SpriteChunk? PreviewChunk;
-        internal int SelectedGroupIndex;
+        public string PreviewName;
+        public int? PreviewedAreaControlId;
+        public Rect? PreviewedArea;
+        public int? PreviewedGlobalIndex;
+        public SpriteGroup? PreviewGroup;
+        public SpriteChunk? PreviewChunk;
+        public int SelectedGroupIndex;
 
-        internal void Initialize(Texture2D sprite, TextureImporter importer)
+        public int SelectedNodeIndex;
+        public int EditedNodeId;
+        public ControlPanelTabs ControlPanelTab;
+
+        public void Initialize(Texture2D sprite, TextureImporter importer)
         {
             Texture = sprite;
             Importer = importer;
@@ -110,7 +114,7 @@ namespace Vis.SmartSpriteSlicer
             _view?.OnGUI(position);
         }
 
-        internal static GUISkin loadGuiSkin() => Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
+        public static GUISkin loadGuiSkin() => Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
 
         private void manageDragAndDrop()
         {
