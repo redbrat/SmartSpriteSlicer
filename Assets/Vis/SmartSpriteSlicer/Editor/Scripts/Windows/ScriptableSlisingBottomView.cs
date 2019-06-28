@@ -42,6 +42,7 @@ namespace Vis.SmartSpriteSlicer
                     {
                         var chunk = currentChunkIndex < report.Chunks.Count ? report.Chunks[currentChunkIndex] : null;
                         if (chunk != null)
+                        {
                             if (chunk.StartIndex == i)
                             {
                                 var hexColorString = ColorUtility.ToHtmlStringRGB(chunk.Color);
@@ -60,21 +61,11 @@ namespace Vis.SmartSpriteSlicer
                                     i--;
                                 continue;
                             }
+                        }
                         sb.Append(text[i]);
                     }
                     text = sb.ToString();
                 }
-                //for (int i = report.Chunks.Count - 1; i >= 0; i--)
-                //{
-                //    var chunk = report.Chunks[i];
-                //    var hexColorString = ColorUtility.ToHtmlStringRGB(chunk.Color);
-                //    if (!chunk.SuccessfullyParsed)
-                //        text = text.Insert(chunk.StopIndex, $"</i></b>");
-                //    text = text.Insert(chunk.StopIndex, $"</color>");
-                //    text = text.Insert(chunk.StartIndex, $"<color=#{hexColorString}>");
-                //    if (!chunk.SuccessfullyParsed)
-                //        text = text.Insert(chunk.StartIndex, $"<b><i>");
-                //}
                 _colorizedTextCache = (_model.SlicingSettings.ScriptableSlicingLayoutHash, text);
             }
             return _colorizedTextCache.text;

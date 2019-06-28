@@ -87,12 +87,12 @@ namespace Vis.SmartSpriteSlicer
                             switch (currentNode.Type)
                             {
                                 case ScriptableNodeType.Name:
-                                    name = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    name = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, true, sb.ToString());
                                     textChunks.Add(name);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Group:
-                                    group = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    group = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, true, sb.ToString());
                                     textChunks.Add(group);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
