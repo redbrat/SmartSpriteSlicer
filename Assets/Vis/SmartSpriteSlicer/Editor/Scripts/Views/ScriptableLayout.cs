@@ -190,7 +190,7 @@ namespace Vis.SmartSpriteSlicer
                     else
                         fullName = name.Text;
                     if (group != default)
-                        fullName = $"{group}{_slicingSettings.NamePartsSeparator}{fullName}";
+                        fullName = $"{group.Text}{_slicingSettings.NamePartsSeparator}{fullName}";
 
                     if (_report == null || !_report.ParsingFailed)
                         yield return (globalIndex++, fullName, position, localPosition, pivotPoint, localPivotPoint);
