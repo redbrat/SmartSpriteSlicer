@@ -46,21 +46,21 @@ namespace Vis.SmartSpriteSlicer
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
-                //var newColor = EditorGUILayout.ColorField(new GUIContent($"Color:"), node.Color);
-                //if (newColor != node.Color)
-                //{
-                //    Undo.RecordObject(_model.SlicingSettings, "Scriptable node color changed");
-                //    _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetColor(newColor);
-                //    EditorUtility.SetDirty(_model.SlicingSettings);
-                //}
+                var newColor = EditorGUILayout.ColorField(new GUIContent($"Color:"), node.Color);
+                if (newColor != node.Color)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Scriptable node color changed");
+                    _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetColor(newColor);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
 
-                //var newTextColor = EditorGUILayout.ColorField(new GUIContent($"Text Color:"), node.TextColor);
-                //if (newTextColor != node.TextColor)
-                //{
-                //    Undo.RecordObject(_model.SlicingSettings, "Scriptable node text color changed");
-                //    _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetTextColor(newTextColor);
-                //    EditorUtility.SetDirty(_model.SlicingSettings);
-                //}
+                var newTextColor = EditorGUILayout.ColorField(new GUIContent($"Text Color:"), node.TextColor);
+                if (newTextColor != node.TextColor)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Scriptable node text color changed");
+                    _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetTextColor(newTextColor);
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
             }
 
             if (GUILayout.Button($"Delete node"))

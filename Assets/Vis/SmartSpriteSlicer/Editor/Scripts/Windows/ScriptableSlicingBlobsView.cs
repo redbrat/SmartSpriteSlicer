@@ -48,13 +48,14 @@ namespace Vis.SmartSpriteSlicer
 
         private Color getBlobColor(ScriptableNode node)
         {
-            switch (node.Type)
-            {
-                case ScriptableNodeType.Text:
-                    return new Color(0, 1, 1, 0.5f);
-                default:
-                    return Color.white * 0.95f;
-            }
+            return node.Color;
+            //switch (node.Type)
+            //{
+            //    case ScriptableNodeType.Text:
+            //        return new Color(0, 1, 1, 0.5f);
+            //    default:
+            //        return Color.white * 0.95f;
+            //}
         }
 
         private GUIContent getBlobContent(ScriptableNode node)

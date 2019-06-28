@@ -44,6 +44,7 @@ namespace Vis.SmartSpriteSlicer
 
             for (int i = 0; i < text.Length; i++)
             {
+                var nextTextIndex = i + 1;
                 var currentChar = text[i];
                 var currentNode = nodes[nodeIndex];
                 ScriptableNode? nextNode = nodeIndex >= nodes.Count - 1 ? null : (ScriptableNode?)nodes[nodeIndex + 1];
@@ -54,19 +55,25 @@ namespace Vis.SmartSpriteSlicer
                         sb.Append(currentChar);
                         if (currentChar == _endOfLineChar)
                         {
-                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, ScriptableNodeType.EndOfLine, true, sb.ToString() ));
-                            textChunkStartIndex = 0;
+                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, ScriptableNodeType.EndOfLine, true, sb.ToString()));
+                            textChunkStartIndex = nextTextIndex;
 
                             nodeIndex++;
                             sb.Clear();
                         }
                         break;
                     case ScriptableNodeType.Text:
-                        sb.Append(currentChar);
-                        if (sb.ToString() == currentNode.Pattern)
+                        if (string.IsNullOrEmpty(currentNode.Pattern))
                         {
-                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, ScriptableNodeType.Text, true, sb.ToString() ));
-                            textChunkStartIndex = 0;
+                            nodeIndex++;
+                            i--;
+                            break;
+                        }
+                        sb.Append(currentChar);
+                        if (stringCoincide(sb.ToString(), currentNode.Pattern))
+                        {
+                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, ScriptableNodeType.Text, true, sb.ToString()));
+                            textChunkStartIndex = nextTextIndex;
 
                             nodeIndex++;
                             sb.Clear();
@@ -80,44 +87,44 @@ namespace Vis.SmartSpriteSlicer
                             switch (currentNode.Type)
                             {
                                 case ScriptableNodeType.Name:
-                                    name = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    name = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(name);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Group:
-                                    group = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    group = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(group);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.X:
-                                    x = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    x = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(x);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Y:
-                                    y = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    y = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(y);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Width:
-                                    width = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    width = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(width);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Height:
-                                    height = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    height = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(height);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.PivotX:
-                                    pivotX = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    pivotX = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(pivotX);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.PivotY:
-                                    pivotY = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, i, currentNode.Type, false, sb.ToString());
+                                    pivotY = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
                                     textChunks.Add(pivotY);
-                                    textChunkStartIndex = 0;
+                                    textChunkStartIndex = nextTextIndex;
                                     break;
                             }
                             sb.Clear();
@@ -172,19 +179,19 @@ namespace Vis.SmartSpriteSlicer
                     var localPosition = new Rect(numX, numY, numWidth, numHeight);
                     var position = new Rect(_position.position + localPosition.position, localPosition.size);
                     var localPivotPoint = new Vector2Int(numPivotX, numPivotY);
-                    var pivotPoint = toVector2Int(_position.position) + localPivotPoint;
+                    var pivotPoint = _position.position.ToVector2Int() + localPivotPoint;
 
-                    localPivotPoint += toVector2Int(localPosition.position);
-                    pivotPoint += toVector2Int(localPosition.position);
+                    localPivotPoint += localPosition.position.ToVector2Int();
+                    pivotPoint += localPosition.position.ToVector2Int();
 
-                    var fullName = string.Empty;
+                    string fullName;
                     if (name == default)
                         fullName = globalIndex.ToString();
                     else
                         fullName = name.Text;
                     if (group != default)
                         fullName = $"{group}{_slicingSettings.NamePartsSeparator}{fullName}";
-                    
+
                     if (_report == null || !_report.ParsingFailed)
                         yield return (globalIndex++, fullName, position, localPosition, pivotPoint, localPivotPoint);
 
@@ -197,7 +204,25 @@ namespace Vis.SmartSpriteSlicer
                     name = default;
                     group = default;
                 }
+                if (_report != null)
+                {
+                    _report.Chunks.AddRange(textChunks);
+                    if (_report.ParsingFailed)
+                        break;
+                }
+                textChunks.Clear();
             }
+        }
+
+        private bool stringCoincide(string what, string with)
+        {
+            if (what.Length < with.Length)
+                return false;
+            var j = what.Length - 1;
+            for (int i = with.Length - 1; i >= 0; i--)
+                if (with[i] != what[j--])
+                    return false;
+            return true;
         }
 
         private bool nextIsSeparator(string text, ScriptableNode? node, int index)
@@ -212,7 +237,7 @@ namespace Vis.SmartSpriteSlicer
             if (value.Type == ScriptableNodeType.EndOfLine)
                 return text[index + 1] == _endOfLineChar;
             if (string.IsNullOrEmpty(value.Pattern))
-                return true; //Не уверен, что тут не false
+                return false; //Не уверен, что тут не true
             for (int i = index + 1; i < text.Length; i++)
             {
                 var localIndex = i - index - 1;
@@ -223,8 +248,6 @@ namespace Vis.SmartSpriteSlicer
             }
             return true; //Если достигли конца текста без ошибок присылаем труе
         }
-
-        private Vector2Int toVector2Int(Vector2 value) => new Vector2Int(Mathf.RoundToInt(value.x), Mathf.RoundToInt(value.y));
 
         IEnumerator IEnumerable.GetEnumerator()
         {

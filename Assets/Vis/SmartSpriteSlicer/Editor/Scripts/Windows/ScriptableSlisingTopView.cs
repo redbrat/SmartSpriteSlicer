@@ -18,32 +18,41 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            EditorGUILayout.BeginHorizontal(_panelStyle);
+            EditorGUILayout.BeginVertical(_panelStyle);
 
-            EditorGUILayout.LabelField(new GUIContent($"<b>Text</b>", "Enter text here"), _model.RichTextStyle);
+            EditorGUILayout.LabelField(new GUIContent($"<b>Test</b>"), _model.RichTextStyle);
 
-            var haveText = !string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText);
-            var wholeSet = _model.SlicingSettings.HasWholeSetOfNodes();
-            var hasAllThingsNicelySeparated = _model.SlicingSettings.HasAllNodesSeparated();
-            GUI.enabled = wholeSet && haveText && hasAllThingsNicelySeparated;
-
-            var tooltip = default(string);
-            if (!haveText)
-                tooltip = $"You must have some text to test";
-            else if (!wholeSet)
-                tooltip = $"You must have the whole set of required nodes: {_model.SlicingSettings.GetListOfNodesRequired()}";
-            else if (!hasAllThingsNicelySeparated)
-                tooltip = $"You must have all your special nodes separated.";
-            else
-                tooltip = "Test your pattern on provided text.";
-
-            if (GUILayout.Button(new GUIContent($"Test", tooltip)))
+            if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) &&
+                _model.SlicingSettings.ScriptableNodes.Count > 0)
             {
+                var messageType = MessageType.Error;
+                var haveText = !string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText);
+                var wholeSet = _model.SlicingSettings.HasWholeSetOfNodes();
+                var hasAllThingsNicelySeparated = _model.SlicingSettings.HasAllNodesSeparated();
 
+                var tooltip = default(string);
+                if (!haveText)
+                    tooltip = $"You must have some text to test";
+                else if (!wholeSet)
+                    tooltip = $"You must have the whole set of required nodes: {_model.SlicingSettings.GetListOfNodesRequired()}";
+                else if (!hasAllThingsNicelySeparated)
+                    tooltip = $"You must have all your special nodes separated.";
+                else
+                {
+                    var deepTestPassed = _model.SlicingSettings.NodesDeepTestPassed();
+                    if (deepTestPassed)
+                    {
+                        tooltip = "You pattern runs successfully on provided text.";
+                        messageType = MessageType.Info;
+                    }
+                    else
+                        tooltip = "You pattern doesn't run successfully on provided text.";
+                }
+
+                EditorGUILayout.HelpBox(tooltip, messageType);
             }
-            GUI.enabled = true;
 
-            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
         }
     }
 }

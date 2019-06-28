@@ -22,7 +22,10 @@ namespace Vis.SmartSpriteSlicer
 
             _top.OnGUILayout();
             _center.OnGUILayout();
-            _bottom.OnGUILayout();
+            if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) && 
+                _model.SlicingSettings.HasWholeSetOfNodes() && 
+                _model.SlicingSettings.HasAllNodesSeparated())
+                _bottom.OnGUILayout();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace Vis.SmartSpriteSlicer
         public List<SpriteChunk> Chunks = new List<SpriteChunk>();
         public List<SpriteGroup> ChunkGroups = new List<SpriteGroup>();
         public List<ScriptableNode> ScriptableNodes = new List<ScriptableNode>();
+
         public PivotPoint GlobalPivotPoint;
         public Vector2Int GlobalAbsolutePivot;
         public bool GroupsDependentEditing;
@@ -45,7 +47,8 @@ namespace Vis.SmartSpriteSlicer
             for (int i = 0; i < ScriptableNodes.Count; i++)
             {
                 var node = ScriptableNodes[i];
-                if ((node.Type == ScriptableNodeType.Text && !string.IsNullOrEmpty(node.Pattern)) || node.Type == ScriptableNodeType.EndOfLine)
+                //Если текстовая нода без патерна но мы видели валидный сепаратор до этого - значит мы видели сепаратор. Вроде бы.
+                if ((node.Type == ScriptableNodeType.Text && (seenSeparator || !string.IsNullOrEmpty(node.Pattern))) || node.Type == ScriptableNodeType.EndOfLine)
                 {
                     seenSeparator = true;
                     if (i == 0)
@@ -94,6 +97,16 @@ namespace Vis.SmartSpriteSlicer
                 result.Add(ScriptableNodeType.PivotY);
 
             return result;
+        }
+
+        internal bool NodesDeepTestPassed()
+        {
+            var report = new ScriptableLayoutReport();
+            var layout = new ScriptableLayout(this, Rect.zero, report);
+            foreach (var item in layout);
+            //var enumerator = new ScriptableLayout(this, Rect.zero, report).GetEnumerator();
+            //enumerator.MoveNext(); // Making just one pass to ensure it's working
+            return !report.ParsingFailed;
         }
 
         public int GetNextGroupId()

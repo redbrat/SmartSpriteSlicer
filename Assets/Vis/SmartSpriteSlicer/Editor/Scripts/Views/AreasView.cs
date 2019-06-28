@@ -18,10 +18,12 @@ namespace Vis.SmartSpriteSlicer
                     drawManualSlicingAreas(position);
                     break;
                 case ControlPanelTabs.ScriptableSclicing:
-                    if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) && _model.SlicingSettings.HasWholeSetOfNodes() && _model.SlicingSettings.HasAllNodesSeparated())
+                    if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) && 
+                        _model.SlicingSettings.ScriptableNodes.Count > 0 && 
+                        _model.SlicingSettings.HasWholeSetOfNodes() && 
+                        _model.SlicingSettings.HasAllNodesSeparated() && 
+                        _model.SlicingSettings.NodesDeepTestPassed())
                         drawScriptableSlicingAreas(position);
-                    break;
-                default:
                     break;
             }
         }
