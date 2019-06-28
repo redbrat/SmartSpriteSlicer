@@ -33,6 +33,7 @@ namespace Vis.SmartSpriteSlicer
             {
                 Undo.RecordObject(_model.SlicingSettings, "Scriptable node type changed");
                 _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetType(availableTypes[newSelectedIndex]);
+                _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
 
@@ -43,6 +44,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Scriptable node text changed");
                     _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetPattern(newText);
+                    _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -51,6 +53,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Scriptable node color changed");
                     _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetColor(newColor);
+                    _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -59,6 +62,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Scriptable node text color changed");
                     _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetTextColor(newTextColor);
+                    _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
             }
@@ -67,6 +71,7 @@ namespace Vis.SmartSpriteSlicer
             {
                 Undo.RecordObject(_model.SlicingSettings, "Scriptable node deleted");
                 _model.SlicingSettings.ScriptableNodes.RemoveAt(nodeIndex);
+                _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
 

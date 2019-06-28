@@ -28,9 +28,17 @@ namespace Vis.SmartSpriteSlicer
             }
         }
 
+        private (int hash, (int globalIndex, string name, Rect position, Rect localPosition, Vector2Int pivotPoint, Vector2Int localPivotPoint)[] areas) _nodesAreasCache;
         private void drawScriptableSlicingAreas(Rect position)
         {
-            var layout = new ScriptableLayout(_model.SlicingSettings, position);
+            if (_nodesAreasCache.hash != _model.SlicingSettings.ScriptableSlicingLayoutHash || _nodesAreasCache.areas == null)
+            {
+                var layout = new ScriptableLayout(_model.SlicingSettings, position);
+                var areasList = new List<(int globalIndex, string name, Rect position, Rect localPosition, Vector2Int pivotPoint, Vector2Int localPivotPoint)>();
+                foreach (var area in layout)
+                    areasList.Add(area);
+                _nodesAreasCache = (_model.SlicingSettings.ScriptableSlicingLayoutHash, areasList.ToArray());
+            }
 
             var outlineColor = Color.gray;
             var faceColor1 = outlineColor;
@@ -38,7 +46,7 @@ namespace Vis.SmartSpriteSlicer
             var faceColor0 = faceColor1;
             faceColor0.a = 0.1f;
 
-            foreach (var area in layout)
+            foreach (var area in _nodesAreasCache.areas)
             {
                 var controlId = GUIUtility.GetControlID(FocusType.Passive);
                 _model.IterableCtrlIds.Add(controlId);

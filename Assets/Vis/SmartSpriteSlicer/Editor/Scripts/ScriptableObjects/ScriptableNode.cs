@@ -45,5 +45,16 @@ namespace Vis.SmartSpriteSlicer
         internal ScriptableNode SetColor(Color color) => new ScriptableNode(_id, _type, color, _textColor, _pattern);
         internal ScriptableNode SetTextColor(Color textColor) => new ScriptableNode(_id, _type, _color, textColor, _pattern);
         internal ScriptableNode SetPattern(string pattern) => new ScriptableNode(_id, _type, _color, _textColor, pattern);
+
+        public override int GetHashCode()
+        {
+            var result = _id.GetHashCode();
+            result += _type.GetHashCode();
+            result += _color.GetHashCode();
+            result += _textColor.GetHashCode();
+            if (_pattern != null)
+                result += _pattern.GetHashCode();
+            return result;
+        }
     }
 }

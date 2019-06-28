@@ -21,7 +21,8 @@ namespace Vis.SmartSpriteSlicer
             if (newTestText != _model.SlicingSettings.ScriptabeSlicingTestText)
             {
                 Undo.RecordObject(_model.SlicingSettings, $"Scriptable slicing test text changed");
-                _model.SlicingSettings.ScriptabeSlicingTestText = newTestText;
+                _model.SlicingSettings.ScriptabeSlicingTestText = /*newTestText.Length >= 256 ? newTestText.Substring(0, 256) : */newTestText;
+                _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
             EditorGUILayout.EndHorizontal();

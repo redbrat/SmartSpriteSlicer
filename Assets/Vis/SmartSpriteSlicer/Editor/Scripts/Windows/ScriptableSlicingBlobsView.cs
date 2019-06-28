@@ -32,6 +32,7 @@ namespace Vis.SmartSpriteSlicer
                 if (reorderableListResult.reordered)
                     Undo.RecordObject(_model.SlicingSettings, $"Scriptable nodes reordered");
                 _model.SlicingSettings.ScriptableNodes = reorderableListResult.list;
+                _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                 if (reorderableListResult.reordered)
                 {
                     if (_model.SelectedNodeIndex >= 0)

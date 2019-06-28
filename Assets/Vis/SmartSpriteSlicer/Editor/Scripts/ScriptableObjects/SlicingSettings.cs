@@ -24,6 +24,13 @@ namespace Vis.SmartSpriteSlicer
         public bool GroupsDependentEditing;
 
         public string ScriptabeSlicingTestText;
+        public int ScriptableSlicingLayoutHash { get; private set; }
+        public void UpdateScriptableSlicingLayoutHash()
+        {
+            ScriptableSlicingLayoutHash = ScriptabeSlicingTestText.GetHashCode();
+            for (int i = 0; i < ScriptableNodes.Count; i++)
+                ScriptableSlicingLayoutHash += ScriptableNodes[i].GetHashCode();
+        }
 
         public int GetNextChunkId()
         {
@@ -99,14 +106,17 @@ namespace Vis.SmartSpriteSlicer
             return result;
         }
 
+        private (int hash, bool result) _nodesDeepTestResultCache;
         internal bool NodesDeepTestPassed()
         {
-            var report = new ScriptableLayoutReport();
-            var layout = new ScriptableLayout(this, Rect.zero, report);
-            foreach (var item in layout);
-            //var enumerator = new ScriptableLayout(this, Rect.zero, report).GetEnumerator();
-            //enumerator.MoveNext(); // Making just one pass to ensure it's working
-            return !report.ParsingFailed;
+            if (_nodesDeepTestResultCache.hash != ScriptableSlicingLayoutHash)
+            {
+                var report = new ScriptableLayoutReport();
+                var layout = new ScriptableLayout(this, Rect.zero, report);
+                foreach (var item in layout) ;
+                _nodesDeepTestResultCache = (ScriptableSlicingLayoutHash, report.ParsingFailed);
+            }
+            return !_nodesDeepTestResultCache.result;
         }
 
         public int GetNextGroupId()
