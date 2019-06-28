@@ -25,10 +25,6 @@ namespace Vis.SmartSpriteSlicer
                 _model.SlicingSettings.ScriptableNodes.Add(new ScriptableNode(_model.SlicingSettings.GetNextNodeId()));
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
-            if (GUILayout.Button(new GUIContent($"Apply"), _buttonsStyle, GUILayout.MaxWidth(120f)))
-            {
-                Debug.Log("Applying scriptable slice");
-            }
             EditorGUILayout.EndHorizontal();
         }
     }

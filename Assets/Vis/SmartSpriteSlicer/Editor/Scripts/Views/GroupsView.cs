@@ -26,7 +26,7 @@ namespace Vis.SmartSpriteSlicer
             EditorGUILayout.LabelField(new GUIContent($"<b>Groups</b>", $"Here you can edit groups of chunks, end-of-lines, spaces etc."), _model.RichTextStyle);
 
             _groupsTopPanel.OnGUILayout();
-            
+
             if (Event.current.type == EventType.Repaint)
             {
                 _mainRect = GUILayoutUtility.GetLastRect();

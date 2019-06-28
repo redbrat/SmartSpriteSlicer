@@ -12,18 +12,103 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUI(position);
 
+            switch (_model.ControlPanelTab)
+            {
+                case ControlPanelTabs.ManualSlicing:
+                    drawManualSlicingAreas(position);
+                    break;
+                case ControlPanelTabs.ScriptableSclicing:
+                    if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) && _model.SlicingSettings.HasWholeSetOfNodes() && _model.SlicingSettings.HasAllNodesSeparated())
+                        drawScriptableSlicingAreas(position);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void drawScriptableSlicingAreas(Rect position)
+        {
+            var layout = new ScriptableLayout(_model.SlicingSettings, position);
+
+            var outlineColor = Color.gray;
+            var faceColor1 = outlineColor;
+            faceColor1.a = 0.5f;
+            var faceColor0 = faceColor1;
+            faceColor0.a = 0.1f;
+
+            foreach (var area in layout)
+            {
+                var controlId = GUIUtility.GetControlID(FocusType.Passive);
+                _model.IterableCtrlIds.Add(controlId);
+                _model.IterableAreas.Add(area.position);
+                _model.IterablePivotPoints.Add(area.pivotPoint);
+
+                var scaledPart = area.position.position - position.position;
+                var scaledPos = new Rect(Vector2.Scale(_model.TextureScale, scaledPart), Vector2.Scale(_model.TextureScale, area.position.size));
+                scaledPos.position += position.position;
+
+                var binaryButtonResult = BinaryButton.Draw(GUIContent.none, scaledPos, outlineColor, faceColor0, faceColor1, _model.PreviewedAreaControlId == controlId);
+                if (binaryButtonResult.clicked)
+                {
+                    if (_model.PreviewedAreaControlId == controlId)
+                    {
+                        _model.PreviewedAreaControlId = null;
+                        _model.PreviewedArea = null;
+                        _model.PreviewedPivotPoint = null;
+                        _model.PreviewedGlobalIndex = null;
+                        _model.PreviewName = null;
+                        _model.PreviewGroup = null;
+                        _model.PreviewChunk = null;
+                    }
+                    else
+                    {
+                        _model.PreviewedAreaControlId = controlId;
+                    }
+                }
+
+                if (_model.PreviewedAreaControlId == controlId)
+                {
+                    if (_model.PreviewedAreaControlId == null)
+                    {
+                        _model.PreviewedArea = null;
+                        _model.PreviewedPivotPoint = null;
+                        _model.PreviewedGlobalIndex = null;
+                        _model.PreviewName = null;
+                        _model.PreviewGroup = null;
+                        _model.PreviewChunk = null;
+                    }
+                    else
+                    {
+                        _model.PreviewedArea = area.position;
+                        _model.PreviewedPivotPoint = area.pivotPoint;
+                        _model.PreviewedGlobalIndex = _model.IterableCtrlIds.Count - 1;
+                        _model.PreviewName = area.name;
+                    }
+                }
+
+                scaledPart = area.pivotPoint - position.position;
+                var scaledPivot = Vector2.Scale(_model.TextureScale, scaledPart);
+                scaledPivot += position.position;
+                var worldPos = new Vector3(scaledPivot.x, scaledPivot.y, 0);
+                var newWorldPos = DraggableDisc.Draw(worldPos, Vector3.back, 4f, outlineColor);
+            }
+        }
+
+        private void drawManualSlicingAreas(Rect position)
+        {
             var layout = new Layout(_model.SlicingSettings, position);
 
             foreach (var area in layout)
             {
                 var outlineColor = area.chunk.Color;
-                var faceColor1 = area.chunk.Color;
+                var faceColor1 = outlineColor;
                 faceColor1.a = 0.5f;
                 var faceColor0 = faceColor1;
                 faceColor0.a = 0.1f;
                 var controlId = GUIUtility.GetControlID(FocusType.Passive);
                 _model.IterableCtrlIds.Add(controlId);
                 _model.IterableAreas.Add(area.position);
+                _model.IterablePivotPoints.Add(area.pivotPoint);
                 if (!_model.IterableCtrlIdsToGroupsIds.ContainsKey(controlId))
                     _model.IterableCtrlIdsToGroupsIds.Add(controlId, area.group.Id);
 
@@ -38,6 +123,7 @@ namespace Vis.SmartSpriteSlicer
                     {
                         _model.PreviewedAreaControlId = null;
                         _model.PreviewedArea = null;
+                        _model.PreviewedPivotPoint = null;
                         _model.PreviewedGlobalIndex = null;
                         _model.PreviewName = null;
                         _model.PreviewGroup = null;
@@ -56,6 +142,7 @@ namespace Vis.SmartSpriteSlicer
                     if (_model.PreviewedAreaControlId == null)
                     {
                         _model.PreviewedArea = null;
+                        _model.PreviewedPivotPoint = null;
                         _model.PreviewedGlobalIndex = null;
                         _model.PreviewName = null;
                         _model.PreviewGroup = null;
@@ -64,6 +151,7 @@ namespace Vis.SmartSpriteSlicer
                     else
                     {
                         _model.PreviewedArea = area.position;
+                        _model.PreviewedPivotPoint = area.pivotPoint;
                         _model.PreviewedGlobalIndex = _model.IterableCtrlIds.Count - 1;
                         _model.PreviewName = area.name;
                         _model.PreviewGroup = area.group;

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
     public class SlicingSettings : ScriptableObject
     {
+        private readonly ScriptableNodeType[] _requiredSetOfNodes = new ScriptableNodeType[] { ScriptableNodeType.X, ScriptableNodeType.Y, ScriptableNodeType.Width, ScriptableNodeType.Height };
+
         public bool UseCustomSpriteName;
         public string CustomName = "sprite";
         public string NamePartsSeparator = "-";
@@ -19,11 +21,53 @@ namespace Vis.SmartSpriteSlicer
         public Vector2Int GlobalAbsolutePivot;
         public bool GroupsDependentEditing;
 
+        public string ScriptabeSlicingTestText;
+
         public int GetNextChunkId()
         {
             if (Chunks.Count == 0)
                 return 1;
             return Chunks.OrderByDescending(c => c.Id).First().Id + 1;
+        }
+
+        internal bool HasWholeSetOfNodes()
+        {
+            for (int i = 0; i < _requiredSetOfNodes.Length; i++)
+                if (!ScriptableNodes.Where(n => n.Type == _requiredSetOfNodes[i]).Any())
+                    return false;
+            return true;
+        }
+
+        internal bool HasAllNodesSeparated()
+        {
+            var seenSeparator = false;
+            var separatorWasOnStart = false;
+            for (int i = 0; i < ScriptableNodes.Count; i++)
+            {
+                var node = ScriptableNodes[i];
+                if ((node.Type == ScriptableNodeType.Text && !string.IsNullOrEmpty(node.Pattern)) || node.Type == ScriptableNodeType.EndOfLine)
+                {
+                    seenSeparator = true;
+                    if (i == 0)
+                        separatorWasOnStart = true;
+                    continue;
+                }
+                if (i > 0 && !seenSeparator) //Если уже не первая нода а мы все еще не видели сепаратора то вертаем false
+                    return false;
+                seenSeparator = false;
+            }
+            if (!separatorWasOnStart && !seenSeparator) //Если сепаратора не было ни в начале ни в конце - вертаем false
+                return false;
+            return true;
+        }
+
+        internal string GetListOfNodesRequired()
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < _requiredSetOfNodes.Length; i++)
+                sb.Append($", {_requiredSetOfNodes[i]}");
+            sb.Remove(0, 2);
+            return sb.ToString();
         }
 
         internal List<ScriptableNodeType> GetAvailableNodeTypes()
@@ -34,6 +78,8 @@ namespace Vis.SmartSpriteSlicer
             result.Add(ScriptableNodeType.EndOfLine);
             if (!ScriptableNodes.Where(n => n.Type == ScriptableNodeType.Name).Any())
                 result.Add(ScriptableNodeType.Name);
+            if (!ScriptableNodes.Where(n => n.Type == ScriptableNodeType.Group).Any())
+                result.Add(ScriptableNodeType.Group);
             if (!ScriptableNodes.Where(n => n.Type == ScriptableNodeType.X).Any())
                 result.Add(ScriptableNodeType.X);
             if (!ScriptableNodes.Where(n => n.Type == ScriptableNodeType.Y).Any())

@@ -57,6 +57,7 @@ namespace Vis.SmartSpriteSlicer
         [NonSerialized]
         public GUISkin Skin;
         public GUIStyle RichTextStyle => Skin.GetStyle($"RichText");
+
         [NonSerialized]
         public Texture2D Texture;
         [NonSerialized]
@@ -67,6 +68,7 @@ namespace Vis.SmartSpriteSlicer
 
         public List<int> IterableCtrlIds = new List<int>();
         public List<Rect> IterableAreas = new List<Rect>();
+        public List<Vector2Int> IterablePivotPoints = new List<Vector2Int>();
         public Dictionary<int, int> IterableCtrlIdsToGroupsIds = new Dictionary<int, int>();
 
         public SpriteIterationMode IterationMode;
@@ -74,6 +76,7 @@ namespace Vis.SmartSpriteSlicer
         public string PreviewName;
         public int? PreviewedAreaControlId;
         public Rect? PreviewedArea;
+        public Vector2Int? PreviewedPivotPoint;
         public int? PreviewedGlobalIndex;
         public SpriteGroup? PreviewGroup;
         public SpriteChunk? PreviewChunk;
@@ -156,30 +159,58 @@ namespace Vis.SmartSpriteSlicer
             Importer.spriteImportMode = SpriteImportMode.Multiple;
             var sprites = new List<SpriteMetaData>();
 
-            var globalName = Texture.name;
-            if (SlicingSettings.UseCustomSpriteName)
-                globalName = SlicingSettings.CustomName;
-
-            var layout = new Layout(SlicingSettings, new Rect(Vector2.zero, TextureRect.position));
-            foreach (var area in layout)
+            switch (ControlPanelTab)
             {
-                var groupName = area.chunk.GetHumanFriendlyName();
-                if (area.group.UseCustomName)
-                    groupName = area.group.CustomName;
+                case ControlPanelTabs.ManualSlicing:
+                    {
+                        var globalName = Texture.name;
+                        if (SlicingSettings.UseCustomSpriteName)
+                            globalName = SlicingSettings.CustomName;
 
-                var name = $"{globalName}{SlicingSettings.NamePartsSeparator}{groupName}{SlicingSettings.NamePartsSeparator}{area.groupIndex}";
+                        var layout = new Layout(SlicingSettings, new Rect(Vector2.zero, TextureRect.position));
+                        foreach (var area in layout)
+                        {
+                            var groupName = area.chunk.GetHumanFriendlyName();
+                            if (area.group.UseCustomName)
+                                groupName = area.group.CustomName;
 
-                var flippedYRect = area.position;
-                flippedYRect.y = Texture.height - area.position.y - area.position.height;
-                var flippedYPivot = area.pivotPoint;
-                flippedYPivot.y = Texture.height - area.pivotPoint.y;
+                            var name = $"{globalName}{SlicingSettings.NamePartsSeparator}{groupName}{SlicingSettings.NamePartsSeparator}{area.groupIndex}";
 
-                sprites.Add(new SpriteMetaData()
-                {
-                    name = name,
-                    rect = flippedYRect,
-                    pivot = flippedYPivot
-                });
+                            var flippedYRect = area.position;
+                            flippedYRect.y = Texture.height - area.position.y - area.position.height;
+                            var flippedYPivot = area.pivotPoint;
+                            flippedYPivot.y = Texture.height - area.pivotPoint.y;
+
+                            sprites.Add(new SpriteMetaData()
+                            {
+                                name = name,
+                                rect = flippedYRect,
+                                pivot = flippedYPivot
+                            });
+                        }
+                    }
+                    break;
+                case ControlPanelTabs.ScriptableSclicing:
+                    {
+                        var layout = new ScriptableLayout(SlicingSettings, new Rect(Vector2.zero, TextureRect.position));
+                        foreach (var area in layout)
+                        {
+                            var flippedYRect = area.position;
+                            flippedYRect.y = Texture.height - area.position.y - area.position.height;
+                            var flippedYPivot = area.pivotPoint;
+                            flippedYPivot.y = Texture.height - area.pivotPoint.y;
+
+                            sprites.Add(new SpriteMetaData()
+                            {
+                                name = area.name,
+                                rect = flippedYRect,
+                                pivot = flippedYPivot
+                            });
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
 
             Importer.spritesheet = sprites.ToArray();

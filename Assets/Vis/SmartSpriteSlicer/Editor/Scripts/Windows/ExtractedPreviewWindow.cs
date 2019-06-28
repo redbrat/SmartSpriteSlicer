@@ -8,6 +8,8 @@ namespace Vis.SmartSpriteSlicer
 
         private void OnGUI()
         {
+            if (Model.PreviewedArea == null)
+                return;
             if (SpritePreviewWindow.Extracted)
                 SpritePreviewWindow.DrawPreview(position, Model);
             Repaint();

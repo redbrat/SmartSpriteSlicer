@@ -16,6 +16,7 @@ namespace Vis.SmartSpriteSlicer
             {
                 _model.PreviewedAreaControlId = null;
                 _model.PreviewedArea = null;
+                _model.PreviewedPivotPoint = null;
                 GUI.changed = true;
                 Event.current.Use();
             }
@@ -50,16 +51,21 @@ namespace Vis.SmartSpriteSlicer
 
                 _model.PreviewedAreaControlId = _model.IterableCtrlIds[_model.PreviewedGlobalIndex.Value];
                 _model.PreviewedArea = _model.IterableAreas[_model.PreviewedGlobalIndex.Value];
-                _model.EditedGroupId = _model.IterableCtrlIdsToGroupsIds[_model.PreviewedAreaControlId.Value];
-                for (int i = 0; i < _model.SlicingSettings.ChunkGroups.Count; i++)
-                    if (_model.SlicingSettings.ChunkGroups[i].Id == _model.EditedGroupId)
-                        _model.SelectedGroupIndex = i;
+                _model.PreviewedPivotPoint = _model.IterablePivotPoints[_model.PreviewedGlobalIndex.Value];
+                if (_model.ControlPanelTab == ControlPanelTabs.ManualSlicing)
+                {
+                    _model.EditedGroupId = _model.IterableCtrlIdsToGroupsIds[_model.PreviewedAreaControlId.Value];
+                    for (int i = 0; i < _model.SlicingSettings.ChunkGroups.Count; i++)
+                        if (_model.SlicingSettings.ChunkGroups[i].Id == _model.EditedGroupId)
+                            _model.SelectedGroupIndex = i;
+                }
 
                 Event.current.Use();
             }
             _model.IterableCtrlIds.Clear();
             _model.IterableAreas.Clear();
             _model.IterableCtrlIdsToGroupsIds.Clear();
+            _model.IterablePivotPoints.Clear();
         }
 
         private bool validIterableItem(int globalIndex)

@@ -6,7 +6,6 @@ namespace Vis.SmartSpriteSlicer
     public enum ControlPanelTabs
     {
         ManualSlicing = 0,
-        ScriptableSclicing,
-        GlobalSettings
+        ScriptableSclicing
     }
 }

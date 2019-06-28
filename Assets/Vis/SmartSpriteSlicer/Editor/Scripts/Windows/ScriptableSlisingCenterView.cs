@@ -1,0 +1,30 @@
+﻿using UnityEditor;
+using UnityEngine;
+
+namespace Vis.SmartSpriteSlicer
+{
+    public class ScriptableSlisingCenterView : LayoutViewBase
+    {
+        private readonly GUIStyle _panelStyle;
+
+        public ScriptableSlisingCenterView(SmartSpriteSlicerWindow model) : base(model)
+        {
+            _panelStyle = model.Skin.GetStyle("GroupsMainPanel");
+        }
+
+        public override void OnGUILayout()
+        {
+            base.OnGUILayout();
+
+            EditorGUILayout.BeginHorizontal(_panelStyle);
+            var newTestText = EditorGUILayout.TextArea(_model.SlicingSettings.ScriptabeSlicingTestText, GUILayout.MinHeight(60f), GUILayout.MaxHeight(80f));
+            if (newTestText != _model.SlicingSettings.ScriptabeSlicingTestText)
+            {
+                Undo.RecordObject(_model.SlicingSettings, $"Scriptable slicing test text changed");
+                _model.SlicingSettings.ScriptabeSlicingTestText = newTestText;
+                EditorUtility.SetDirty(_model.SlicingSettings);
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+    }
+}

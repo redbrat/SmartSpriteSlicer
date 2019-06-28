@@ -51,7 +51,7 @@ namespace Vis.SmartSpriteSlicer
             switch (node.Type)
             {
                 case ScriptableNodeType.Text:
-                    return node.Color;
+                    return new Color(0, 1, 1, 0.5f);
                 default:
                     return Color.white * 0.95f;
             }
@@ -70,6 +70,8 @@ namespace Vis.SmartSpriteSlicer
                     return new GUIContent($"<color=#000000><i>End of line</i></color>");
                 case ScriptableNodeType.Name:
                     return new GUIContent($"<color=#000000><b>Name</b></color>");
+                case ScriptableNodeType.Group:
+                    return new GUIContent($"<color=#000000><b>Group</b></color>");
                 case ScriptableNodeType.X:
                     return new GUIContent($"<color=#000000><b>X</b></color>");
                 case ScriptableNodeType.Y:
@@ -94,6 +96,7 @@ namespace Vis.SmartSpriteSlicer
             switch (node.Type)
             {
                 case ScriptableNodeType.Text:
+                case ScriptableNodeType.EndOfLine:
                     style.normal.textColor = node.TextColor;
                     break;
                 default:

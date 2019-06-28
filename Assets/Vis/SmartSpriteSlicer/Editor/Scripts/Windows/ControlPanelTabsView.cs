@@ -38,6 +38,8 @@ namespace Vis.SmartSpriteSlicer
             switch (newTab)
             {
                 case ControlPanelTabs.ManualSlicing:
+                    GlobalSettingsView.OnGUILayout();
+
                     ChunksView.OnGUILayout();
                     EditorGUILayout.Space();
                     GroupsView.WindowWidth = WindowWidth;
@@ -48,9 +50,6 @@ namespace Vis.SmartSpriteSlicer
                 case ControlPanelTabs.ScriptableSclicing:
                     ScriptableSlicingView.WindowWidth = WindowWidth;
                     ScriptableSlicingView.OnGUILayout();
-                    break;
-                case ControlPanelTabs.GlobalSettings:
-                    GlobalSettingsView.OnGUILayout();
                     break;
                 default:
                     break;
@@ -65,8 +64,6 @@ namespace Vis.SmartSpriteSlicer
                     return new GUIContent($"<size=16>Manual Slicing</size>");
                 case ControlPanelTabs.ScriptableSclicing:
                     return new GUIContent($"<size=16>Scriptable Slicing</size>");
-                case ControlPanelTabs.GlobalSettings:
-                    return new GUIContent($"<size=16>Settings</size>");
                 default:
                     throw new ApplicationException($"Unknown tab type: {tab}");
             }

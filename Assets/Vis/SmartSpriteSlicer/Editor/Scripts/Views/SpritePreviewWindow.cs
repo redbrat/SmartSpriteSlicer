@@ -55,12 +55,28 @@ namespace Vis.SmartSpriteSlicer
             GUI.DrawTextureWithTexCoords(rect, _previewSpriteStyle.normal.background, new Rect(0, 0, rect.width / _previewSpriteStyle.normal.background.width, rect.height / _previewSpriteStyle.normal.background.height));
             GUI.DrawTextureWithTexCoords(rect, texture, textureSubRect);
 
-            var newIterationMode = (SpriteIterationMode)EditorGUILayout.EnumPopup(new GUIContent($"Iteration Mode:", $"You can iterate through sprites with right and left arrow buttons. This option allows you to choose what do you want to iterate through."), model.IterationMode);
-            if (newIterationMode != model.IterationMode)
+            var pivot = model.PreviewedPivotPoint.Value - model.PreviewedArea.Value.position;
+            pivot = rect.position + pivot * rect.width / _previewSpriteStyle.normal.background.width;
+            var worldPos = new Vector3(pivot.x, pivot.y, 0);
+            var newWorldPos = DraggableDisc.Draw(worldPos, Vector3.back, 4f, Color.gray * 0.5f);
+            Handles.BeginGUI();
+            Handles.color = new Color(0, 0, 0, 0.4f);
+            Handles.DrawSolidDisc(worldPos, Vector3.back, 5);
+            Handles.color = new Color(1, 1, 1, 0.4f);
+            Handles.DrawSolidDisc(worldPos, Vector3.back, 2);
+            Handles.color = new Color(1, 1, 1, 1);
+            Handles.DrawSolidDisc(worldPos, Vector3.back, 1);
+            Handles.EndGUI();
+
+            if (model.ControlPanelTab == ControlPanelTabs.ManualSlicing)
             {
-                Undo.RecordObject(model, $"Iteration mode changed");
-                model.IterationMode = newIterationMode;
-                EditorUtility.SetDirty(model);
+                var newIterationMode = (SpriteIterationMode)EditorGUILayout.EnumPopup(new GUIContent($"Iteration Mode:", $"You can iterate through sprites with right and left arrow buttons. This option allows you to choose what do you want to iterate through."), model.IterationMode);
+                if (newIterationMode != model.IterationMode)
+                {
+                    Undo.RecordObject(model, $"Iteration mode changed");
+                    model.IterationMode = newIterationMode;
+                    EditorUtility.SetDirty(model);
+                }
             }
         }
     }
