@@ -37,7 +37,7 @@ namespace Vis.SmartSpriteSlicer
                 DrawControlPanel(SmartSpriteSlicerWindow.MaxContolPanelWidth);
             }
             else if (_windowInstanceCache == null)
-                _windowInstanceCache = EditorWindow.GetWindow(typeof(ExtractedControlPanel), true, "Control Panel");
+                _windowInstanceCache = EditorWindow.GetWindow(typeof(ExtractedControlPanelWIndow), true, _model.ControlPanelCaption);
 
             if (Event.current.type == EventType.Repaint)
                 _topPanelViewPosition.width = GUILayoutUtility.GetLastRect().width;

@@ -15,6 +15,8 @@ namespace Vis.SmartSpriteSlicer
         private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
         private const string _slicingSettingsName = "SlicingSettings.asset";
 
+        internal readonly string ControlPanelCaption = "Control Panel";
+
         public Vector2 TextureScale => new Vector2(TextureRect.width / Texture.width, TextureRect.height / Texture.height);
         public Texture2D WhiteTexture { get; private set; }
         public Texture2D BlackTexture { get; private set; }

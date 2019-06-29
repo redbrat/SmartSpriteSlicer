@@ -55,7 +55,7 @@ namespace Vis.SmartSpriteSlicer
                         sb.Append(currentChar);
                         if (currentChar == _endOfLineChar)
                         {
-                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, ScriptableNodeType.EndOfLine, true, sb.ToString()));
+                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, ScriptableNodeType.EndOfLine, sb.ToString(), true));
                             textChunkStartIndex = nextTextIndex;
 
                             nodeIndex++;
@@ -72,7 +72,7 @@ namespace Vis.SmartSpriteSlicer
                         sb.Append(currentChar);
                         if (stringCoincide(sb.ToString(), currentNode.Pattern))
                         {
-                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, ScriptableNodeType.Text, true, sb.ToString()));
+                            textChunks.Add(new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, ScriptableNodeType.Text, sb.ToString(), true));
                             textChunkStartIndex = nextTextIndex;
 
                             nodeIndex++;
@@ -87,42 +87,42 @@ namespace Vis.SmartSpriteSlicer
                             switch (currentNode.Type)
                             {
                                 case ScriptableNodeType.Name:
-                                    name = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, true, sb.ToString());
+                                    name = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), true);
                                     textChunks.Add(name);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Group:
-                                    group = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, true, sb.ToString());
+                                    group = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), true);
                                     textChunks.Add(group);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.X:
-                                    x = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    x = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(x);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Y:
-                                    y = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    y = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(y);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Width:
-                                    width = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    width = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(width);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.Height:
-                                    height = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    height = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(height);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.PivotX:
-                                    pivotX = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    pivotX = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(pivotX);
                                     textChunkStartIndex = nextTextIndex;
                                     break;
                                 case ScriptableNodeType.PivotY:
-                                    pivotY = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, false, sb.ToString());
+                                    pivotY = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(pivotY);
                                     textChunkStartIndex = nextTextIndex;
                                     break;

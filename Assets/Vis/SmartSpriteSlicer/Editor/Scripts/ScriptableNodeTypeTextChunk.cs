@@ -12,7 +12,7 @@ namespace Vis.SmartSpriteSlicer
 
         public bool SuccessfullyParsed;
 
-        public ScriptableNodeTypeTextChunk(Color color, int startIndex, int stopIndex, ScriptableNodeType type, bool endOfLine, string text, bool successfullyParsed = false)
+        public ScriptableNodeTypeTextChunk(Color color, int startIndex, int stopIndex, ScriptableNodeType type, string text, bool successfullyParsed = false)
         {
             Color = color;
             StartIndex = startIndex;

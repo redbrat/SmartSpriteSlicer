@@ -21,7 +21,7 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUILayout();
             EditorGUILayout.BeginHorizontal(_panelStyle);
             var text = _model.SlicingSettings.ScriptableNodes.Count > 0 ? getColorizedValidatedText(_model.SlicingSettings.ScriptabeSlicingTestText) : _model.SlicingSettings.ScriptabeSlicingTestText;
-            EditorGUILayout.LabelField(text, _previewTextStyle, GUILayout.MinHeight(100f), GUILayout.MaxHeight(120f));
+            EditorGUILayout.TextArea(text, _previewTextStyle, GUILayout.MinHeight(100f), GUILayout.MaxHeight(300f));
             EditorGUILayout.EndHorizontal();
         }
 

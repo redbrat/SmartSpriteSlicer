@@ -65,7 +65,7 @@ namespace Vis.SmartSpriteSlicer
                 ControlPanelWindow.Extracted = true;
                 SpritePreviewWindow.Extracted = true;
             }
-            else if (ControlPanelWindow.Extracted && GUILayout.Button(new GUIContent($"Embed windows", $"Make windows embedded to main window")))
+            else if (ControlPanelWindow.Extracted && GUILayout.Button(new GUIContent($"Embed windows", $"Make windows embedded in main window")))
             {
                 ControlPanelWindow.Extracted = false;
                 SpritePreviewWindow.Extracted = false;

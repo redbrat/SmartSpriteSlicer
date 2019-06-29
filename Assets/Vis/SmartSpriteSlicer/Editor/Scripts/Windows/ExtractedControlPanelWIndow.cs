@@ -2,7 +2,7 @@
 
 namespace Vis.SmartSpriteSlicer
 {
-    public class ExtractedControlPanel : EditorWindow
+    public class ExtractedControlPanelWIndow : EditorWindow
     {
         private void OnGUI()
         {
