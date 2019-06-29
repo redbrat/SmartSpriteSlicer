@@ -48,9 +48,8 @@ namespace Vis.SmartSpriteSlicer
             }
             if (GUILayout.Button(new GUIContent($"Save as...")))
             {
-                var absolutePath = EditorUtility.SaveFilePanel($"Save preset as", string.Empty, $"SpriteSlicePreset", "preset");
+                var absolutePath = EditorUtility.SaveFilePanel($"Save preset as", Application.dataPath, $"SpriteSlicePreset", "preset");
                 var relativePath = $"Assets/{absolutePath.Substring(Application.dataPath.Length)}";
-                Debug.Log($"relativePath = {relativePath}");
                 var preset = new Preset(_model.SlicingSettings);
                 AssetDatabase.CreateAsset(preset, relativePath);
                 AssetDatabase.SaveAssets();
