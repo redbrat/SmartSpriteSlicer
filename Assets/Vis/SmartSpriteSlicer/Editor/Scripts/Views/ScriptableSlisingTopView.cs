@@ -20,7 +20,7 @@ namespace Vis.SmartSpriteSlicer
 
             EditorGUILayout.BeginVertical(_panelStyle);
 
-            EditorGUILayout.LabelField(new GUIContent($"<b>Test</b>"), _model.RichTextStyle);
+            EditorGUILayout.LabelField(new GUIContent($"<b>Text</b>"), _model.RichTextStyle);
 
             if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) &&
                 _model.SlicingSettings.ScriptableNodes.Count > 0)

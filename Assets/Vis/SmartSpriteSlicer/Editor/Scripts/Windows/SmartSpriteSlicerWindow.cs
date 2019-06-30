@@ -204,12 +204,14 @@ namespace Vis.SmartSpriteSlicer
                             flippedYRect.y = Texture.height - area.position.y - area.position.height;
                             var flippedYPivot = area.pivotPoint;
                             flippedYPivot.y = Texture.height - area.pivotPoint.y;
+                            var normalizedPivot = (flippedYPivot - flippedYRect.position) / flippedYRect.size;
 
                             sprites.Add(new SpriteMetaData()
                             {
                                 name = name,
                                 rect = flippedYRect,
-                                pivot = flippedYPivot
+                                alignment = (int)SpriteAlignment.Custom,
+                                pivot = normalizedPivot
                             });
                         }
                     }
@@ -223,12 +225,14 @@ namespace Vis.SmartSpriteSlicer
                             flippedYRect.y = Texture.height - area.position.y - area.position.height;
                             var flippedYPivot = area.pivotPoint;
                             flippedYPivot.y = Texture.height - area.pivotPoint.y;
+                            var normalizedPivot = (flippedYPivot - flippedYRect.position) / flippedYRect.size;
 
                             sprites.Add(new SpriteMetaData()
                             {
                                 name = area.name,
                                 rect = flippedYRect,
-                                pivot = flippedYPivot
+                                alignment = (int)SpriteAlignment.Custom,
+                                pivot = normalizedPivot
                             });
                         }
                     }
@@ -251,6 +255,7 @@ namespace Vis.SmartSpriteSlicer
                 groupsFriendlyName = "Empty space";
             Undo.RecordObject(SlicingSettings, $"{groupsFriendlyName} deleted");
             SlicingSettings.ChunkGroups.RemoveAt(groupIndex);
+            Repaint();
             EditorUtility.SetDirty(SlicingSettings);
         }
     }

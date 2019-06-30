@@ -181,15 +181,19 @@ namespace Vis.SmartSpriteSlicer
                 var newWorldPos = DraggableDisc.Draw(worldPos, Vector3.back, 4f, area.chunk.Color);
                 if (newWorldPos != worldPos)
                 {
-                    if (newWorldPos.x < area.position.x)
-                        newWorldPos.x = area.position.x;
-                    if (newWorldPos.y < area.position.y)
-                        newWorldPos.y = area.position.y;
-                    if (newWorldPos.x > area.position.x + area.position.width)
-                        newWorldPos.x = area.position.x + area.position.width;
-                    if (newWorldPos.y > area.position.y + area.position.height)
-                        newWorldPos.y = area.position.y + area.position.height;
-                    var absolutePivot = toVector2Int(newWorldPos - new Vector3(area.position.position.x, area.position.position.y, 0));
+                    scaledPart = newWorldPos.ToVector2Int() - position.position;
+                    var unscaledPivot = scaledPart / _model.TextureScale;
+                    var newPivot = (position.position + unscaledPivot).ToVector2Int();
+
+                    if (newPivot.x < area.position.x)
+                        newPivot.x = Mathf.RoundToInt(area.position.x);
+                    if (newPivot.y < area.position.y)
+                        newPivot.y = Mathf.RoundToInt(area.position.y);
+                    if (newPivot.x > area.position.x + area.position.width)
+                        newPivot.x = Mathf.RoundToInt(area.position.x + area.position.width);
+                    if (newPivot.y > area.position.y + area.position.height)
+                        newPivot.y = Mathf.RoundToInt(area.position.y + area.position.height);
+                    var absolutePivot = (newPivot - new Vector2(area.position.position.x, area.position.position.y)).ToVector2Int();
 
                     var newPivotPoint = PivotPoint.Absolute;
                     if (absolutePivot.x == area.position.size.x && absolutePivot.y == area.position.size.y)
@@ -217,7 +221,5 @@ namespace Vis.SmartSpriteSlicer
                     return i;
             return -1;
         }
-
-        private Vector2Int toVector2Int(Vector2 vector2) => new Vector2Int(Mathf.RoundToInt(vector2.x), Mathf.RoundToInt(vector2.y));
     }
 }

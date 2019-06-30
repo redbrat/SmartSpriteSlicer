@@ -17,10 +17,200 @@ MonoBehaviour:
   NamePartsSeparator: '-'
   Offset: {x: 0, y: 0}
   LayoutAnchor: 0
-  Chunks: []
-  ChunkGroups: []
+  Chunks:
+  - _name: 
+    _id: 1
+    _color: {r: 0.35373968, g: 0.7966218, b: 0.60612637, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _size: {x: 44, y: 72}
+  - _name: 
+    _id: 2
+    _color: {r: 0.49299008, g: 0.6442095, b: 0.3543231, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _size: {x: 30, y: 71}
+  - _name: 
+    _id: 3
+    _color: {r: 0.8814162, g: 0.2021085, b: 0.91727126, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _size: {x: 44, y: 71}
+  - _name: 
+    _id: 4
+    _color: {r: 1, g: 0.53926504, b: 0, a: 1}
+    _textColor: {r: 1, g: 1, b: 1, a: 1}
+    _size: {x: 33, y: 67}
+  ChunkGroups:
+  - _id: 1
+    _flavor: 0
+    _chunkId: 1
+    _times: 11
+    _offset: {x: 0, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 0
+    _pivotPoint: 5
+    _absolutePivot: {x: 20, y: 36}
+  - _id: 2
+    _flavor: 0
+    _chunkId: 1
+    _times: 9
+    _offset: {x: 0, y: -1}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 1
+    _pivotPoint: 0
+    _absolutePivot: {x: 20, y: 36}
+  - _id: 3
+    _flavor: 0
+    _chunkId: 2
+    _times: 21
+    _offset: {x: 0, y: 1}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 1
+    _pivotPoint: 1
+    _absolutePivot: {x: 17, y: 36}
+  - _id: 4
+    _flavor: 0
+    _chunkId: 2
+    _times: 16
+    _offset: {x: 0, y: -1}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 1
+    _pivotPoint: 5
+    _absolutePivot: {x: 8, y: 16}
+  - _id: 6
+    _flavor: 1
+    _chunkId: 0
+    _times: 1
+    _offset: {x: 0, y: 71}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 0
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
+  - _id: 5
+    _flavor: 0
+    _chunkId: 2
+    _times: 23
+    _offset: {x: 0, y: 2}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 1
+    _pivotPoint: 4
+    _absolutePivot: {x: 30, y: 71}
+  - _id: 7
+    _flavor: 0
+    _chunkId: 3
+    _times: 15
+    _offset: {x: 0, y: 0}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 1
+    _pivotPoint: 5
+    _absolutePivot: {x: 9, y: 21}
+  - _id: 8
+    _flavor: 0
+    _chunkId: 3
+    _times: 1
+    _offset: {x: 0, y: -1}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 0
+    _pivotPoint: 5
+    _absolutePivot: {x: 22, y: 36}
+  - _id: 9
+    _flavor: 1
+    _chunkId: 0
+    _times: 1
+    _offset: {x: 0, y: 71}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 0
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
+  - _id: 10
+    _flavor: 0
+    _chunkId: 4
+    _times: 8
+    _offset: {x: 1, y: 1}
+    _direction: 0
+    _individualMargin:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    _naming: 0
+    _useCustomName: 0
+    _customName: 
+    _useGroupPivotPointSettings: 0
+    _pivotPoint: 0
+    _absolutePivot: {x: 0, y: 0}
   ScriptableNodes: []
   GlobalPivotPoint: 0
   GlobalAbsolutePivot: {x: 0, y: 0}
   GroupsDependentEditing: 0
-  ScriptabeSlicingTestText: 
+  ScriptabeSlicingTestText: "BREATH^DL-0000:660,0,44,72,3,1\r\nBREATH^DL-0001:484,0,44,72,3,1\r\nBREATH^DL-0002:528,0,44,72,3,1\r\nBREATH^DL-0003:572,0,44,72,3,1\r\nBREATH^DL-0004:616,0,44,72,3,1\r\nBREATH^DL-0005:0,0,44,73,3,0\r\nBREATH^DL-0006:44,0,44,73,3,0\r\nBREATH^DL-0007:88,0,44,73,3,0\r\nBREATH^DL-0008:132,0,44,73,3,0\r\nBREATH^DL-0009:176,0,44,73,3,0\r\nBREATH^DL-0010:220,0,44,73,3,0\r\nBREATH^DL-0011:264,0,44,73,3,0\r\nBREATH^DL-0012:308,0,44,73,3,0\r\nBREATH^DL-0013:352,0,44,73,3,0\r\nBREATH^DL-0014:396,0,44,73,3,0\r\nBREATH^DL-0015:440,0,44,73,3,0\r\nBREATH^DL-0016:704,0,44,72,3,1\r\nBREATH^DL-0017:748,0,44,72,3,1\r\nBREATH^DL-0018:792,0,44,72,3,1\r\nBREATH^DL-0019:836,0,44,72,3,1\r\nBREATH^DR-0000:133,143,34,67,14,5\r\nBREATH^DR-0001:0,143,34,67,14,5\r\nBREATH^DR-0002:34,143,33,67,15,5\r\nBREATH^DR-0003:67,143,33,67,15,5\r\nBREATH^DR-0004:100,143,33,67,15,5\r\nBREATH^DR-0005:1394,73,33,68,15,4\r\nBREATH^DR-0006:1515,73,33,68,15,4\r\nBREATH^DR-0007:1548,73,33,68,15,4\r\nBREATH^DR-0008:1581,73,33,68,15,4\r\nBREATH^DR-0009:1614,73,33,68,15,4\r\nBREATH^DR-0010:1647,73,33,68,15,4\r\nBREATH^DR-0011:1680,73,33,68,15,4\r\nBREATH^DR-0012:1713,73,33,68,15,4\r\nBREATH^DR-0013:1746,73,33,68,15,4\r\nBREATH^DR-0014:1779,73,33,68,15,4\r\nBREATH^DR-0015:1812,73,33,68,15,4\r\nBREATH^DR-0016:167,143,33,67,15,5\r\nBREATH^DR-0017:200,143,33,67,15,5\r\nBREATH^DR-0018:233,143,33,67,15,5\r\nBREATH^DR-0019:1934,73,34,67,14,5\r\nBREATH^L-0000:1845,73,45,68,3,4\r\nBREATH^L-0001:1890,73,44,68,4,4\r\nBREATH^L-0002:1350,73,44,68,4,4\r\nBREATH^L-0003:690,73,44,69,4,3\r\nBREATH^L-0004:734,73,44,69,4,3\r\nBREATH^L-0005:778,73,44,69,4,3\r\nBREATH^L-0006:822,73,44,69,4,3\r\nBREATH^L-0007:866,73,44,69,4,3\r\nBREATH^L-0008:910,73,44,69,4,3\r\nBREATH^L-0009:954,73,44,69,4,3\r\nBREATH^L-0010:998,73,44,69,4,3\r\nBREATH^L-0011:1042,73,44,69,4,3\r\nBREATH^L-0012:1086,73,44,69,4,3\r\nBREATH^L-0013:1130,73,44,69,4,3\r\nBREATH^L-0014:1174,73,44,69,4,3\r\nBREATH^L-0015:1218,73,44,69,4,3\r\nBREATH^L-0016:1262,73,44,69,4,3\r\nBREATH^L-0017:1306,73,44,69,4,3\r\nBREATH^L-0018:1427,73,44,68,4,4\r\nBREATH^L-0019:1471,73,44,68,4,4\r\nBREATH^R-0000:1158,143,45,65,13,5\r\nBREATH^R-0001:1203,143,45,65,13,5\r\nBREATH^R-0002:1248,143,45,65,13,5\r\nBREATH^R-0003:1293,143,44,65,13,5\r\nBREATH^R-0004:1337,143,44,65,13,5\r\nBREATH^R-0005:1381,143,44,65,13,5\r\nBREATH^R-0006:1425,143,44,65,13,5\r\nBREATH^R-0007:1469,143,44,65,13,5\r\nBREATH^R-0008:1513,143,44,65,13,5\r\nBREATH^R-0009:1557,143,44,65,13,5\r\nBREATH^R-0010:1601,143,44,65,13,5\r\nBREATH^R-0011:1645,143,44,65,13,5\r\nBREATH^R-0012:1689,143,44,65,13,5\r\nBREATH^R-0013:1733,143,44,65,13,5\r\nBREATH^R-0014:1777,143,44,65,13,5\r\nBREATH^R-0015:1821,143,44,65,13,5\r\nBREATH^R-0016:1865,143,44,65,13,5\r\nBREATH^R-0017:1909,143,44,65,13,5\r\nBREATH^R-0018:1953,143,45,65,13,5\r\nBREATH^R-0019:0,210,45,65,13,5\r\nBREATH^UL-0000:263,339,32,63,14,6\r\nBREATH^UL-0001:458,339,32,63,14,6\r\nBREATH^UL-0002:490,339,32,63,14,6\r\nBREATH^UL-0003:747,339,32,63,14,6\r\nBREATH^UL-0004:779,339,32,63,14,6\r\nBREATH^UL-0005:756,275,32,63,14,6\r\nBREATH^UL-0006:788,275,32,63,14,6\r\nBREATH^UL-0007:820,275,31,63,14,6\r\nBREATH^UL-0008:1000,275,31,63,14,6\r\nBREATH^UL-0009:1031,275,31,63,14,6\r\nBREATH^UL-0010:1062,275,31,63,14,6\r\nBREATH^UL-0011:1264,275,31,63,14,6\r\nBREATH^UL-0012:1343,275,31,63,14,6\r\nBREATH^UL-0013:1374,275,31,63,14,6\r\nBREATH^UL-0014:1405,275,32,63,14,6\r\nBREATH^UL-0015:1437,275,32,63,14,6\r\nBREATH^UL-0016:1469,275,32,63,14,6\r\nBREATH^UL-0017:1543,275,32,63,14,6\r\nBREATH^UL-0018:1866,275,32,63,14,6\r\nBREATH^UL-0019:43,339,32,63,14,6\r\nBREATH^UR-0000:45,210,45,65,12,6\r\nBREATH^UR-0001:90,210,45,65,12,6\r\nBREATH^UR-0002:682,210,45,65,12,6\r\nBREATH^UR-0003:868,210,45,65,12,6\r\nBREATH^UR-0004:913,210,45,65,12,6\r\nBREATH^UR-0005:488,143,45,65,12,6\r\nBREATH^UR-0006:533,143,45,65,12,6\r\nBREATH^UR-0007:578,143,45,65,12,6\r\nBREATH^UR-0008:623,143,44,65,12,6\r\nBREATH^UR-0009:667,143,44,65,12,6\r\nBREATH^UR-0010:711,143,44,65,12,6\r\nBREATH^UR-0011:755,143,44,65,12,6\r\nBREATH^UR-0012:799,143,44,65,12,6\r\nBREATH^UR-0013:843,143,45,65,12,6\r\nBREATH^UR-0014:888,143,45,65,12,6\r\nBREATH^UR-0015:933,143,45,65,12,6\r\nBREATH^UR-0016:978,143,45,65,12,6\r\nBREATH^UR-0017:1023,143,45,65,12,6\r\nBREATH^UR-0018:1068,143,45,65,12,6\r\nBREATH^UR-0019:1113,143,45,65,12,6\r\nIDLE1-0000:1690,0,30,70,16,1\r\nIDLE1-0001:1720,0,30,70,16,1\r\nIDLE1-0002:1750,0,30,70,16,1\r\nIDLE1-0003:1780,0,30,70,16,1\r\nIDLE1-0004:1810,0,30,70,16,1\r\nIDLE1-0005:1840,0,30,70,16,1\r\nIDLE1-0006:1870,0,30,70,16,1\r\nIDLE1-0007:880,0,30,71,16,0\r\nIDLE1-0008:910,0,30,71,16,0\r\nIDLE1-0009:940,0,30,71,16,0\r\nIDLE1-0010:970,0,30,71,16,0\r\nIDLE1-0011:1000,0,30,71,16,0\r\nIDLE1-0012:1030,0,30,71,16,0\r\nIDLE1-0013:1060,0,30,71,16,0\r\nIDLE1-0014:300,73,30,70,16,1\r\nIDLE1-0015:330,73,30,70,16,1\r\nIDLE1-0016:360,73,30,70,16,1\r\nIDLE1-0017:390,73,30,70,16,1\r\nIDLE1-0018:420,73,30,70,16,1\r\nIDLE1-0019:450,73,30,70,16,1\r\nIDLE2-0000:480,73,30,70,16,1\r\nIDLE2-0001:1510,0,30,70,16,1\r\nIDLE2-0002:1540,0,30,70,16,1\r\nIDLE2-0003:1570,0,30,70,16,1\r\nIDLE2-0004:1600,0,30,70,16,1\r\nIDLE2-0005:1630,0,30,70,16,1\r\nIDLE2-0006:1660,0,30,70,16,1\r\nIDLE2-0007:1090,0,30,71,16,0\r\nIDLE2-0008:1120,0,30,71,16,0\r\nIDLE2-0009:1150,0,30,71,16,0\r\nIDLE2-0010:1180,0,30,71,16,0\r\nIDLE2-0011:1210,0,30,71,16,0\r\nIDLE2-0012:1240,0,30,71,16,0\r\nIDLE2-0013:1270,0,30,71,16,0\r\nIDLE2-0014:1900,0,30,70,16,1\r\nIDLE2-0015:1930,0,30,70,16,1\r\nIDLE2-0016:1960,0,30,70,16,1\r\nIDLE2-0017:0,73,30,70,16,1\r\nIDLE2-0018:30,73,30,70,16,1\r\nIDLE2-0019:60,73,30,70,16,1\r\nIDLEBREATH-0000:90,73,30,70,16,1\r\nIDLEBREATH-0001:120,73,30,70,16,1\r\nIDLEBREATH-0002:150,73,30,70,16,1\r\nIDLEBREATH-0003:180,73,30,70,16,1\r\nIDLEBREATH-0004:210,73,30,70,16,1\r\nIDLEBREATH-0005:240,73,30,70,16,1\r\nIDLEBREATH-0006:270,73,30,70,16,1\r\nIDLEBREATH-0007:1300,0,30,71,16,0\r\nIDLEBREATH-0008:1330,0,30,71,16,0\r\nIDLEBREATH-0009:1360,0,30,71,16,0\r\nIDLEBREATH-0010:1390,0,30,71,16,0\r\nIDLEBREATH-0011:1420,0,30,71,16,0\r\nIDLEBREATH-0012:1450,0,30,71,16,0\r\nIDLEBREATH-0013:1480,0,30,71,16,0\r\nIDLEBREATH-0014:510,73,30,70,16,1\r\nIDLEBREATH-0015:540,73,30,70,16,1\r\nIDLEBREATH-0016:570,73,30,70,16,1\r\nIDLEBREATH-0017:600,73,30,70,16,1\r\nIDLEBREATH-0018:630,73,30,70,16,1\r\nIDLEBREATH-0019:660,73,30,70,16,1\r\nMOVE^DL-0000:117,339,36,63,12,7\r\nMOVE^DL-0001:1184,339,36,62,12,7\r\nMOVE^DL-0002:1139,210,36,64,11,6\r\nMOVE^DL-0003:295,339,35,63,10,6\r\nMOVE^DL-0004:420,339,38,63,7,5\r\nMOVE^DL-0005:1861,210,41,64,5,5\r\nMOVE^DL-0006:266,143,42,66,4,5\r\nMOVE^DL-0007:308,143,46,66,3,6\r\nMOVE^DL-0008:1902,210,46,64,3,6\r\nMOVE^DL-0009:1454,339,47,62,3,7\r\nMOVE^DL-0010:1948,210,48,64,3,7\r\nMOVE^DL-0011:592,275,48,64,3,7\r\nMOVE^DL-0012:1006,210,48,64,3,7\r\nMOVE^DL-0013:135,210,47,65,3,6\r\nMOVE^DL-0014:1309,210,45,64,3,6\r\nMOVE^DL-0015:1538,210,43,64,3,6\r\nMOVE^DL-0016:1093,275,41,63,5,6\r\nMOVE^DL-0017:1228,275,36,63,8,6\r\nMOVE^DL-0018:1821,339,35,61,10,7\r\nMOVE^DL-0019:1856,339,35,61,12,7\r\nMOVE^DR-0000:182,210,39,65,7,6\r\nMOVE^DR-0001:221,210,39,65,7,6\r\nMOVE^DR-0002:260,210,40,65,7,6\r\nMOVE^DR-0003:166,275,42,64,6,6\r\nMOVE^DR-0004:208,275,43,64,6,5\r\nMOVE^DR-0005:380,275,43,64,5,5\r\nMOVE^DR-0006:1501,275,42,63,5,5\r\nMOVE^DR-0007:423,275,42,64,5,5\r\nMOVE^DR-0008:859,339,43,62,5,6\r\nMOVE^DR-0009:902,339,44,62,5,6\r\nMOVE^DR-0010:1737,275,44,63,6,6\r\nMOVE^DR-0011:1823,275,43,63,6,6\r\nMOVE^DR-0012:465,275,42,64,6,5\r\nMOVE^DR-0013:507,275,42,64,5,5\r\nMOVE^DR-0014:75,339,42,63,5,5\r\nMOVE^DR-0015:549,275,43,64,5,5\r\nMOVE^DR-0016:300,210,43,65,6,5\r\nMOVE^DR-0017:343,210,43,65,6,5\r\nMOVE^DR-0018:1018,339,41,62,7,6\r\nMOVE^DR-0019:330,339,39,63,7,6\r\nMOVE^L-0000:1363,339,51,62,12,7\r\nMOVE^L-0001:369,339,51,63,12,6\r\nMOVE^L-0002:1677,339,50,62,13,6\r\nMOVE^L-0003:811,339,48,62,14,6\r\nMOVE^L-0004:1054,210,42,64,19,5\r\nMOVE^L-0005:1096,210,43,64,17,5\r\nMOVE^L-0006:386,210,45,65,14,5\r\nMOVE^L-0007:522,339,47,63,9,6\r\nMOVE^L-0008:1727,339,47,61,7,6\r\nMOVE^L-0009:1774,339,47,61,6,7\r\nMOVE^L-0010:1220,339,48,62,5,7\r\nMOVE^L-0011:1268,339,48,62,5,7\r\nMOVE^L-0012:1316,339,47,62,5,7\r\nMOVE^L-0013:569,339,47,63,6,6\r\nMOVE^L-0014:616,339,47,63,10,6\r\nMOVE^L-0015:1175,210,45,64,13,5\r\nMOVE^L-0016:1220,210,44,64,16,5\r\nMOVE^L-0017:1264,210,45,64,17,6\r\nMOVE^L-0018:431,210,48,65,15,6\r\nMOVE^L-0019:1354,210,50,64,13,7\r\nMOVE^R-0000:851,275,50,63,0,7\r\nMOVE^R-0001:901,275,50,63,0,7\r\nMOVE^R-0002:951,275,49,63,0,7\r\nMOVE^R-0003:1404,210,48,64,0,6\r\nMOVE^R-0004:1452,210,42,64,1,5\r\nMOVE^R-0005:1494,210,44,64,2,5\r\nMOVE^R-0006:479,210,44,65,4,5\r\nMOVE^R-0007:1134,275,47,63,6,6\r\nMOVE^R-0008:1181,275,47,63,8,6\r\nMOVE^R-0009:1581,210,47,64,9,6\r\nMOVE^R-0010:1628,210,48,64,9,6\r\nMOVE^R-0011:1295,275,48,63,9,6\r\nMOVE^R-0012:1676,210,47,64,10,6\r\nMOVE^R-0013:1723,210,47,64,9,5\r\nMOVE^R-0014:1770,210,46,64,6,5\r\nMOVE^R-0015:1816,210,45,64,4,5\r\nMOVE^R-0016:523,210,44,65,3,5\r\nMOVE^R-0017:1501,339,44,62,1,6\r\nMOVE^R-0018:1545,339,47,62,0,6\r\nMOVE^R-0019:1628,339,49,62,0,7\r\nMOVE^UL-0000:567,210,38,65,16,6\r\nMOVE^UL-0001:605,210,38,65,16,6\r\nMOVE^UL-0002:1575,275,38,63,16,6\r\nMOVE^UL-0003:1613,275,40,63,15,5\r\nMOVE^UL-0004:1653,275,42,63,14,5\r\nMOVE^UL-0005:1059,339,42,62,14,5\r\nMOVE^UL-0006:1101,339,42,62,15,5\r\nMOVE^UL-0007:1143,339,41,62,16,6\r\nMOVE^UL-0008:1695,275,42,63,15,6\r\nMOVE^UL-0009:0,275,42,64,15,6\r\nMOVE^UL-0010:1781,275,42,63,14,7\r\nMOVE^UL-0011:42,275,42,64,14,6\r\nMOVE^UL-0012:84,275,41,64,15,6\r\nMOVE^UL-0013:1414,339,40,62,17,6\r\nMOVE^UL-0014:1898,275,42,63,15,5\r\nMOVE^UL-0015:1940,275,42,63,14,5\r\nMOVE^UL-0016:0,339,43,63,13,5\r\nMOVE^UL-0017:125,275,41,64,14,5\r\nMOVE^UL-0018:643,210,39,65,15,6\r\nMOVE^UL-0019:354,143,38,66,16,6\r\nMOVE^UR-0000:153,339,35,63,13,6\r\nMOVE^UR-0001:188,339,36,63,13,6\r\nMOVE^UR-0002:946,339,36,62,13,6\r\nMOVE^UR-0003:982,339,36,62,15,5\r\nMOVE^UR-0004:224,339,39,63,15,5\r\nMOVE^UR-0005:251,275,40,64,15,4\r\nMOVE^UR-0006:291,275,43,64,14,4\r\nMOVE^UR-0007:334,275,46,64,12,5\r\nMOVE^UR-0008:727,210,47,65,11,5\r\nMOVE^UR-0009:774,210,47,65,11,6\r\nMOVE^UR-0010:821,210,47,65,10,6\r\nMOVE^UR-0011:392,143,48,66,9,5\r\nMOVE^UR-0012:440,143,48,66,10,5\r\nMOVE^UR-0013:958,210,48,65,10,5\r\nMOVE^UR-0014:640,275,46,64,12,4\r\nMOVE^UR-0015:663,339,43,63,14,4\r\nMOVE^UR-0016:706,339,41,63,15,4\r\nMOVE^UR-0017:1592,339,36,62,16,5\r\nMOVE^UR-0018:686,275,35,64,15,5\r\nMOVE^UR-0019:721,275,35,64,14,6"

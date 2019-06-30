@@ -39,6 +39,7 @@ namespace Vis.SmartSpriteSlicer
                         Undo.RecordObject(_model.SlicingSettingsPreset, "Preset values updated");
                         _model.SlicingSettingsPreset.UpdateProperties(_model.SlicingSettings);
                         EditorUtility.SetDirty(_model.SlicingSettingsPreset);
+                        AssetDatabase.SaveAssets();
                     }
                     if (GUILayout.Button(new GUIContent($"Reset", "Apply preset values")))
                     {

@@ -33,7 +33,10 @@ namespace Vis.SmartSpriteSlicer
 
             var newTab = RadioButtonsGroup.DrawEnum(_model.ControlPanelTab, styleFunc, contentFunc);
             if (newTab != _model.ControlPanelTab)
+            {
                 _model.ControlPanelTab = newTab;
+                _model.Repaint();
+            }
 
             switch (newTab)
             {

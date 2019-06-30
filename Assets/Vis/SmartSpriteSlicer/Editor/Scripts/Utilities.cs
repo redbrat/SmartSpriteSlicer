@@ -29,5 +29,6 @@ namespace Vis
                     throw new ApplicationException($"Vis.Utilities. Unknown mode: {mode}");
             }
         }
+        public static Vector2Int ToVector2Int(this Vector3 value, FloatConvertionMode mode = FloatConvertionMode.Round) => new Vector2(value.x, value.y).ToVector2Int(mode);
     }
 }

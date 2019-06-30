@@ -172,7 +172,10 @@ namespace Vis.SmartSpriteSlicer
                     break;
                 case PivotPoint.Absolute:
                 default:
-                    pivotPointCoords = toVector2Int(result.position.position + result.group.AbsolutePivot);
+                    if (group.UseGroupPivotPointSettings)
+                        pivotPointCoords = toVector2Int(result.position.position + result.group.AbsolutePivot);
+                    else
+                        pivotPointCoords = toVector2Int(result.position.position + _slicingSettings.GlobalAbsolutePivot);
                     break;
             }
             result.pivotPoint = pivotPointCoords;
