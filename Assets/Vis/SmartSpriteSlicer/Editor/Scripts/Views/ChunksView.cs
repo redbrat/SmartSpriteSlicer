@@ -11,18 +11,21 @@ namespace Vis.SmartSpriteSlicer
         internal const string ChunksPanelStyleName = "ChunksPanel";
         internal const string ChunkEditPanelStyleName = "ChunkEditPanel";
         internal const string ChunkButtonStyleName = "ChunkButton";
-
+        internal const string ChunkButtonPressedStyleName = "ChunkButtonPressed";
+        
         internal static int EditorChunkId;
 
         private readonly GUIStyle _chunksPanelStyle;
         private readonly GUIStyle _chunkEditPanelStyle;
         private readonly GUIStyle _chunkButtonStyle;
+        private readonly GUIStyle _chunkButtonPressedStyle;
 
         public ChunksView(SmartSpriteSlicerWindow model) : base(model)
         {
             _chunksPanelStyle = _model.Skin.GetStyle(ChunksPanelStyleName);
             _chunkEditPanelStyle = _model.Skin.GetStyle(ChunkEditPanelStyleName);
             _chunkButtonStyle = _model.Skin.GetStyle(ChunkButtonStyleName);
+            _chunkButtonPressedStyle = _model.Skin.GetStyle(ChunkButtonPressedStyleName);
         }
 
         public override void OnGUILayout()
@@ -59,7 +62,7 @@ namespace Vis.SmartSpriteSlicer
                         GUI.backgroundColor = chunk.Color;
                         GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
                         _chunkButtonStyle.normal.textColor = chunk.TextColor;
-                        var draggableButtonResult = DragableButton.Draw(new GUIContent(chunk.GetHumanFriendlyName()), _chunkButtonStyle, true, GUILayout.MinWidth(80f));
+                        var draggableButtonResult = DragableButton.Draw(new GUIContent(chunk.GetHumanFriendlyName()), EditorChunkId == chunk.Id ? _chunkButtonPressedStyle : _chunkButtonStyle, true, GUILayout.MinWidth(80f));
                         switch (draggableButtonResult)
                         {
                             case DraggableButtonResult.None:
@@ -142,7 +145,7 @@ namespace Vis.SmartSpriteSlicer
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
-                if (GUILayout.Button(new GUIContent($"Delete", "Remove chunk and all groups containing it")) &&
+                if (GUILayout.Button(new GUIContent($"Delete", "Remove chunk and all groups that contain it")) &&
                     (!_model.SlicingSettings.ChunkGroups.Where(g => g.ChunkId == chunks[targetChunkIndex].Id).Any() || EditorUtility.DisplayDialog("Warning!", "This action will delete all groups containing that chunk. Are you sure you want to delete it?", "Yes", "No")))
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk deleted");
