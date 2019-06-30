@@ -27,13 +27,17 @@ namespace Vis.SmartSpriteSlicer
             if (_model.SlicingSettings.ChunkGroups.Count == 0)
             {
                 if (_model.SlicingSettings.Chunks.Count == 0)
-                    EditorGUILayout.LabelField(new GUIContent($"<i><color=#888888>Groups panel empty.</color></i>"), _model.RichTextStyle);
+                    EditorGUILayout.LabelField(new GUIContent($"<i><color=#000000>Groups panel empty.</color></i>"), _model.RichTextStyle);
                 else
-                    EditorGUILayout.LabelField(new GUIContent($"<i><color=#888888>Drag'n'Drop some chunks here to create a group.</color></i>"), _model.RichTextStyle);
+                    EditorGUILayout.LabelField(new GUIContent($"<i><color=#000000>Drag'n'Drop some chunks here to create a group.</color></i>"), _model.RichTextStyle);
             }
             else
             {
                 var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ChunkGroups, _model.SelectedGroupIndex, (int)WindowWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
+                if (reorderableListResult.clicked.Id != 0)
+                {
+
+                }
                 if (reorderableListResult.reordered)
                     Undo.RecordObject(_model.SlicingSettings, $"Chunk groups reordered");
                 _model.SlicingSettings.ChunkGroups = reorderableListResult.list;
@@ -41,6 +45,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     if (_model.SelectedGroupIndex >= 0)
                         _model.SelectedGroupIndex = reorderableListResult.selected;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 else
@@ -69,7 +74,7 @@ namespace Vis.SmartSpriteSlicer
             switch (group.Flavor)
             {
                 case SpriteGroupFlavor.Group:
-                    return getBlobContent(_model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First());
+                    return getBlobContent(group, _model.SlicingSettings.Chunks.Where(chunk => chunk.Id == group.ChunkId).First());
                 case SpriteGroupFlavor.EndOfLine:
                     return new GUIContent($"<color=#000000><i>End of line</i></color>");
                 case SpriteGroupFlavor.EmptySpace:
@@ -110,6 +115,11 @@ namespace Vis.SmartSpriteSlicer
                 _model.EditedGroupId = group.Id;
         }
 
-        private GUIContent getBlobContent(SpriteChunk chunk) => new GUIContent($"{chunk.GetHumanFriendlyName()}");
+        private GUIContent getBlobContent(SpriteGroup group, SpriteChunk chunk)
+        {
+            if (group.UseCustomName)
+                return new GUIContent(group.CustomName);
+            return new GUIContent($"{chunk.GetHumanFriendlyName()}");
+        }
     }
 }

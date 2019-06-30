@@ -58,7 +58,6 @@ namespace Vis.SmartSpriteSlicer
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-
             if (!ControlPanelWindow.Extracted && GUILayout.Button(new GUIContent($"Extract windows", $"Make windows hover")))
             {
                 ControlPanelWindow.Extracted = true;

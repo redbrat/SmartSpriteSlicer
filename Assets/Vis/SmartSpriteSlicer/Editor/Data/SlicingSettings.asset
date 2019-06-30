@@ -12,130 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e36d81dd46d3340aa1b71ce17af25d, type: 3}
   m_Name: SlicingSettings
   m_EditorClassIdentifier: 
-  UseCustomSpriteName: 1
-  CustomName: mySprite
-  NamePartsSeparator: '---'
+  UseCustomSpriteName: 0
+  CustomName: sprite
+  NamePartsSeparator: '-'
   Offset: {x: 0, y: 0}
   LayoutAnchor: 0
-  Chunks:
-  - _name: BreathBottomLeft
-    _id: 1
-    _color: {r: 0.9221561, g: 0.83679605, b: 0.5657658, a: 1}
-    _textColor: {r: 1, g: 1, b: 1, a: 1}
-    _size: {x: 44, y: 72}
-  - _name: BreathBottom
-    _id: 2
-    _color: {r: 0.60970086, g: 0.9962263, b: 0.17663121, a: 1}
-    _textColor: {r: 1, g: 1, b: 1, a: 1}
-    _size: {x: 30, y: 72}
-  - _name: My Named chunk
-    _id: 3
-    _color: {r: 0.3903045, g: 0.19993794, b: 0.91735065, a: 1}
-    _textColor: {r: 1, g: 1, b: 1, a: 1}
-    _size: {x: 64, y: 64}
-  ChunkGroups:
-  - _id: 12
-    _flavor: 0
-    _chunkId: 1
-    _times: 11
-    _offset: {x: 0, y: 0}
-    _direction: 0
-    _individualMargin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    _naming: 1
-    _useCustomName: 0
-    _customName: 
-    _useGroupPivotPointSettings: 0
-    _pivotPoint: 0
-    _absolutePivot: {x: 0, y: 0}
-  - _id: 13
-    _flavor: 0
-    _chunkId: 1
-    _times: 9
-    _offset: {x: 0, y: -1}
-    _direction: 0
-    _individualMargin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    _naming: 0
-    _useCustomName: 0
-    _customName: 
-    _useGroupPivotPointSettings: 0
-    _pivotPoint: 0
-    _absolutePivot: {x: 0, y: 0}
-  - _id: 14
-    _flavor: 0
-    _chunkId: 2
-    _times: 21
-    _offset: {x: 0, y: 0}
-    _direction: 0
-    _individualMargin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    _naming: 0
-    _useCustomName: 0
-    _customName: 
-    _useGroupPivotPointSettings: 0
-    _pivotPoint: 0
-    _absolutePivot: {x: 0, y: 0}
-  - _id: 15
-    _flavor: 0
-    _chunkId: 2
-    _times: 16
-    _offset: {x: 0, y: -1}
-    _direction: 0
-    _individualMargin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    _naming: 0
-    _useCustomName: 0
-    _customName: 
-    _useGroupPivotPointSettings: 0
-    _pivotPoint: 0
-    _absolutePivot: {x: 0, y: 0}
-  - _id: 16
-    _flavor: 1
-    _chunkId: 0
-    _times: 1
-    _offset: {x: 0, y: 72}
-    _direction: 0
-    _individualMargin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    _naming: 0
-    _useCustomName: 0
-    _customName: 
-    _useGroupPivotPointSettings: 0
-    _pivotPoint: 0
-    _absolutePivot: {x: 0, y: 0}
-  - _id: 17
-    _flavor: 0
-    _chunkId: 2
-    _times: 23
-    _offset: {x: 0, y: 1}
-    _direction: 0
-    _individualMargin:
-      m_Left: 0
-      m_Right: 0
-      m_Top: 0
-      m_Bottom: 0
-    _naming: 0
-    _useCustomName: 0
-    _customName: 
-    _useGroupPivotPointSettings: 0
-    _pivotPoint: 0
-    _absolutePivot: {x: 0, y: 0}
+  Chunks: []
+  ChunkGroups: []
   ScriptableNodes: []
   GlobalPivotPoint: 0
   GlobalAbsolutePivot: {x: 0, y: 0}

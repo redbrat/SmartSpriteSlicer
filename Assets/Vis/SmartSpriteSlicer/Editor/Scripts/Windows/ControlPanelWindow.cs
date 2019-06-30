@@ -25,7 +25,7 @@ namespace Vis.SmartSpriteSlicer
         {
             base.OnGUILayout();
 
-            var reserve = GUILayoutUtility.GetRect(1, _model.SlicingSettings.HaveChunkGroups() ? 60 : 30);
+            var reserve = GUILayoutUtility.GetRect(1, /*_model.SlicingSettings.HaveChunkGroups() ? 60 : 30*/60);
             _topPanelView.ReservedHeight = reserve.height;
             if (Event.current.type == EventType.Repaint)
                 _topPanelViewPosition = reserve;
@@ -37,7 +37,10 @@ namespace Vis.SmartSpriteSlicer
                 DrawControlPanel(SmartSpriteSlicerWindow.MaxContolPanelWidth);
             }
             else if (_windowInstanceCache == null)
+            {
                 _windowInstanceCache = EditorWindow.GetWindow(typeof(ExtractedControlPanelWIndow), true, _model.ControlPanelCaption);
+                _model.Focus();
+            }
 
             if (Event.current.type == EventType.Repaint)
                 _topPanelViewPosition.width = GUILayoutUtility.GetLastRect().width;

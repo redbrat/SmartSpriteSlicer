@@ -38,6 +38,7 @@ namespace Vis.SmartSpriteSlicer
             {
                 _windowInstanceCache = (ExtractedPreviewWindow)EditorWindow.GetWindow(typeof(ExtractedPreviewWindow), true, _model.GetPreviewTitle());
                 _windowInstanceCache.Model = _model;
+                _model.Focus();
             }
 
             if (SpritePreviewWindow.Extracted)

@@ -60,6 +60,7 @@ namespace Vis.SmartSpriteSlicer
                         GUI.backgroundColor = chunk.Color;
                         GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
                         _chunkButtonStyle.normal.textColor = chunk.TextColor;
+                        _chunkButtonPressedStyle.normal.textColor = chunk.TextColor;
                         var draggableButtonResult = DragableButton.Draw(new GUIContent(chunk.GetHumanFriendlyName()), _model.EditedChunkId == chunk.Id ? _chunkButtonPressedStyle : _chunkButtonStyle, true, GUILayout.MinWidth(80f));
                         switch (draggableButtonResult)
                         {
@@ -76,7 +77,10 @@ namespace Vis.SmartSpriteSlicer
                                 var newGroupId = 1;
                                 if (_model.SlicingSettings.ChunkGroups.Count > 0)
                                     newGroupId = _model.SlicingSettings.ChunkGroups.OrderByDescending(c => c.Id).First().Id + 1;
+                                Undo.RecordObject(_model.SlicingSettings, "Group added");
                                 _model.SlicingSettings.ChunkGroups.Add(new SpriteGroup(newGroupId, chunk.Id));
+                                _model.Repaint();
+                                EditorUtility.SetDirty(_model.SlicingSettings);
                                 break;
                             default:
                                 break;
@@ -85,7 +89,7 @@ namespace Vis.SmartSpriteSlicer
                     }
 
                     if (buttonsCount == 1)
-                        EditorGUILayout.LabelField(new GUIContent($"<i><color=#888888>Create some chunks with \"+\" button.</color></i>"), _model.RichTextStyle);
+                        EditorGUILayout.LabelField(new GUIContent($"<i><color=#000000>Create some chunks with \"+\" button.</color></i>"), _model.RichTextStyle);
                 }
                 EditorGUILayout.EndHorizontal();
             }
@@ -104,6 +108,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk width changed");
                     chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(newWidth, chunk.Size.y));
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 EditorGUILayout.EndHorizontal();
@@ -115,6 +120,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk height changed");
                     chunks[targetChunkIndex] = chunk.SetSize(new Vector2Int(chunk.Size.x, newHeight));
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 EditorGUILayout.EndHorizontal();
@@ -124,6 +130,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk name changed");
                     chunks[targetChunkIndex] = chunk.SetName(newName);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -132,6 +139,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk color changed");
                     chunks[targetChunkIndex] = chunk.SetColor(newColor);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -140,6 +148,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Chunk's text color changed");
                     chunks[targetChunkIndex] = chunk.SetTextColor(newTextColor);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -155,6 +164,7 @@ namespace Vis.SmartSpriteSlicer
                             _model.SlicingSettings.ChunkGroups.RemoveAt(i--);
                     }
                     chunks.RemoveAt(targetChunkIndex);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 EditorGUILayout.EndVertical();

@@ -34,6 +34,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Global naming changed");
                     _model.SlicingSettings.UseCustomSpriteName = newUseCustomSpriteName;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -44,6 +45,7 @@ namespace Vis.SmartSpriteSlicer
                     {
                         Undo.RecordObject(_model.SlicingSettings, "Global naming changed");
                         _model.SlicingSettings.CustomName = newCustomName;
+                        _model.Repaint();
                         EditorUtility.SetDirty(_model.SlicingSettings);
                     }
                 }
@@ -53,6 +55,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Global naming changed");
                     _model.SlicingSettings.NamePartsSeparator = newNamePartsSeparator;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -61,6 +64,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Global anchor changed");
                     _model.SlicingSettings.LayoutAnchor = newAnchor;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 var newOffset = EditorGUILayout.Vector2IntField(new GUIContent($"Offset:"), _model.SlicingSettings.Offset);
@@ -68,6 +72,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Global offset changed");
                     _model.SlicingSettings.Offset = newOffset;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -76,6 +81,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Global pivot point changed");
                     _model.SlicingSettings.GlobalPivotPoint = newPivotPoint;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -86,15 +92,17 @@ namespace Vis.SmartSpriteSlicer
                     {
                         Undo.RecordObject(_model.SlicingSettings, "Global absolute pivot changed");
                         _model.SlicingSettings.GlobalAbsolutePivot = newAbsolutePivot;
+                        _model.Repaint();
                         EditorUtility.SetDirty(_model.SlicingSettings);
                     }
                 }
 
-                var newGroupsDependentEditing = !EditorGUILayout.Toggle(new GUIContent($"Groups independent editing:", $"If false - changes to preceding groups will cause changes to positions of further groups"), !_model.SlicingSettings.GroupsDependentEditing);
+                var newGroupsDependentEditing = !EditorGUILayout.Toggle(new GUIContent($"Groups independent:", $"If false - changes to preceding groups will cause positions changes of further groups"), !_model.SlicingSettings.GroupsDependentEditing);
                 if (newGroupsDependentEditing != _model.SlicingSettings.GroupsDependentEditing)
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Groups dependent editing setting changed");
                     _model.SlicingSettings.GroupsDependentEditing = newGroupsDependentEditing;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 EditorGUI.indentLevel--;

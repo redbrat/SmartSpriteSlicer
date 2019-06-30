@@ -190,7 +190,8 @@ namespace Vis.SmartSpriteSlicer
                         if (SlicingSettings.UseCustomSpriteName)
                             globalName = SlicingSettings.CustomName;
 
-                        var layout = new Layout(SlicingSettings, new Rect(Vector2.zero, TextureRect.position));
+                        var layout = new Layout(SlicingSettings, new Rect(Vector2Int.zero, new Vector2Int(Texture.width, Texture.height)));
+                        //var layout = new Layout(SlicingSettings, new Rect(position.position, TextureRect.size));
                         foreach (var area in layout)
                         {
                             var groupName = area.chunk.GetHumanFriendlyName();
@@ -215,7 +216,7 @@ namespace Vis.SmartSpriteSlicer
                     break;
                 case ControlPanelTabs.ScriptableSclicing:
                     {
-                        var layout = new ScriptableLayout(SlicingSettings, new Rect(Vector2.zero, TextureRect.position));
+                        var layout = new ScriptableLayout(SlicingSettings, new Rect(Vector2Int.zero, TextureRect.position));
                         foreach (var area in layout)
                         {
                             var flippedYRect = area.position;

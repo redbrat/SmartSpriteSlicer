@@ -27,6 +27,7 @@ namespace Vis.SmartSpriteSlicer
                 lastGroupOffset.x = 0;
                 Undo.RecordObject(_model.SlicingSettings, "End of line added");
                 _model.SlicingSettings.ChunkGroups.Add(new SpriteGroup(_model.SlicingSettings.GetNextGroupId(), SpriteGroupFlavor.EndOfLine, lastGroupOffset));
+                _model.Repaint();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
             if (GUILayout.Button(new GUIContent($"Add empty space"), _buttonsStyle, GUILayout.MaxWidth(120f)))
@@ -36,6 +37,7 @@ namespace Vis.SmartSpriteSlicer
                     lastGroupOffset = Vector2Int.one * 100;
                 Undo.RecordObject(_model.SlicingSettings, "Empty space added");
                 _model.SlicingSettings.ChunkGroups.Add(new SpriteGroup(_model.SlicingSettings.GetNextGroupId(), SpriteGroupFlavor.EmptySpace, lastGroupOffset));
+                _model.Repaint();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
             EditorGUILayout.EndHorizontal();

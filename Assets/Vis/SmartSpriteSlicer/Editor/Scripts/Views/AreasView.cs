@@ -108,7 +108,8 @@ namespace Vis.SmartSpriteSlicer
 
         private void drawManualSlicingAreas(Rect position)
         {
-            var layout = new Layout(_model.SlicingSettings, position);
+            //var layout = new Layout(_model.SlicingSettings, position);
+            var layout = new Layout(_model.SlicingSettings, new Rect(position.position, new Vector2Int(_model.Texture.width, _model.Texture.height)));
 
             foreach (var area in layout)
             {

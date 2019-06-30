@@ -27,44 +27,48 @@ namespace Vis.SmartSpriteSlicer
             {
                 Undo.RecordObject(_model.SlicingSettings, "Group times changed");
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetTimes(newTimes);
+                _model.Repaint();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
             if (group.Flavor == SpriteGroupFlavor.Group)
             {
-                var newNaming = EditorGUILayout.Toggle(new GUIContent($"Modify name", "Modify final sprite name"), group.Naming);
-                if (newNaming != group.Naming)
+                //var newNaming = EditorGUILayout.Toggle(new GUIContent($"Modify name", "Modify final sprite name"), group.Naming);
+                //if (newNaming != group.Naming)
+                //{
+                //    Undo.RecordObject(_model.SlicingSettings, "Group naming setting changed");
+                //    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetNaming(newNaming);
+                //    EditorUtility.SetDirty(_model.SlicingSettings);
+                //}
+                //if (newNaming)
+                //{
+                var newUseCustomName = !EditorGUILayout.Toggle(new GUIContent($"Use chunk name", $"If true final sprite name will include chunk name ({_model.SlicingSettings.Chunks.Where(c => c.Id == group.ChunkId).First().GetHumanFriendlyName()})"), !group.UseCustomName);
+                if (newUseCustomName != group.UseCustomName)
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Group naming setting changed");
-                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetNaming(newNaming);
+                    _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetUseCustomName(newUseCustomName);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
-                if (newNaming)
+
+                if (newUseCustomName)
                 {
-                    var newUseCustomName = !EditorGUILayout.Toggle(new GUIContent($"Use chunk name", $"Final sprite name will include chunk name ({_model.SlicingSettings.Chunks.Where(c => c.Id == group.ChunkId).First().GetHumanFriendlyName()})"), !group.UseCustomName);
-                    if (newUseCustomName != group.UseCustomName)
+                    var newCustomName = EditorGUILayout.TextField(new GUIContent($"Custom group name", "Final sprite will include this name"), group.CustomName);
+                    if (newCustomName != group.CustomName)
                     {
                         Undo.RecordObject(_model.SlicingSettings, "Group naming setting changed");
-                        _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetUseCustomName(newUseCustomName);
+                        _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetCustomName(newCustomName);
+                        _model.Repaint();
                         EditorUtility.SetDirty(_model.SlicingSettings);
                     }
-
-                    if (newUseCustomName)
-                    {
-                        var newCustomName = EditorGUILayout.TextField(new GUIContent($"Custom group name", "Final sprite will include this name"), group.CustomName);
-                        if (newCustomName != group.CustomName)
-                        {
-                            Undo.RecordObject(_model.SlicingSettings, "Group naming setting changed");
-                            _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetCustomName(newCustomName);
-                            EditorUtility.SetDirty(_model.SlicingSettings);
-                        }
-                    }
                 }
+                //}
 
                 var newUseGroupPivotPointSettings = !EditorGUILayout.Toggle(new GUIContent($"Use global pivot point:"), !group.UseGroupPivotPointSettings);
                 if (newUseGroupPivotPointSettings != group.UseGroupPivotPointSettings)
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Group new use global pivot point settings changed");
                     _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetUseGroupPivotPointSettings(newUseGroupPivotPointSettings);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
 
@@ -75,6 +79,7 @@ namespace Vis.SmartSpriteSlicer
                     {
                         Undo.RecordObject(_model.SlicingSettings, "Group pivot point changed");
                         _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetPivotPoint(newPivotPoint);
+                        _model.Repaint();
                         EditorUtility.SetDirty(_model.SlicingSettings);
                     }
 
@@ -85,6 +90,7 @@ namespace Vis.SmartSpriteSlicer
                         {
                             Undo.RecordObject(_model.SlicingSettings, "Group absolute pivot changed");
                             _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetAbsolutePivot(newAbsolutePivot);
+                            _model.Repaint();
                             EditorUtility.SetDirty(_model.SlicingSettings);
                         }
                     }
@@ -100,7 +106,9 @@ namespace Vis.SmartSpriteSlicer
             if (newOffset != group.Offset)
             {
                 Undo.RecordObject(_model.SlicingSettings, "Group offset changed");
-                if (!_model.SlicingSettings.GroupsDependentEditing && groupIndex < _model.SlicingSettings.ChunkGroups.Count - 1)
+                if (!_model.SlicingSettings.GroupsDependentEditing && 
+                    groupIndex < _model.SlicingSettings.ChunkGroups.Count - 1 &&
+                    group.Flavor == SpriteGroupFlavor.Group)
                 {
                     var nextGroup = _model.SlicingSettings.ChunkGroups[groupIndex + 1];
                     if (newOffset.x != group.Offset.x)
@@ -117,6 +125,7 @@ namespace Vis.SmartSpriteSlicer
                     }
                 }
                 _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetOffset(newOffset);
+                _model.Repaint();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
 
@@ -147,17 +156,19 @@ namespace Vis.SmartSpriteSlicer
                         }
                     }
                     _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetIndividualMargin(newIndividualMargin);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
             }
 
-            if (group.Flavor != SpriteGroupFlavor.EndOfLine)
+            if (group.Flavor == SpriteGroupFlavor.Group)
             {
                 var newDirection = (LayoutDirection)EditorGUILayout.EnumPopup(new GUIContent($"Group direction:"), group.Direction);
                 if (newDirection != group.Direction)
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Group direction changed");
                     _model.SlicingSettings.ChunkGroups[groupIndex] = group.SetDirection(newDirection);
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
             }

@@ -21,9 +21,10 @@ namespace Vis.SmartSpriteSlicer
             EditorGUILayout.BeginHorizontal(_panelStyle);
             if (GUILayout.Button(new GUIContent($"Add node"), _buttonsStyle, GUILayout.MaxWidth(100f)))
             {
-                Undo.RecordObject(_model.SlicingSettings, "End of line added");
+                Undo.RecordObject(_model.SlicingSettings, "Node added");
                 _model.SlicingSettings.ScriptableNodes.Add(new ScriptableNode(_model.SlicingSettings.GetNextNodeId()));
                 _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
+                _model.Repaint();
                 EditorUtility.SetDirty(_model.SlicingSettings);
             }
             EditorGUILayout.EndHorizontal();

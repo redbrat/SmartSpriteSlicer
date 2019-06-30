@@ -24,8 +24,8 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUILayout();
 
             EditorGUILayout.BeginVertical(DragableButton.IsDragging && DragableButton.ReadyToDrop ? _panelDragAcceptanceStyle : _panelStyle);
-            if (_model.SlicingSettings.ChunkGroups.Count == 0)
-                EditorGUILayout.LabelField(new GUIContent($"<i><color=#888888>No nodes found added.</color></i>"), _model.RichTextStyle);
+            if (_model.SlicingSettings.ScriptableNodes.Count == 0)
+                EditorGUILayout.LabelField(new GUIContent($"<i><color=#000000>Add some nodes</color></i>"), _model.RichTextStyle);
             else
             {
                 var reorderableListResult = ReorderableBlobList.Draw(_model.SlicingSettings.ScriptableNodes, _model.SelectedNodeIndex, (int)WindowWidth - 30, getBlobContent, getBlobColor, getBlobStyle, getSelectedBlobStyle);
@@ -37,6 +37,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     if (_model.SelectedNodeIndex >= 0)
                         _model.SelectedNodeIndex = reorderableListResult.selected;
+                    _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }
                 else
