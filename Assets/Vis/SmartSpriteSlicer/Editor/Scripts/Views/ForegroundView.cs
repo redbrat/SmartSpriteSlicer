@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Vis.SmartSpriteSlicer
 {
@@ -17,6 +18,7 @@ namespace Vis.SmartSpriteSlicer
                 _model.PreviewedAreaControlId = null;
                 _model.PreviewedArea = null;
                 _model.PreviewedPivotPoint = null;
+                _model.EditedChunkId = 0;
                 GUI.changed = true;
                 Event.current.Use();
             }
@@ -57,7 +59,14 @@ namespace Vis.SmartSpriteSlicer
                     _model.EditedGroupId = _model.IterableCtrlIdsToGroupsIds[_model.PreviewedAreaControlId.Value];
                     for (int i = 0; i < _model.SlicingSettings.ChunkGroups.Count; i++)
                         if (_model.SlicingSettings.ChunkGroups[i].Id == _model.EditedGroupId)
+                        {
                             _model.SelectedGroupIndex = i;
+                            if (_model.SlicingSettings.ChunkGroups[i].Flavor == SpriteGroupFlavor.Group)
+                            {
+                                var chunk = _model.SlicingSettings.Chunks.Where(ch => ch.Id == _model.SlicingSettings.ChunkGroups[i].ChunkId).First();
+                                _model.EditedChunkId = chunk.Id;
+                            }
+                        }
                 }
 
                 Event.current.Use();

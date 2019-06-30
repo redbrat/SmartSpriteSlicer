@@ -76,6 +76,8 @@ namespace Vis.SmartSpriteSlicer
         private MainView _view;
         public Rect TextureRect;
 
+        public int EditedChunkId;
+
         public List<int> IterableCtrlIds = new List<int>();
         public List<Rect> IterableAreas = new List<Rect>();
         public List<Vector2Int> IterablePivotPoints = new List<Vector2Int>();

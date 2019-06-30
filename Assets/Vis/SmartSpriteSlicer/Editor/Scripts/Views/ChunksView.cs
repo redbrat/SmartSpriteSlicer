@@ -12,8 +12,6 @@ namespace Vis.SmartSpriteSlicer
         internal const string ChunkEditPanelStyleName = "ChunkEditPanel";
         internal const string ChunkButtonStyleName = "ChunkButton";
         internal const string ChunkButtonPressedStyleName = "ChunkButtonPressed";
-        
-        internal static int EditorChunkId;
 
         private readonly GUIStyle _chunksPanelStyle;
         private readonly GUIStyle _chunkEditPanelStyle;
@@ -62,16 +60,16 @@ namespace Vis.SmartSpriteSlicer
                         GUI.backgroundColor = chunk.Color;
                         GUI.SetNextControlName($"Chunk_{currentButtonIndex - 1}");
                         _chunkButtonStyle.normal.textColor = chunk.TextColor;
-                        var draggableButtonResult = DragableButton.Draw(new GUIContent(chunk.GetHumanFriendlyName()), EditorChunkId == chunk.Id ? _chunkButtonPressedStyle : _chunkButtonStyle, true, GUILayout.MinWidth(80f));
+                        var draggableButtonResult = DragableButton.Draw(new GUIContent(chunk.GetHumanFriendlyName()), _model.EditedChunkId == chunk.Id ? _chunkButtonPressedStyle : _chunkButtonStyle, true, GUILayout.MinWidth(80f));
                         switch (draggableButtonResult)
                         {
                             case DraggableButtonResult.None:
                                 break;
                             case DraggableButtonResult.Clicked:
-                                if (EditorChunkId == chunk.Id)
-                                    EditorChunkId = default;
+                                if (_model.EditedChunkId == chunk.Id)
+                                    _model.EditedChunkId = default;
                                 else
-                                    EditorChunkId = chunk.Id;
+                                    _model.EditedChunkId = chunk.Id;
                                 GUI.FocusControl(default);
                                 break;
                             case DraggableButtonResult.Droped:
@@ -93,7 +91,7 @@ namespace Vis.SmartSpriteSlicer
             }
             EditorGUILayout.EndVertical();
 
-            var targetChunkIndex = chunks.FindIndex(c => c.Id == EditorChunkId);
+            var targetChunkIndex = chunks.FindIndex(c => c.Id == _model.EditedChunkId);
             if (targetChunkIndex >= 0)
             {
                 var chunk = chunks[targetChunkIndex];

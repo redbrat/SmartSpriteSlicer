@@ -69,6 +69,7 @@ namespace Vis.SmartSpriteSlicer
                         _model.PreviewName = null;
                         _model.PreviewGroup = null;
                         _model.PreviewChunk = null;
+                        _model.EditedChunkId = 0;
                     }
                     else
                     {
@@ -86,6 +87,7 @@ namespace Vis.SmartSpriteSlicer
                         _model.PreviewName = null;
                         _model.PreviewGroup = null;
                         _model.PreviewChunk = null;
+                        _model.EditedChunkId = 0;
                     }
                     else
                     {
@@ -138,11 +140,13 @@ namespace Vis.SmartSpriteSlicer
                         _model.PreviewName = null;
                         _model.PreviewGroup = null;
                         _model.PreviewChunk = null;
+                        _model.EditedChunkId = 0;
                     }
                     else
                     {
                         _model.PreviewedAreaControlId = controlId;
                         _model.SelectedGroupIndex = getIndexOf(_model.SlicingSettings.ChunkGroups, area.group);
+                        _model.EditedChunkId = area.chunk.Id;
                         _model.EditedGroupId = area.group.Id;
                     }
                 }
