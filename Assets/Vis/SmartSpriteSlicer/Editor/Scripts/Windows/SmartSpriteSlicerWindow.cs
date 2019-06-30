@@ -56,8 +56,16 @@ namespace Vis.SmartSpriteSlicer
         /// </summary>
         public Preset SlicingSettingsPreset;
 
-        [NonSerialized]
-        public GUISkin Skin;
+        public GUISkin Skin
+        {
+            get
+            {
+                if (_skin == null)
+                    _skin = loadGuiSkin();
+                return _skin;
+            }
+        }
+        private GUISkin _skin;
         public GUIStyle RichTextStyle => Skin.GetStyle($"RichText");
 
         [NonSerialized]
@@ -92,7 +100,6 @@ namespace Vis.SmartSpriteSlicer
         {
             Texture = sprite;
             Importer = importer;
-            Skin = loadGuiSkin();
 
             BlackTexture = new Texture2D(1, 1);
             BlackTexture.SetPixel(0, 0, Color.black);
@@ -116,11 +123,15 @@ namespace Vis.SmartSpriteSlicer
         {
             manageDragAndDrop();
 
-            _view?.OnGUI(position);
+            if (_view == null)
+                GUI.Box(new Rect(Vector2Int.zero, position.size), new GUIContent($"Drag'n'drop your sprite here"), _isDraggingOverWindow ? Skin.GetStyle("PlaceholderActive") : Skin.GetStyle("Placeholder"));
+            else
+                _view?.OnGUI(position);
         }
 
         public static GUISkin loadGuiSkin() => Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
 
+        private bool _isDraggingOverWindow;
         private void manageDragAndDrop()
         {
             if ((Event.current.type == EventType.DragUpdated ||
@@ -130,9 +141,17 @@ namespace Vis.SmartSpriteSlicer
                 EntryPoints.ValidateObjectIsEditableSprite(DragAndDrop.objectReferences[0]))
             {
                 if (Event.current.type == EventType.DragUpdated)
+                {
                     DragAndDrop.visualMode = DragAndDropVisualMode.Move;
+                    _isDraggingOverWindow = true;
+                }
                 else if (Event.current.type == EventType.DragExited)
-                    Initialize(DragAndDrop.objectReferences[0] as Texture2D, EntryPoints.GetTextureImporter(DragAndDrop.objectReferences[0]));
+                {
+                    var localPos = new Rect(Vector2Int.zero, position.size);
+                    if (localPos.Contains(Event.current.mousePosition))
+                        Initialize(DragAndDrop.objectReferences[0] as Texture2D, EntryPoints.GetTextureImporter(DragAndDrop.objectReferences[0]));
+                    _isDraggingOverWindow = false;
+                }
             }
         }
 

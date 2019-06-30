@@ -5,12 +5,12 @@ namespace Vis.SmartSpriteSlicer
 {
     public static class EntryPoints
     {
-        private const string _editMenuPath = "Assets/Vis/SmartPriteSlicer/Edit";
+        private const string _editMenuPath = "Assets/Vis/Sprite Slicer Pro";
 
         [MenuItem(_editMenuPath, false)]
         public static void EditWindow()
         {
-            var window = EditorWindow.GetWindow<SmartSpriteSlicerWindow>("Smart Sprite Slicer", true, typeof(SceneView));
+            var window = EditorWindow.GetWindow<SmartSpriteSlicerWindow>("Sprite Slicer Pro", true, typeof(SceneView));
             window.Initialize(Selection.activeObject as Texture2D, GetTextureImporter(Selection.activeObject));
         }
 
