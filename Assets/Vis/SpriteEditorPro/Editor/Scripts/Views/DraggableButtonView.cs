@@ -1,11 +1,11 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class DraggableButtonView : ViewBase
     {
-        public DraggableButtonView(SmartSpriteSlicerWindow model) : base(model)
+        public DraggableButtonView(SpriteEditorProWindow model) : base(model)
         {
         }
 

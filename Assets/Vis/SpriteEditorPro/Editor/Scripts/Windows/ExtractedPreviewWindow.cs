@@ -1,10 +1,10 @@
 ﻿using UnityEditor;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public class ExtractedPreviewWindow : EditorWindow
     {
-        public SmartSpriteSlicerWindow Model;
+        public SpriteEditorProWindow Model;
         private bool _opened;
 
         private void OnGUI()

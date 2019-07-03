@@ -2,7 +2,7 @@
 using UnityEditor.Presets;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class TopPanelView : LayoutViewBase
     {
@@ -10,7 +10,7 @@ namespace Vis.SmartSpriteSlicer
 
         private float _validWidthCache;
 
-        public TopPanelView(SmartSpriteSlicerWindow model) : base(model)
+        public TopPanelView(SpriteEditorProWindow model) : base(model)
         {
             _panelStyle = _model.Skin.GetStyle("ControlTopPanel");
         }
@@ -73,7 +73,12 @@ namespace Vis.SmartSpriteSlicer
                 ControlPanelWindow.Extracted = false;
                 SpritePreviewWindow.Extracted = false;
             }
-            if (!_model.SlicingSettings.HaveChunkGroups())
+            if ((_model.ControlPanelTab == ControlPanelTabs.ManualSlicing && !_model.SlicingSettings.HaveChunkGroups()) ||
+                (_model.ControlPanelTab == ControlPanelTabs.ScriptableSclicing &&
+                (string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) ||
+                !_model.SlicingSettings.HasWholeSetOfNodes() ||
+                !_model.SlicingSettings.HasAllNodesSeparated() ||
+                !_model.SlicingSettings.NodesDeepTestPassed())))
                 GUI.enabled = false;
             if (GUILayout.Button(new GUIContent($"Apply", $"Slice texture")))
                 _model.Slice();

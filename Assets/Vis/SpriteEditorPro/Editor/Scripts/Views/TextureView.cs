@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class TextureView : ViewBase
     {
         private readonly AreasView _areas;
 
-        public TextureView(SmartSpriteSlicerWindow model) : base(model)
+        public TextureView(SpriteEditorProWindow model) : base(model)
         {
             _areas = new AreasView(model);
         }

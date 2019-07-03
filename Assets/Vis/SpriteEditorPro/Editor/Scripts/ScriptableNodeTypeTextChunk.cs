@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public class ScriptableNodeTypeTextChunk
     {
@@ -10,7 +10,13 @@ namespace Vis.SmartSpriteSlicer
         public readonly Color Color;
         public readonly string Text;
 
+        public int EnrichedStartIndex;
+        public int EnrichedStopIndex;
         public bool SuccessfullyParsed;
+
+        public PivotPointAnchor PivotPointAnchor;
+        public Vector2Int CustomPivotPointAnchor;
+        public PivotDirection PivotDirection;
 
         public ScriptableNodeTypeTextChunk(Color color, int startIndex, int stopIndex, ScriptableNodeType type, string text, bool successfullyParsed = false)
         {
@@ -20,6 +26,8 @@ namespace Vis.SmartSpriteSlicer
             Type = type;
             Text = text;
             SuccessfullyParsed = successfullyParsed;
+            EnrichedStartIndex = startIndex;
+            EnrichedStopIndex = stopIndex;
         }
     }
 }

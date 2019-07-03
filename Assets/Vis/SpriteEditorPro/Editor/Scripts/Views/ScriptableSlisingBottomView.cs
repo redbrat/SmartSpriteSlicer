@@ -3,14 +3,16 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
-    public class ScriptableSlisingBottomView : LayoutViewBase
+    public class ScriptableSlicingPreviewBottomView : LayoutViewBase
     {
         private readonly GUIStyle _previewTextStyle;
         private readonly GUIStyle _panelStyle;
 
-        public ScriptableSlisingBottomView(SmartSpriteSlicerWindow model) : base(model)
+        private Vector2 _scrollPosition;
+
+        public ScriptableSlicingPreviewBottomView(SpriteEditorProWindow model) : base(model)
         {
             _previewTextStyle = model.Skin.GetStyle("ScriptableSlicePreviewText");
             _panelStyle = model.Skin.GetStyle("GroupsEditPanel");
@@ -21,11 +23,26 @@ namespace Vis.SmartSpriteSlicer
             base.OnGUILayout();
             EditorGUILayout.BeginHorizontal(_panelStyle);
             var text = _model.SlicingSettings.ScriptableNodes.Count > 0 ? getColorizedValidatedText(_model.SlicingSettings.ScriptabeSlicingTestText) : _model.SlicingSettings.ScriptabeSlicingTestText;
-            EditorGUILayout.TextArea(text, _previewTextStyle, GUILayout.MinHeight(100f), GUILayout.MaxHeight(300f));
+            if (_model.PreviewedGlobalIndex.HasValue && _model.PreviewedGlobalIndex < _colorizedTextCache.report.Chunks.Count)
+            {
+                var firstChunkIndex = _model.PreviewedGlobalIndex.Value * _model.SlicingSettings.ScriptableNodes.Count;
+                var lastChunkIndex = firstChunkIndex + _model.SlicingSettings.ScriptableNodes.Count - 1;
+                var firstReportedChunk = _colorizedTextCache.report.Chunks[firstChunkIndex];
+                var lastReportedChunk = _colorizedTextCache.report.Chunks[lastChunkIndex];
+                var size = _previewTextStyle.CalcSize(new GUIContent(text));
+                _scrollPosition.y = (firstReportedChunk.EnrichedStartIndex / (float)text.Length) * size.y;
+                text = text.Insert(lastReportedChunk.EnrichedStopIndex, "</size>").Insert(firstReportedChunk.EnrichedStartIndex, "<size=24>");
+            }
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUILayout.MinHeight(100f), GUILayout.MaxHeight(300f));
+            //Debug.LogError($"_scrollPosition = {_scrollPosition}");
+            //Debug.LogError($"size = {size}");
+
+            EditorGUILayout.TextArea(text, _previewTextStyle, /*GUILayout.MinHeight(100f), GUILayout.MaxHeight(300f),*/ GUILayout.ExpandHeight(true));
+            EditorGUILayout.EndScrollView();
             EditorGUILayout.EndHorizontal();
         }
 
-        private (int hash, string text) _colorizedTextCache;
+        private (int hash, string text, ScriptableLayoutReport report) _colorizedTextCache;
         private string getColorizedValidatedText(string text)
         {
             if (_colorizedTextCache.hash != _model.SlicingSettings.ScriptableSlicingLayoutHash || _colorizedTextCache.text == null)
@@ -34,6 +51,7 @@ namespace Vis.SmartSpriteSlicer
                 var layout = new ScriptableLayout(_model.SlicingSettings, Rect.zero, report);
                 foreach (var item in layout) ;
 
+                var enrichedOffset = 0;
                 if (report.Chunks.Count > 0) 
                 {
                     var sb = new StringBuilder();
@@ -47,15 +65,29 @@ namespace Vis.SmartSpriteSlicer
                             {
                                 var hexColorString = ColorUtility.ToHtmlStringRGB(chunk.Color);
 
-                                sb.Append($"<color=#{hexColorString}>");
+                                chunk.EnrichedStartIndex += enrichedOffset;
+                                var openColorTag = $"<color=#{hexColorString}>";
+                                enrichedOffset += openColorTag.Length;
+                                sb.Append(openColorTag);
                                 if (!chunk.SuccessfullyParsed)
-                                    sb.Append($"<b><i>");
+                                {
+                                    var failedOpenTags = $"<b><i>";
+                                    sb.Append(failedOpenTags);
+                                    enrichedOffset += failedOpenTags.Length;
+                                }
                             }
                             if (chunk.StopIndex == i || text.Length == i + 1)
                             {
                                 if (!chunk.SuccessfullyParsed)
-                                    sb.Append($"</i></b>");
-                                sb.Append($"</color>");
+                                {
+                                    var failedCloseTags = $"</i></b>";
+                                    sb.Append(failedCloseTags);
+                                    enrichedOffset += failedCloseTags.Length;
+                                }
+                                var closeColorTag = $"</color>";
+                                sb.Append(closeColorTag);
+                                enrichedOffset += closeColorTag.Length;
+                                chunk.EnrichedStopIndex += enrichedOffset;
                                 currentChunkIndex++;
                                 if (text.Length > i + 1)
                                     i--;
@@ -66,7 +98,7 @@ namespace Vis.SmartSpriteSlicer
                     }
                     text = sb.ToString();
                 }
-                _colorizedTextCache = (_model.SlicingSettings.ScriptableSlicingLayoutHash, text);
+                _colorizedTextCache = (_model.SlicingSettings.ScriptableSlicingLayoutHash, text, report);
             }
             return _colorizedTextCache.text;
         }

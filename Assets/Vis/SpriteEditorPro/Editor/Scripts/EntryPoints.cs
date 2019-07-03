@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public static class EntryPoints
     {
@@ -10,7 +10,7 @@ namespace Vis.SmartSpriteSlicer
         [MenuItem(_editMenuPath, false)]
         public static void EditWindow()
         {
-            var window = EditorWindow.GetWindow<SmartSpriteSlicerWindow>("Sprite Editor Pro", true, typeof(SceneView));
+            var window = EditorWindow.GetWindow<SpriteEditorProWindow>("Sprite Editor Pro", true, typeof(SceneView));
             window.Initialize(Selection.activeObject as Texture2D, GetTextureImporter(Selection.activeObject));
         }
 

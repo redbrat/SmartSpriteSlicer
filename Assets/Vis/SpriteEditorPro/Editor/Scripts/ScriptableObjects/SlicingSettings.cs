@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public class SlicingSettings : ScriptableObject
     {
@@ -29,7 +29,7 @@ namespace Vis.SmartSpriteSlicer
         {
             ScriptableSlicingLayoutHash = ScriptabeSlicingTestText.GetHashCode();
             for (int i = 0; i < ScriptableNodes.Count; i++)
-                ScriptableSlicingLayoutHash += ScriptableNodes[i].GetHashCode();
+                ScriptableSlicingLayoutHash += ScriptableNodes[i].GetHashCode() * i;
         }
 
         public int GetNextChunkId()

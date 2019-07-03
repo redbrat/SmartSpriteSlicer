@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     [Serializable]
     public struct SpriteGroup

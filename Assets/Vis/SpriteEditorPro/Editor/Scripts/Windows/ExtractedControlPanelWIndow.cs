@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public class ExtractedControlPanelWIndow : EditorWindow
     {

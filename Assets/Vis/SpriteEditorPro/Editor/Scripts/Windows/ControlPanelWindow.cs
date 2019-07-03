@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class ControlPanelWindow : LayoutViewBase
     {
@@ -9,7 +9,7 @@ namespace Vis.SmartSpriteSlicer
 
         public static LayoutViewBase TabsView;
 
-        public ControlPanelWindow(SmartSpriteSlicerWindow model) : base(model)
+        public ControlPanelWindow(SpriteEditorProWindow model) : base(model)
         {
             _topPanelView = new TopPanelView(model);
 
@@ -34,7 +34,7 @@ namespace Vis.SmartSpriteSlicer
             {
                 if (_windowInstanceCache != null)
                     _windowInstanceCache.Close();
-                DrawControlPanel(SmartSpriteSlicerWindow.MaxContolPanelWidth);
+                DrawControlPanel(SpriteEditorProWindow.MaxContolPanelWidth);
             }
             else if (_windowInstanceCache == null)
             {

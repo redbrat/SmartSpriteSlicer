@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public class ScriptableLayoutReport
     {

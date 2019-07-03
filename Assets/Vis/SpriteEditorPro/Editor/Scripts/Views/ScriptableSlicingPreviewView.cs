@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Vis.SmartSpriteSlicer
+﻿namespace Vis.SpriteEditorPro
 {
     internal class ScriptableSlicingPreviewView : LayoutViewBase
     {
@@ -9,11 +6,11 @@ namespace Vis.SmartSpriteSlicer
         private readonly LayoutViewBase _center;
         private readonly LayoutViewBase _bottom;
 
-        public ScriptableSlicingPreviewView(SmartSpriteSlicerWindow model) : base(model)
+        public ScriptableSlicingPreviewView(SpriteEditorProWindow model) : base(model)
         {
-            _top = new ScriptableSlisingTopView(model);
-            _center = new ScriptableSlisingCenterView(model);
-            _bottom = new ScriptableSlisingBottomView(model);
+            _top = new ScriptableSlicingPreviewTopView(model);
+            _center = new ScriptableSlicingPreviewCenterView(model);
+            _bottom = new ScriptableSlicingPreviewBottomView(model);
         }
 
         public override void OnGUILayout()
@@ -22,8 +19,8 @@ namespace Vis.SmartSpriteSlicer
 
             _top.OnGUILayout();
             _center.OnGUILayout();
-            if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) && 
-                _model.SlicingSettings.HasWholeSetOfNodes() && 
+            if (!string.IsNullOrEmpty(_model.SlicingSettings.ScriptabeSlicingTestText) &&
+                _model.SlicingSettings.HasWholeSetOfNodes() &&
                 _model.SlicingSettings.HasAllNodesSeparated())
                 _bottom.OnGUILayout();
         }

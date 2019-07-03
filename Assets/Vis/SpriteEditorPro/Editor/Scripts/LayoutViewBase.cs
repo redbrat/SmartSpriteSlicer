@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public class LayoutViewBase : ViewBase
     {
-        public LayoutViewBase(SmartSpriteSlicerWindow model) : base(model) { }
+        public LayoutViewBase(SpriteEditorProWindow model) : base(model) { }
 
         public Rect WindowPosition;
         public float ReservedHeight;

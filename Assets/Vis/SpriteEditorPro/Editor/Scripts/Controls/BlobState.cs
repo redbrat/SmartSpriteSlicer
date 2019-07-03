@@ -1,4 +1,4 @@
-﻿namespace Vis.SmartSpriteSlicer
+﻿namespace Vis.SpriteEditorPro
 {
     public enum BlobState
     {

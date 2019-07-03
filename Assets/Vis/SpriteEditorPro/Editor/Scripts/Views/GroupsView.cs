@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class GroupsView : LayoutViewBase
     {
@@ -12,7 +12,7 @@ namespace Vis.SmartSpriteSlicer
 
         private Rect _mainRect;
 
-        public GroupsView(SmartSpriteSlicerWindow model) : base(model)
+        public GroupsView(SpriteEditorProWindow model) : base(model)
         {
             _groupsTopPanel = new GroupsTopPanelView(model);
             _groupsMainPanel = new GroupsMainPanelView(model);

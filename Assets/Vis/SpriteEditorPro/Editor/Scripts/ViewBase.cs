@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public abstract class ViewBase
     {
-        protected readonly SmartSpriteSlicerWindow _model;
+        protected readonly SpriteEditorProWindow _model;
 
-        public ViewBase(SmartSpriteSlicerWindow model)
+        public ViewBase(SpriteEditorProWindow model)
         {
             _model = model;
         }

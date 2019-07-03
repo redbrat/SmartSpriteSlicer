@@ -30,5 +30,7 @@ namespace Vis
             }
         }
         public static Vector2Int ToVector2Int(this Vector3 value, FloatConvertionMode mode = FloatConvertionMode.Round) => new Vector2(value.x, value.y).ToVector2Int(mode);
+
+        public static Vector2 ToVector2(this Vector2Int value) => new Vector2(value.x, value.y);
     }
 }

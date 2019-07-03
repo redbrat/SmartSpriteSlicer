@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class ChunksView : LayoutViewBase
     {
@@ -18,7 +18,7 @@ namespace Vis.SmartSpriteSlicer
         private readonly GUIStyle _chunkButtonStyle;
         private readonly GUIStyle _chunkButtonPressedStyle;
 
-        public ChunksView(SmartSpriteSlicerWindow model) : base(model)
+        public ChunksView(SpriteEditorProWindow model) : base(model)
         {
             _chunksPanelStyle = _model.Skin.GetStyle(ChunksPanelStyleName);
             _chunkEditPanelStyle = _model.Skin.GetStyle(ChunkEditPanelStyleName);

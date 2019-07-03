@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class ForegroundView : ViewBase
     {
-        public ForegroundView(SmartSpriteSlicerWindow model) : base(model) { }
+        public ForegroundView(SpriteEditorProWindow model) : base(model) { }
 
         public override void OnGUI(Rect position)
         {
@@ -79,28 +79,35 @@ namespace Vis.SmartSpriteSlicer
 
         private bool validIterableItem(int globalIndex)
         {
-            switch (_model.IterationMode)
+            switch (_model.ControlPanelTab)
             {
-                case SpriteIterationMode.Group:
+                case ControlPanelTabs.ManualSlicing:
+                    switch (_model.IterationMode)
                     {
-                        var layout = new Layout(_model.SlicingSettings, Rect.zero);
-                        foreach (var area in layout)
-                            if (area.globalIndex == globalIndex)
-                                return _model.PreviewGroup.Value.Id == area.group.Id;
-                        return false;
+                        case SpriteIterationMode.Group:
+                            {
+                                var layout = new Layout(_model.SlicingSettings, Rect.zero);
+                                foreach (var area in layout)
+                                    if (area.globalIndex == globalIndex)
+                                        return _model.PreviewGroup.Value.Id == area.group.Id;
+                                return false;
+                            }
+                        case SpriteIterationMode.Chunk:
+                            {
+                                var layout = new Layout(_model.SlicingSettings, Rect.zero);
+                                foreach (var area in layout)
+                                    if (area.globalIndex == globalIndex)
+                                        return _model.PreviewChunk.Value.Id == area.chunk.Id;
+                                return false;
+                            }
+                        case SpriteIterationMode.Global:
+                        default:
+                            return true;
                     }
-                case SpriteIterationMode.Chunk:
-                    {
-                        var layout = new Layout(_model.SlicingSettings, Rect.zero);
-                        foreach (var area in layout)
-                            if (area.globalIndex == globalIndex)
-                                return _model.PreviewChunk.Value.Id == area.chunk.Id;
-                        return false;
-                    }
-                case SpriteIterationMode.Global:
                 default:
                     return true;
             }
+            
         }
     }
 }

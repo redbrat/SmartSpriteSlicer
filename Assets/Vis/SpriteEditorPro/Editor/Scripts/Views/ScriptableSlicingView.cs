@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEditor;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class ScriptableSlicingView : LayoutViewBase
     {
@@ -12,7 +12,7 @@ namespace Vis.SmartSpriteSlicer
 
         private bool _unfolded;
 
-        public ScriptableSlicingView(SmartSpriteSlicerWindow model) : base(model)
+        public ScriptableSlicingView(SpriteEditorProWindow model) : base(model)
         {
             _topView = new ScriptableSlicingTopView(model);
             _blobsView = new ScriptableSlicingBlobsView(model);

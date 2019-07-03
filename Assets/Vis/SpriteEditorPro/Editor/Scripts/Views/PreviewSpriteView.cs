@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class PreviewSpriteView : ViewBase
     {
@@ -14,7 +14,7 @@ namespace Vis.SmartSpriteSlicer
 
         private ExtractedPreviewWindow _windowInstanceCache;
 
-        public PreviewSpriteView(SmartSpriteSlicerWindow model) : base(model)
+        public PreviewSpriteView(SpriteEditorProWindow model) : base(model)
         {
             _subWindow = new SpritePreviewWindow(model);
         }
@@ -50,8 +50,8 @@ namespace Vis.SmartSpriteSlicer
                 _model.PreviewWindowRect.x = 0;
             if (_model.PreviewWindowRect.y < 0)
                 _model.PreviewWindowRect.y = 0;
-            if (_model.PreviewWindowRect.width != SmartSpriteSlicerWindow.MaxPreviewWindowWidth)
-                _model.PreviewWindowRect.width = SmartSpriteSlicerWindow.MaxPreviewWindowWidth;
+            if (_model.PreviewWindowRect.width != SpriteEditorProWindow.MaxPreviewWindowWidth)
+                _model.PreviewWindowRect.width = SpriteEditorProWindow.MaxPreviewWindowWidth;
             if (_model.PreviewWindowRect.x >= _model.position.width - _subWindow.WindowWorkaroundRect.width)
                 _model.PreviewWindowRect.x = _model.position.width - _subWindow.WindowWorkaroundRect.width;
             if (_model.PreviewWindowRect.y >= _model.position.height - 18)

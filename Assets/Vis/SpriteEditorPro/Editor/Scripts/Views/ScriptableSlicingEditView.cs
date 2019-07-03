@@ -2,13 +2,13 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class ScriptableSlicingEditView : LayoutViewBase
     {
         private readonly GUIStyle _panelStyle;
 
-        public ScriptableSlicingEditView(SmartSpriteSlicerWindow model) : base(model)
+        public ScriptableSlicingEditView(SpriteEditorProWindow model) : base(model)
         {
             _panelStyle = model.Skin.GetStyle("GroupsEditPanel");
         }
@@ -65,6 +65,42 @@ namespace Vis.SmartSpriteSlicer
                 {
                     Undo.RecordObject(_model.SlicingSettings, "Scriptable node text color changed");
                     _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetTextColor(newTextColor);
+                    _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
+                    _model.Repaint();
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
+            }
+
+            if (node.Type == ScriptableNodeType.PivotX || node.Type == ScriptableNodeType.PivotY)
+            {
+
+                var newPivotAnchor = (PivotPointAnchor)EditorGUILayout.EnumPopup(new GUIContent($"Pivot anchor:", "Which point to use as origin for pivot coordinate"), node.PivotAnchor);
+                if (newPivotAnchor != node.PivotAnchor)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Pivot point anchor changed for node");
+                    _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetPivotAnchor(newPivotAnchor);
+                    _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
+                    _model.Repaint();
+                    EditorUtility.SetDirty(_model.SlicingSettings);
+                }
+
+                if (newPivotAnchor == PivotPointAnchor.CustomAnchor)
+                {
+                    var newCustomAnchor = EditorGUILayout.Vector2IntField(new GUIContent($"Custom anchor:"), node.CustomAnchor);
+                    if (newCustomAnchor != node.CustomAnchor)
+                    {
+                        Undo.RecordObject(_model.SlicingSettings, "Pivot's custom anchor changed for node");
+                        _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
+                        _model.Repaint();
+                        EditorUtility.SetDirty(_model.SlicingSettings);
+                    }
+                }
+
+                var newPivotDirection = (PivotDirection)EditorGUILayout.EnumPopup(new GUIContent($"Pivot direction:"), node.PivotDirection);
+                if (newPivotDirection != node.PivotDirection)
+                {
+                    Undo.RecordObject(_model.SlicingSettings, "Pivot point direction changed for node");
+                    _model.SlicingSettings.ScriptableNodes[nodeIndex] = node.SetPivotDirection(newPivotDirection);
                     _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                     _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);

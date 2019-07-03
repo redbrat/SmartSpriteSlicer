@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal struct ScriptableLayout : IEnumerable<(int globalIndex, string name, Rect position, Rect localPosition, Vector2Int pivotPoint, Vector2Int localPivotPoint)>
     {
@@ -120,11 +120,17 @@ namespace Vis.SmartSpriteSlicer
                                     pivotX = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(pivotX);
                                     textChunkStartIndex = nextTextIndex;
+                                    pivotX.PivotPointAnchor = currentNode.PivotAnchor;
+                                    pivotX.CustomPivotPointAnchor = currentNode.CustomAnchor;
+                                    pivotX.PivotDirection = currentNode.PivotDirection;
                                     break;
                                 case ScriptableNodeType.PivotY:
                                     pivotY = new ScriptableNodeTypeTextChunk(currentNode.Color, textChunkStartIndex, nextTextIndex, currentNode.Type, sb.ToString(), false);
                                     textChunks.Add(pivotY);
                                     textChunkStartIndex = nextTextIndex;
+                                    pivotY.PivotPointAnchor = currentNode.PivotAnchor;
+                                    pivotY.CustomPivotPointAnchor = currentNode.CustomAnchor;
+                                    pivotY.PivotDirection = currentNode.PivotDirection;
                                     break;
                             }
                             sb.Clear();
@@ -178,7 +184,96 @@ namespace Vis.SmartSpriteSlicer
 
                     var localPosition = new Rect(numX, numY, numWidth, numHeight);
                     var position = new Rect(_position.position + localPosition.position, localPosition.size);
-                    var localPivotPoint = new Vector2Int(numPivotX, numPivotY);
+                    var localPivotPoint = new Vector2Int(/*numWidth - */numPivotX, /*numHeight - */numPivotY);
+                    int directedNumPivotX;
+                    int directedNumPivotY;
+                    switch (pivotX.PivotDirection)
+                    {
+                        case PivotDirection.TopLeft:
+                        case PivotDirection.BottomLeft:
+                            directedNumPivotX = -numPivotX;
+                            break;
+                        case PivotDirection.TopRight:
+                        case PivotDirection.BottomRight:
+                        default:
+                            directedNumPivotX = numPivotX;
+                            break;
+                    }
+                    switch (pivotY.PivotDirection)
+                    {
+                        case PivotDirection.TopLeft:
+                        case PivotDirection.TopRight:
+                            directedNumPivotY = -numPivotY;
+                            break;
+                        case PivotDirection.BottomLeft:
+                        case PivotDirection.BottomRight:
+                        default:
+                            directedNumPivotY = numPivotY;
+                            break;
+                    }
+                    switch (pivotX.PivotPointAnchor)
+                    {
+                        case PivotPointAnchor.TopLeft:
+                            localPivotPoint.x = directedNumPivotX;
+                            break;
+                        case PivotPointAnchor.TopRight:
+                            localPivotPoint.x = numWidth + directedNumPivotX;
+                            break;
+                        case PivotPointAnchor.BottomLeft:
+                            localPivotPoint.x = directedNumPivotX;
+                            break;
+                        case PivotPointAnchor.BottomRight:
+                            localPivotPoint.x = numWidth + directedNumPivotX;
+                            break;
+                        //case PivotPointAnchor.GlobalTopLeft:
+                        //    localPivotPoint = new Vector2(_position.position.x - directedNumPivotX, _position.position.y - directedNumPivotY).ToVector2Int();
+                        //    break;
+                        //case PivotPointAnchor.GlobalTopRight:
+                        //    localPivotPoint = new Vector2(_position.position.x - directedNumPivotX, _position.position.y - directedNumPivotY).ToVector2Int();
+                        //    localPivotPoint.x = Mathf.RoundToInt(_position.position.x + numWidth) - localPivotPoint.x;
+                        //    break;
+                        //case PivotPointAnchor.GlobalBottomLeft:
+                        //    localPivotPoint.x = Mathf.RoundToInt(_position.position.y) - localPivotPoint.y;
+                        //    break;
+                        //case PivotPointAnchor.GlobalBottomRight:
+                        //    localPivotPoint.x = Mathf.RoundToInt(_position.position.y + numHeight) - localPivotPoint.y;
+                        //    break;
+                        case PivotPointAnchor.CustomAnchor:
+                            localPivotPoint.x = pivotX.CustomPivotPointAnchor.x + directedNumPivotX;
+                            break;
+                    }
+                    switch (pivotX.PivotPointAnchor)
+                    {
+                        case PivotPointAnchor.TopLeft:
+                            localPivotPoint.y = directedNumPivotY;
+                            break;
+                        case PivotPointAnchor.TopRight:
+                            localPivotPoint.y = directedNumPivotY;
+                            break;
+                        case PivotPointAnchor.BottomLeft:
+                            localPivotPoint.y = numHeight + directedNumPivotY;
+                            break;
+                        case PivotPointAnchor.BottomRight:
+                            localPivotPoint.y = numHeight + directedNumPivotY;
+                            break;
+                        //case PivotPointAnchor.GlobalTopLeft:
+                        //    localPivotPoint = new Vector2(_position.position.x - directedNumPivotX, _position.position.y - directedNumPivotY).ToVector2Int();
+                        //    break;
+                        //case PivotPointAnchor.GlobalTopRight:
+                        //    localPivotPoint = new Vector2(_position.position.x - directedNumPivotX, _position.position.y - directedNumPivotY).ToVector2Int();
+                        //    localPivotPoint.x = Mathf.RoundToInt(_position.position.x + numWidth) - localPivotPoint.x;
+                        //    break;
+                        //case PivotPointAnchor.GlobalBottomLeft:
+                        //    localPivotPoint.x = Mathf.RoundToInt(_position.position.y) - localPivotPoint.y;
+                        //    break;
+                        //case PivotPointAnchor.GlobalBottomRight:
+                        //    localPivotPoint.x = Mathf.RoundToInt(_position.position.y + numHeight) - localPivotPoint.y;
+                        //    break;
+                        case PivotPointAnchor.CustomAnchor:
+                            localPivotPoint.y = pivotX.CustomPivotPointAnchor.y + directedNumPivotY;
+                            break;
+                    }
+                    //localPivotPoint = localPosition.size.ToVector2Int() - localPivotPoint;
                     var pivotPoint = _position.position.ToVector2Int() + localPivotPoint;
 
                     localPivotPoint += localPosition.position.ToVector2Int();

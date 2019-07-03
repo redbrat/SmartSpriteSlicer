@@ -2,13 +2,13 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class GroupEditPanelView : LayoutViewBase
     {
         private readonly GUIStyle _panelStyle;
 
-        public GroupEditPanelView(SmartSpriteSlicerWindow model) : base(model)
+        public GroupEditPanelView(SpriteEditorProWindow model) : base(model)
         {
             _panelStyle = model.Skin.GetStyle("GroupsEditPanel");
         }

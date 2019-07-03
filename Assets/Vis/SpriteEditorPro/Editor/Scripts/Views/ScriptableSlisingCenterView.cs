@@ -1,13 +1,13 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
-    public class ScriptableSlisingCenterView : LayoutViewBase
+    public class ScriptableSlicingPreviewCenterView : LayoutViewBase
     {
         private readonly GUIStyle _panelStyle;
 
-        public ScriptableSlisingCenterView(SmartSpriteSlicerWindow model) : base(model)
+        public ScriptableSlicingPreviewCenterView(SpriteEditorProWindow model) : base(model)
         {
             _panelStyle = model.Skin.GetStyle("GroupsMainPanel");
         }

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class ControlPanelTabsView : LayoutViewBase
     {
@@ -15,7 +15,7 @@ namespace Vis.SmartSpriteSlicer
         public readonly LayoutViewBase GroupsView;
         public readonly ViewBase DraggableButtonsView;
 
-        public ControlPanelTabsView(SmartSpriteSlicerWindow model) : base(model)
+        public ControlPanelTabsView(SpriteEditorProWindow model) : base(model)
         {
             _radioButtonDefaultStyle = model.Skin.GetStyle("RadioButtonDefault");
             _radioButtonDefaultSelectedStyle = model.Skin.GetStyle("RadioButtonSelectedDefault");

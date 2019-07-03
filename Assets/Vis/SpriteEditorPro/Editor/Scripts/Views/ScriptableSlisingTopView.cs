@@ -1,14 +1,14 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
-    public class ScriptableSlisingTopView : LayoutViewBase
+    public class ScriptableSlicingPreviewTopView : LayoutViewBase
     {
         private readonly GUIStyle _panelStyle;
         private readonly GUIStyle _buttonsStyle;
 
-        public ScriptableSlisingTopView(SmartSpriteSlicerWindow model) : base(model)
+        public ScriptableSlicingPreviewTopView(SpriteEditorProWindow model) : base(model)
         {
             _panelStyle = model.Skin.GetStyle("GroupsTopPanel");
             _buttonsStyle = model.Skin.GetStyle("GroupsTopPanelButton");

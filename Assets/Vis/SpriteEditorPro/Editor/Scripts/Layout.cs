@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public struct Layout : IEnumerable<(int globalIndex, int groupIndex, string name, Rect position, Vector2Int pivotPoint, SpriteGroup group, SpriteChunk chunk)>
     {

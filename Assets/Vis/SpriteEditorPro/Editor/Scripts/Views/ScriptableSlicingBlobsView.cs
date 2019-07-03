@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class ScriptableSlicingBlobsView : LayoutViewBase
     {
@@ -11,7 +11,7 @@ namespace Vis.SmartSpriteSlicer
         private readonly GUIStyle _blobStyle;
         private readonly GUIStyle _selectedBlobStyle;
 
-        public ScriptableSlicingBlobsView(SmartSpriteSlicerWindow model) : base(model)
+        public ScriptableSlicingBlobsView(SpriteEditorProWindow model) : base(model)
         {
             _panelStyle = model.Skin.GetStyle("GroupsMainPanel");
             _panelDragAcceptanceStyle = model.Skin.GetStyle("GroupsMainPanelDragAcceptence");
@@ -37,6 +37,7 @@ namespace Vis.SmartSpriteSlicer
                 {
                     if (_model.SelectedNodeIndex >= 0)
                         _model.SelectedNodeIndex = reorderableListResult.selected;
+                    _model.SlicingSettings.UpdateScriptableSlicingLayoutHash();
                     _model.Repaint();
                     EditorUtility.SetDirty(_model.SlicingSettings);
                 }

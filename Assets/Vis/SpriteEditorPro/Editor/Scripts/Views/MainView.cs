@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     public class MainView : ViewBase
     {
@@ -10,7 +10,7 @@ namespace Vis.SmartSpriteSlicer
         private readonly PreviewSpriteView _previewSpriteView;
         private readonly ForegroundView _foreground;
 
-        public MainView(SmartSpriteSlicerWindow model) : base(model)
+        public MainView(SpriteEditorProWindow model) : base(model)
         {
             _background = new BackgroundView(model);
             _image = new TextureView(model);

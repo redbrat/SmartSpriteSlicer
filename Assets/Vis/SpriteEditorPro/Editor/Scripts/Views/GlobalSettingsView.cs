@@ -1,13 +1,13 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class GlobalSettingsView : LayoutViewBase
     {
         private bool _unfolded;
 
-        public GlobalSettingsView(SmartSpriteSlicerWindow model) : base(model)
+        public GlobalSettingsView(SpriteEditorProWindow model) : base(model)
         {
         }
 

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class BackgroundView : ViewBase
     {
-        public BackgroundView(SmartSpriteSlicerWindow model) : base(model) { }
+        public BackgroundView(SpriteEditorProWindow model) : base(model) { }
 
         public override void OnGUI(Rect position)
         {

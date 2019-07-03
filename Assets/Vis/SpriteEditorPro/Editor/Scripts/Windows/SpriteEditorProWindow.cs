@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.Presets;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
-    public class SmartSpriteSlicerWindow : EditorWindow
+    public class SpriteEditorProWindow : EditorWindow
     {
         public const int MaxContolPanelWidth = 460;
         public const int MaxPreviewWindowWidth = 300;
         public int EditedGroupId;
-        private const string _dbPointerName = "SmartSpriteSlicerDbPointer";
+        private const string _dbPointerName = "SpriteEditorProDbPointer";
         private const string _slicingSettingsName = "SlicingSettings.asset";
 
         internal readonly string ControlPanelCaption = "Control Panel";
 
-        public Vector2 TextureScale => new Vector2(TextureRect.width / Texture.width, TextureRect.height / Texture.height);
+        public Vector2 TextureScale => new Vector2(TextureRect.width / TextureOriginalSize.x, TextureRect.height / TextureOriginalSize.y);
         public Texture2D WhiteTexture { get; private set; }
         public Texture2D BlackTexture { get; private set; }
 
@@ -70,6 +71,7 @@ namespace Vis.SmartSpriteSlicer
 
         [NonSerialized]
         public Texture2D Texture;
+        public Vector2Int TextureOriginalSize;
         [NonSerialized]
         public TextureImporter Importer;
 
@@ -97,11 +99,17 @@ namespace Vis.SmartSpriteSlicer
         public int SelectedNodeIndex;
         public int EditedNodeId;
         public ControlPanelTabs ControlPanelTab;
+        [NonSerialized]
+        public bool PinPivot;
+        public Vector2 PinnedPivotPoint;
+        public float PinnedScale;
 
         public void Initialize(Texture2D sprite, TextureImporter importer)
         {
             Texture = sprite;
             Importer = importer;
+            if (!getImageSize(sprite, out TextureOriginalSize))
+                TextureOriginalSize = new Vector2Int(Texture.width, Texture.height);
 
             BlackTexture = new Texture2D(1, 1);
             BlackTexture.SetPixel(0, 0, Color.black);
@@ -116,6 +124,7 @@ namespace Vis.SmartSpriteSlicer
             _view = new MainView(this);
         }
 
+
         private void OnDestroy()
         {
             DestroyImmediate(BlackTexture);
@@ -125,15 +134,16 @@ namespace Vis.SmartSpriteSlicer
         {
             manageDragAndDrop();
 
-            if (_view == null)
+            if (_view == null || Texture == null)
                 GUI.Box(new Rect(Vector2Int.zero, position.size), new GUIContent($"Drag'n'drop your sprite here"), _isDraggingOverWindow ? Skin.GetStyle("PlaceholderActive") : Skin.GetStyle("Placeholder"));
             else
                 _view?.OnGUI(position);
         }
 
-        public static GUISkin loadGuiSkin() => Resources.Load<GUISkin>("Vis/SmartSpriteSlicer/SmartSpriteSlicer");
+        public static GUISkin loadGuiSkin() => Resources.Load<GUISkin>("Vis/SpriteEditorPro/SpriteEditorPro");
 
         private bool _isDraggingOverWindow;
+
         private void manageDragAndDrop()
         {
             if ((Event.current.type == EventType.DragUpdated ||
@@ -161,7 +171,7 @@ namespace Vis.SmartSpriteSlicer
         {
             var dbPointerGuids = AssetDatabase.FindAssets(_dbPointerName);
             if (dbPointerGuids.Length == 0)
-                throw new ApplicationException($"[{nameof(SmartSpriteSlicerWindow)}] Asset installation corrupted. Try reimport asset from AssetStore!");
+                throw new ApplicationException($"[{nameof(SpriteEditorProWindow)}] Asset installation corrupted. Try reimport asset from AssetStore!");
             var dbPointerPath = AssetDatabase.GUIDToAssetPath(dbPointerGuids[0]);
             var slicingSettingsPath = Path.Combine(dbPointerPath.Substring(0, dbPointerPath.Length - Path.GetFileName(dbPointerPath).Length), _slicingSettingsName);
             var instance = AssetDatabase.LoadAssetAtPath<SlicingSettings>(slicingSettingsPath);
@@ -191,7 +201,6 @@ namespace Vis.SmartSpriteSlicer
                             globalName = SlicingSettings.CustomName;
 
                         var layout = new Layout(SlicingSettings, new Rect(Vector2Int.zero, new Vector2Int(Texture.width, Texture.height)));
-                        //var layout = new Layout(SlicingSettings, new Rect(position.position, TextureRect.size));
                         foreach (var area in layout)
                         {
                             var groupName = area.chunk.GetHumanFriendlyName();
@@ -257,6 +266,28 @@ namespace Vis.SmartSpriteSlicer
             SlicingSettings.ChunkGroups.RemoveAt(groupIndex);
             Repaint();
             EditorUtility.SetDirty(SlicingSettings);
+        }
+        private bool getImageSize(Texture2D asset, out Vector2Int size)
+        {
+            if (asset != null)
+            {
+                var assetPath = AssetDatabase.GetAssetPath(asset);
+                var importer = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+
+                if (importer != null)
+                {
+                    var args = new object[2] { 0, 0 };
+                    var mi = typeof(TextureImporter).GetMethod("GetWidthAndHeight", BindingFlags.NonPublic | BindingFlags.Instance);
+                    mi.Invoke(importer, args);
+
+                    size = new Vector2Int((int)args[0], (int)args[1]);
+
+                    return true;
+                }
+            }
+
+            size = default;
+            return false;
         }
     }
 }

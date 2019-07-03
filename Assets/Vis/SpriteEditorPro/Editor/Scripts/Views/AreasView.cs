@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class AreasView : ViewBase
     {
-        public AreasView(SmartSpriteSlicerWindow model) : base(model) { }
+        public AreasView(SpriteEditorProWindow model) : base(model) { }
 
         public override void OnGUI(Rect position)
         {

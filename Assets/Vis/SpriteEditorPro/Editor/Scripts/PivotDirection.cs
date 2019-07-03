@@ -3,11 +3,11 @@
 namespace Vis.SpriteEditorPro
 {
     [Serializable]
-    public enum LayoutAnchor
+    public enum PivotDirection
     {
-        TopLeft = 0,
+        BottomRight = 0,
+        BottomLeft,
         TopRight,
-        BottomRight,
-        BottomLeft
+        TopLeft
     }
 }

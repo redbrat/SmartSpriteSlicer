@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Vis.SmartSpriteSlicer
+namespace Vis.SpriteEditorPro
 {
     internal class RadioButtonsGroupState<T> where T : Enum
     {
